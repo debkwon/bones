@@ -4,9 +4,10 @@ import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
 import {render} from 'react-dom'
 import { Provider } from 'react-redux'
 
+import styles from './style/main.css'
 import store from './store'
-import Root from './components/Root'
-import ProductsContainer from './components/Products'
+
+import Container from './components/Container'
 import Login from './components/Login'
 import { fetchProducts } from './reducers/products'
 
@@ -16,11 +17,13 @@ const onProductsEnter = function () {
 }
 
 
+
 render (
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={ProductsContainer} onEnter={onProductsEnter}/>
-      <Route path="/login" component={Login} />
+      <Route path="/" component={Container}>
+        <Route path="/login" component={Login} />
+      </Route>
     </Router>
   </Provider>,
   document.getElementById('main')
