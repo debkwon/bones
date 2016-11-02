@@ -6,6 +6,7 @@ const pkg = require('./package.json')
 
 const debug = require('debug')(`${pkg.name}:boot`)
 
+
 const nameError =
 `*******************************************************************
  You need to give your app a proper name.
