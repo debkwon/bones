@@ -5,10 +5,11 @@ import { Provider } from 'react-redux'
 
 import store from './store'
 import Root from './components/Root'
+import ProductsContainer from './components/Products'
 
 render (
   <Provider store={store}>
-    <Root/>
+    <ProductsContainer />
   </Provider>,
   document.getElementById('main')
 )
