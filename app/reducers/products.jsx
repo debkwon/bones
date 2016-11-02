@@ -1,9 +1,9 @@
-// import axios from 'axios'
+import axios from 'axios'
 
 export default function reducer (state = null, action) {
   switch(action.type) {
 
-    case ALL_PRODUCTS:
+    case RECEIVE_PRODUCTS:
       return action.products;
 
     default:
@@ -11,13 +11,20 @@ export default function reducer (state = null, action) {
   }
 }
 
-const ALL_PRODUCTS = 'ALL_PRODUCTS';
-export const allProducts = products => ({
-  type: ALL_PRODUCTS, products
+const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
+
+export const receiveProducts = products => ({
+  type: RECEIVE_PRODUCTS, products
 })
 
-export const getProducts = () => 
-  dispatch =>
-    axios.get('api/products')
-      .then(res => dispatch(allProducts(res.data))) // data, not body?
-      .catch(err => console.error('Fetching products unsuccessful', err))
+export const fetchProducts = () => {
+  return function (dispatch) {
+    axios.get('/api/products')
+      .then(res => {
+        console.log("These are your products:", products)
+        dispatch(receiveProducts(products))
+      })
+      .catch(err => console.error('Fetching products unsuccessful', err));
+  };
+};
+
