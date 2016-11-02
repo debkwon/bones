@@ -2,6 +2,7 @@
 
 const Sequelize = require('sequelize');
 const db = require('APP/db');
+const OrderProduct = require('./orderProduct');
 
 const Order = db.define('orders', {
     shippingDate: Sequelize.DATE,
@@ -9,6 +10,22 @@ const Order = db.define('orders', {
       type: Sequelize.ENUM,
       values: ['processing', 'shipped', 'delivered'],
       defaultValue: 'processing'
+    }
+  },
+  {
+    getterMethods: {
+      total: function () {
+        let total = 0;
+        OrderProduct.findAll({
+          where: {order_id: this.id}
+        })
+        .then(products => {
+          products.forEach(row => {
+            total += row.price * row.quantity
+          })
+          return total
+        })
+      }
     }
   }
 );
