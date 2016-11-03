@@ -127,16 +127,45 @@ describe('Order', () => {
   }
   )
 
-  it('updates the total upon create', () =>
-     Order.findById(4)
-     .then(order =>{
-           console.log(order)
-           console.log("the total is...", order.getTotal())
-         }
+  it('updates inputs total upon create', () => {
+    let input = [
+      {
+        product_id: 4,
+        price: 5,
+        quantity: 2
+      },
+      {
+        product_id: 1,
+        price: 100,
+        quantity: 100
+      },
+    ]
+
+    let total = 0
+
+    input.map((ele)=>{
+      total += ele.price * ele.quantity
+    })
+
+    Order.create({
+      user_id: 1,
+      total: total
+    })
+    .then(order =>
+      input.map((item) =>
+        OrderProduct.create({
+          order_id: order.id,
+          product_id: item.product_id,
+          pricePerUnit: item.price,
+          quantity: item.quantity
+        }).then(opRow => {
+          expect(order.total).to.eql(10010)
+      })
       )
+    )
+  }
      )
 
-  it('updates the total upon update')
 
 })
 
