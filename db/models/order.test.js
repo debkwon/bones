@@ -81,9 +81,13 @@ describe('Order', () => {
       user_id: 1
     })
     .then(order =>
-      order.setProducts(2)
-      .then(()=>
-        OrderProduct.findAll({where: {order_id: order.id}})
+      OrderProduct.create({
+        order_id: 1,
+        product_id: 3,
+        quantity: 4
+      })
+      .then(orderProduct =>
+        console.log(orderProduct)
       )
     )
   )
