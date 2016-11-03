@@ -82,15 +82,61 @@ describe('Order', () => {
     })
     .then(order =>
       OrderProduct.create({
-        order_id: 1,
+        order_id: order.id,
         product_id: 3,
+        pricePerUnit: 10,
         quantity: 4
       })
-      .then(orderProduct =>
-        console.log(orderProduct)
+      .then(orderProduct => {
+        expect(orderProduct.quantity).to.eql(4);
+        expect(orderProduct.pricePerUnit).to.not.be.null
+      }
       )
     )
   )
+
+  it('Adding multiple lines for same order at same time', () => {
+    let input = [
+      {
+        product_id: 4,
+        price: 5,
+        quantity: 2
+      },
+      {
+        product_id: 1,
+        price: 100,
+        quantity: 100
+      },
+    ]
+    Order.create({
+      user_id: 1
+    })
+    .then(order =>
+      input.map((item) =>
+        OrderProduct.create({
+          order_id: order.id,
+          product_id: item.product_id,
+          pricePerUnit: item.price,
+          quantity: item.quantity
+        }).then(order => {
+          expect(order.quantity).to.eql(item.quantity)
+          expect(order.product_id).to.eql(item.product_id)
+      })
+      )
+    )
+  }
+  )
+
+  it('updates the total upon create', () =>
+     Order.findById(4)
+     .then(order =>{
+           console.log(order)
+           console.log("the total is...", order.getTotal())
+         }
+      )
+     )
+
+  it('updates the total upon update')
 
 })
 
