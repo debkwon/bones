@@ -2,6 +2,8 @@ const Order = require('APP/db/models/order');
 const Product = require('APP/db/models/product');
 const OrderProduct = require('APP/db/models/orderProduct')
 const router = require('express').Router();
+const Promise = require('bluebird');
+
 
 router.get('/', (req, res, next) =>
   Order.findAll()
@@ -37,16 +39,18 @@ router.post('/', (req, res, next) =>{
 
   Order.create(orderInfo)
   .then(order =>
-    orderProducts.map((product) =>
+    Promise.map(orderProducts, (orderProduct) =>
       OrderProduct.create({
         order_id: order.id,
-        product_id: item.product_id,
-        pricePerUnit: item.price,
-        quantity: item.quantity
-      }))
-    )
-  .then(rows =>
-    res.status(201).send(order)
+        product_id: orderProduct.product_id,
+        pricePerUnit: orderProduct.price,
+        quantity: orderProduct.quantity
+      })
+    ).then(rows => {
+        console.log(rows)
+        res.status(201).send(order)
+      }
+      )
   )
   .catch(next)
 })

@@ -44,6 +44,8 @@ describe('/api/orders', () => {
     }
    ]
 
+   let usableProductIds = []
+
    before('sync database & make products', () =>
      db.didSync
        .then(() => Order.truncate({ cascade: true }))
@@ -53,7 +55,9 @@ describe('/api/orders', () => {
           products: Promise.map(products, (prod) => Product.create(prod))
         })
        )
-       .then(() => console.log('done with associations'))
+       .then(({orders, products}) =>
+         products.map((product) => usableProductIds.push(product.id))
+       )
    )
 
   it('Get / lists all orders in database', () =>
@@ -103,19 +107,19 @@ describe('/api/orders', () => {
       user: 2,
       products: [
       {
-        product_id: 1,
+        product_id: usableProductIds[0],
         quantity: 5,
         price: 34,
       },
       {
-        product_id: 2,
+        product_id: usableProductIds[1],
         quantity: 10,
         price: 245,
       },
       {
-        product_id: 3,
-        quantity: 435,
-        price: 56
+        product_id: usableProductIds[2],
+        quantity: 345,
+        price: 6754,
       }
       ]}
     )
