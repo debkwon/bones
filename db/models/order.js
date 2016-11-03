@@ -8,7 +8,7 @@ const Order = db.define('orders', {
     shippingDate: Sequelize.DATE,
     status: {
       type: Sequelize.ENUM,
-      values: ['processing', 'shipped', 'delivered'],
+      values: ['processing', 'shipped', 'delivered', 'cancelled'],
       defaultValue: 'processing'
     }
   },

@@ -2,6 +2,7 @@
 
 const Sequelize = require('sequelize');
 const db = require('APP/db');
+const Product = require('./product')
 
 const OrderProduct = db.define('order_product', {
   quantity: {
@@ -9,11 +10,18 @@ const OrderProduct = db.define('order_product', {
     defaultValue: 1
   },
   pricePerUnit: {
-    type: Sequelize.FLOAT,
-    validate: {
-      notEmpty: true
+    type: Sequelize.FLOAT
+  }
+},
+{
+  hooks: {
+    afterCreate: function (orderLine) {
+      console.log('in hooks')
+      orderLine.pricePerUnit = 200
     }
   }
 });
+
+
 
 module.exports = OrderProduct
