@@ -19,7 +19,7 @@ user.get('/', function(req, res, next){
     })
     .catch(next);
 })
-
+//
 
 user.get('/:userId', function(req, res, next){
     if (!req.user) {
