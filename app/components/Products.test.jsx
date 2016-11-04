@@ -15,7 +15,7 @@ describe('<Products />', () => {
     expect(root.find('h2')).to.have.length(1)
   })
 
-  it('displays a table with five columns on it', () => {
-    expect(root.find('table[type="productsList"]')).to.have.length(1)
+  it('displays a Google Maximum UI table', () => {
+    expect(root.find('Table')).to.have.length(1)
   })
 })
