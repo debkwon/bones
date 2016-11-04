@@ -53,7 +53,8 @@ export class User extends Component {
   }
   update( firstName, lastName, username, email, password){
 
-
+    console.log("auth", this.state.auth.password_digest);
+    var password_digest = this.state.auth.password_digest;
 
     var id = this.state.auth.id;
     var user = {firstName: firstName,
@@ -67,7 +68,7 @@ export class User extends Component {
     .then(function(res){
       console.log("RES",res);
       if(res.status ==200){
-        location.reload();
+        //location.reload();
         //console.log("Success!!");
       }
     })
