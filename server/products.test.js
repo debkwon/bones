@@ -58,12 +58,14 @@ describe('/api/products', () => {
         angelina.addProduct(dogCollar),
       ])
 
+
   before('sync database & make products', () =>
     db.didSync
       .then(() => Product.destroy({truncate: true, cascade: true}))
       .then(makeProducts)
       .then(makeCelebs)
       .then(associateProductsWithCelebs)
+      .then(console.log("we associated allll the celebs"))
   )
 
 
@@ -76,10 +78,9 @@ describe('/api/products', () => {
       })
   )
 
-  // TODO: Uncheck this spec and get it to pass
-  xit('**Fix this with understanding of join tables** GET / lists all products by celeb\'s id', () =>
+  it('GET / lists all products by celeb\'s id', () =>
     request(app)
-      .get(`/api/products?name=angelina+jolie`)
+      .get(`/api/products?name=Angelina+Jolie`)
       .expect(200)
       .then(res => {
         expect(res.body).to.have.length(products.length)
