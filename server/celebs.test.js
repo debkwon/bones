@@ -8,6 +8,8 @@ const app = require('./start')
 const Promise = require('bluebird');
 
  describe('/api/celebs', () => {
+  
+  // create celebs for database
   const celebs = [
     {
       name: "Emma Stone",
@@ -24,11 +26,17 @@ const Promise = require('bluebird');
       list: "D",
       alive: true
     }
-   ]
-   const [emma,liz,mickey] = celebs;
+  ]
 
-   const products = [
-   {
+  let emma, liz, mickey
+  const makeCelebs = () =>
+    db.Promise.map(celebs,
+      celeb => Celeb.create(celeb))
+    .then(celebs => [emma, liz, mickey] = celebs)
+
+  // create products for database
+  const products = [
+    {
       name: "Mary Jane outfit",
       price: 10.00,
       categories: ["Comics", "Clothing" ]
@@ -43,28 +51,32 @@ const Promise = require('bluebird');
       price: 300.00,
       categories: ["Clothing"]
     }
-   ]
+  ]
 
-   before('sync database & make products', () =>
+  let outfit, ring, vest
+  const makeProducts = () =>
+    db.Promise.map(products,
+      product => Product.create(product))
+    .then(products => [outfit, ring, vest] = products)
+
+  // pair celebs with their products
+  const associateProductsWithCelebs = () =>       
+      Promise.all([
+        emma.addProduct(vest),
+        liz.addProduct(outfit),
+        liz.addProduct(ring),
+      ])
+
+  before('sync database & make products', () =>
      db.didSync
-       .then(() => Celeb.truncate({ cascade: true }))
-       .then(() => Product.truncate({ cascade: true }))
-       .then(() => Promise.props({
-          celebs: Promise.map(celebs, (celeb) => Celeb.create(celeb)),
-          products: Promise.map(products, (prod) => Product.create(prod))
-        })
-       )
-       .then(({celebs, products}) =>
-             Promise.map(products,
-                         product =>
-                         CelebProduct.create({
-                          product_id: product.id,
-                          celeb_id: celebs[0].id
-                         }))
-       )
+       .then(() => Celeb.destroy({ truncate: true, cascade: true }))
+       .then(() => Product.truncate({ truncate: true, cascade: true }))
+       .then(makeProducts)
+       .then(makeCelebs)
+       .then(associateProductsWithCelebs)
    )
 
-   it('GET / lists all celebrities', () =>
+  it('GET / lists all celebrities', () =>
      request(app)
        .get(`/api/celebs`)
        .expect(200)
@@ -73,23 +85,23 @@ const Promise = require('bluebird');
         })
    )
 
-   it('POST / adds a new celebrity', () =>
-       request(app)
-         .post('/api/celebs')
-         .send({
-           name: "Thandie Newton",
-           list: "A",
-           alive: true
-         })
-         .expect(201)
-         .then(res => {
-            expect(res.body).contain(
-            {
-             name: "Thandie Newton",
-             list: "A",
-             alive: true
-            })
-         })
+  it('POST / adds a new celebrity', () =>
+    request(app)
+      .post('/api/celebs')
+      .send({
+        name: "Thandie Newton",
+        list: "A",
+        alive: true
+      })
+      .expect(201)
+      .then(res => {
+        expect(res.body).contain(
+          {
+            name: "Thandie Newton",
+            list: "A",
+            alive: true
+          })
+      })
    )
 
    it('GET /:celebId lists all products by celebrity id', () =>
@@ -97,7 +109,6 @@ const Promise = require('bluebird');
        .get(`/api/celebs/2`)
        .expect(200)
        .then(res => {
-         // console.log(res.body)
          expect(res.body[0].products[0]).to.be.an('object')
          expect(res.body[0].products[0].name).to.equal("Mary Jane outfit")
          expect(res.body[0].products[1].name).to.equal("Giant Diamond Ring")
