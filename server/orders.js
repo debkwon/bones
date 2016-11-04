@@ -60,6 +60,54 @@ router.post('/', (req, res, next) =>{
   .catch(next)
 })
 
+router.put('/:orderId', (req, res, next) => {
+  let orderInfo = {}
+  //need to account for what is included in update request
+  if (req.body.total) orderInfo.total = req.body.total;
+  if (req.body.user_id) orderInfo.user_id = req.body.user_id;
+  if (req.body.status) orderInfo.status = req.body.status;
+  if (req.body.shippingDate) orderInfo.shippingDate = req.body.shippingDate
+  let orderProducts = req.body.products
+  Order.update(orderInfo,{where: {id: req.params.orderId}})
+  .then(order => {
+    if (orderProducts) {
+      Promise.map(orderProducts, (orderProduct)=>
+        OrderProduct.update({pricePerUnit: orderProduct.price,
+        quantity: orderProduct.quantity},{where: {order_id: req.params.orderId,
+          product_id: orderProduct.product_id}})
+        .then((rowsChanged) => {
+          if(rowsChanged[0] === 0) {
+            OrderProduct.create({
+              order_id: req.params.orderId,
+              product_id: orderProduct.product_id,
+              pricePerUnit: orderProduct.price,
+              quantity: orderProduct.quantity
+            })
+          }
+        })
+      ).then( rows => {
+        res.status(200).send(order)
+      }
+    )
+    } else {
+      res.status(200).send(order)
+    }
+  }
+  )
+  .catch(next)
+  }
+)
 
+router.delete('/:orderId', (req, res, next) =>{
+  Order.destroy({where: {id: req.params.orderId}})
+  .then(removedOrder => res.send({message:'order has been removed'}))
+  .catch(next)
+})
 
+//need a route for deleting a certain product from an order
+router.delete('/:orderId/:productId', (req, res, next) => {
+  OrderProduct.destroy({where: {order_id: req.params.orderId, product_id: req.params.productId}})
+  .then(removedProduct => res.send({message:'product has been removed'}))
+  .catch(next)
+})
 module.exports = router;
