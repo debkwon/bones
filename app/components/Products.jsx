@@ -32,11 +32,27 @@ export class Products extends React.Component {
           <TableBody>
             {
               products && products.map(product => (
-                <TableRow key={products.id}>
-                  <TableRowColumn><img src={product.photoURL}/></TableRowColumn>
-                  <TableRowColumn>{product.name}</TableRowColumn>
-                  <TableRowColumn>{product.description}</TableRowColumn>
-                  <TableRowColumn>{product.quantity}</TableRowColumn>
+                <TableRow key={product.id}>
+                  <TableRowColumn>
+                    <Link to={`/products/${product.id}`}>
+                      <img src={product.photoURL}/>
+                    </Link>
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <Link to={`/products/${product.id}`}>
+                      {product.name}
+                    </Link>
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <Link to={`/products/${product.id}`}>
+                      {product.description}
+                    </Link>
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <Link to={`/products/${product.id}`}>
+                      {product.quantity}
+                    </Link>
+                  </TableRowColumn>
                   <TableRowColumn>
                     {
                       product.categories && product.categories.map(category => (

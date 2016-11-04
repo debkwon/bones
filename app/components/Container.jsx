@@ -8,7 +8,7 @@ export class Container extends Component {
 
   render() {
     return (
-      <div>
+      <div className="mdl-layout">
       <nav>
         <div id="nav-top">
           <div>
