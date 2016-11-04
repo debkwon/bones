@@ -122,8 +122,8 @@ export class Cart extends Component {
 }
 
 import {connect} from 'react-redux'
-const mapStateToProps = ({auth, user}) => ({
-  auth, products
+const mapStateToProps = ({auth, user, orderid}) => ({
+  auth, products, orderid
 })
 export default connect (
   mapStateToProps,
