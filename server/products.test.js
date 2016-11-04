@@ -3,6 +3,7 @@ const {expect} = require('chai')
 const db = require('APP/db')
 const Product = require('APP/db/models/product')
 const Celeb = require('APP/db/models/celeb')
+const CelebProduct = require('APP/db/models/index').CelebProduct
 const app = require('./start')
 const Review = require('APP/db/models/review')
 
@@ -26,7 +27,7 @@ describe('/api/products', () => {
             photoURL: 'http://luxurylaunches.com/wp-content/uploads/2012/11/pharrells-gshock-gold-watch.jpg'
           }
   ]
-  
+
   let watch, dogCollar
   const makeProducts = () =>
     db.Promise.map(products,
@@ -52,7 +53,7 @@ describe('/api/products', () => {
       celeb => Celeb.create(celeb))
     .then(celebs => [angelina, brad] = celebs)
 
-  const associateProductsWithCelebs = () =>       
+  const associateProductsWithCelebs = () =>
       Promise.all([
         brad.addProduct(watch),
         angelina.addProduct(dogCollar),
@@ -68,7 +69,6 @@ describe('/api/products', () => {
       .then(console.log("we associated allll the celebs"))
   )
 
-
   it('GET / lists all products', () =>
     request(app)
       .get(`/api/products`)
@@ -83,11 +83,9 @@ describe('/api/products', () => {
       .get(`/api/products?name=Angelina+Jolie`)
       .expect(200)
       .then(res => {
-        expect(res.body).to.have.length(products.length)
-        const [
-          gotWatch,
-          gotdogCollar ] = res.body
-        expect(gotWatch).to.contain(watch)
+        expect(res.body).to.have.length(1);
+        expect(res.body[0].name).to.eql(dogCollar.name);
+        expect(res.body[0].price).to.eql(dogCollar.price);
       })
   )
 
