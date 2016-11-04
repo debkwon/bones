@@ -9,7 +9,7 @@ import store from './store'
 
 import Container from './components/Container'
 import Login from './components/Login'
-import User from './components/user'
+import User from './components/User'
 import Review from './components/Review'
 import ProductsContainer from './components/Products'
 import { fetchProducts } from './reducers/products'
