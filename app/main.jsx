@@ -13,7 +13,6 @@ import User from './components/user'
 import Review from './components/Review'
 import ProductsContainer from './components/Products'
 import WhoAmI from './components/WhoAmI'
-
 import { fetchProducts } from './reducers/products'
 
 render (
