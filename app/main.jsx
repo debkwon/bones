@@ -11,6 +11,7 @@ import Container from './components/Container'
 import Login from './components/Login'
 import User from './components/user'
 import Review from './components/Review'
+import Cart from './components/Cart'
 import ProductsContainer from './components/Products'
 import { fetchProducts } from './reducers/products'
 
@@ -36,13 +37,14 @@ render (
       <Router history={browserHistory}>
         <Route path="/" component={Container}>
           <IndexRedirect to="/products" />
-          <Route 
-            path="/products" 
-            component={ProductsContainer} 
+          <Route
+            path="/products"
+            component={ProductsContainer}
             onEnter={onProductsEnter()} />
           <Route path="/login" component={Login} />
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
+          <Route path="/cart" component={Cart} />
         </Route>
       </Router>
     </Provider>

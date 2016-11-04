@@ -1,33 +1,6 @@
 import React, {Component} from 'react'
 import store from '../store';
 import axios from 'axios';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import {orange500, blue500} from 'material-ui/styles/colors';
-const Divstyle ={
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center'
-}
-const style = {
-  margin: 12,
-  color:blue500
-};
-const Textstyles = {
-  paddingLeft:'10px',
-  errorStyle: {
-    color: orange500,
-  },
-  underlineStyle: {
-    borderColor: orange500,
-  },
-  floatingLabelStyle: {
-    color: orange500,
-  },
-  floatingLabelFocusStyle: {
-    color: blue500,
-  },
-};
 export class User extends Component {
 
   constructor() {
@@ -88,19 +61,20 @@ export class User extends Component {
 
   render() {
   return (
-    <div style={Divstyle}>
+    <div>
     {this.state.auth?
     <form  onSubmit = {evt=>{ evt.preventDefault(); this.update(evt.target.firstname.value, evt.target.lastname.value, evt.target.username.value, evt.target.email.value, evt.target.password.value);}}>
-      <p>First Name:<TextField defaultValue = {this.state.auth.firstName} name="firstname" style={Textstyles}/></p>
-      <p>Last Name: <TextField  defaultValue = {this.state.auth.lastName} name="lastname"  style={Textstyles}/></p>
-      <p>Username: <TextField  defaultValue = {this.state.auth.username} name="username"  style={Textstyles}/></p>
-      <p>Eamil: <TextField  defaultValue = {this.state.auth.email} name="email"  style={Textstyles}/></p>
-      <p>Password: <TextField  defaultValue = {this.state.auth.password} name="password"  style={Textstyles}/></p>
-      <RaisedButton type="submit" label="UPDATE" primary={true} style={style} />
+      <p>First Name: <input type="text"  defaultValue = {this.state.auth.firstName} name="firstname"/></p>
+      <p>Last Name: <input type="text"  defaultValue = {this.state.auth.lastName} name="lastname"/></p>
+      <p>Username: <input type="text"  defaultValue = {this.state.auth.username} name="username"/></p>
+      <p>Eamil: <input type="text"  defaultValue = {this.state.auth.email} name="email"/></p>
+      <p>Password: <input type="text"  defaultValue = {this.state.auth.password} name="password"/></p>
+      <button type="submit">UPDATE</button>
     </form>
     :
     <form  onSubmit = {evt=>{ evt.preventDefault(); this.login();}}>
-      <RaisedButton type="submit" label="FAKE LOGIN" primary={true} style={style} />
+
+      <button type="submit">login</button>
     </form>
     }
     </div>
