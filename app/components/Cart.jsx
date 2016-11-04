@@ -15,6 +15,11 @@ const styles = {
     margin: 4,
   },
 };
+const Divstyle ={
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center'
+}
 const showCheckboxes = false;
 const products = [{id:1, name:"Hillary's Pantsuit",quantity:1, description:"LALA",price:12,photoURL:"http://placehold.it/250x150",categories:['Clothing'] },
                   {id:2, name:"Elijah Woods's Frodo Ring",quantity:1, description:"HAHA",price:300,photoURL:"http://placehold.it/250x150",categories:['Clothing'] }]
@@ -48,7 +53,7 @@ export class Cart extends Component {
 
   }
   sub( ){
-    console.log("submit form");
+    console.log("submit form", products);
 
     //var id = product.product.id;
     //var url = `/api/products/${id}`;
@@ -67,16 +72,17 @@ export class Cart extends Component {
   render() {
     console.log("products", products);
   return (
-    <div>
+    <div style={Divstyle}>
+    <h1>My Cart</h1>
       <Table selectable={showCheckboxes} >
         <TableHeader  displaySelectAll={showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>
           <TableRow>
-            <TableHeaderColumn>Photo</TableHeaderColumn>
+            <TableHeaderColumn></TableHeaderColumn>
             <TableHeaderColumn>Name</TableHeaderColumn>
             <TableHeaderColumn>Description</TableHeaderColumn>
             <TableHeaderColumn>Quantity</TableHeaderColumn>
             <TableHeaderColumn>Categories</TableHeaderColumn>
-            <TableHeaderColumn>Delete</TableHeaderColumn>
+            <TableHeaderColumn></TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={showCheckboxes}  >
@@ -106,7 +112,7 @@ export class Cart extends Component {
         </TableBody>
       </Table>
 
-      <RaisedButton type="submit" label="DELETE" onClick = {evt=>{ evt.preventDefault(); this.sub();}}/>
+      <RaisedButton type="submit" label="SUBMIT" onClick = {evt=>{ evt.preventDefault(); this.sub();}}/>
     </div>
 
 
