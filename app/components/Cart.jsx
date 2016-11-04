@@ -26,41 +26,19 @@ export class Cart extends Component {
     this.state = store.getState();
 
     this.del = this.del.bind(this);
+    this.sub = this.sub.bind(this);
+    this.upquantity = this.upquantity.bind(this);
 
   }
   componentWillMount () {
       store.subscribe(() => this.setState(store.getState()));
   }
-  update( firstName, lastName, username, email, password){
 
-
-
-    var id = this.state.auth.id;
-    var user = {firstName: firstName,
-                lastName: lastName,
-                username: username,
-                email: email
-              }
-    var url = `/api/users/${id}`;
-    console.log("url", url);
-    axios.put(url,user)
-    .then(function(res){
-      console.log("RES",res);
-      if(res.status ==200){
-        location.reload();
-        //console.log("Success!!");
-      }
-    })
-    .catch(function (err) {
-      console.error("ERR",err)
-    });
-
-  }
 
   del( product){
     console.log("del", product.product.id);
     var id = product.product.id;
-    url = `/api/products/${id}`;
+    var url = `/api/products/${id}`;
     // axios.del(url)
     // .then(function(res){
     //   console.log("ressss",res)
@@ -68,6 +46,22 @@ export class Cart extends Component {
     //   console.log("TMP", tmp);
     // })
 
+  }
+  sub( ){
+    console.log("submit form");
+
+    //var id = product.product.id;
+    //var url = `/api/products/${id}`;
+    // axios.del(url)
+    // .then(function(res){
+    //   console.log("ressss",res)
+        // })
+
+  }
+  upquantity(q, product){
+    console.log("Quantity: ", q);
+    console.log("product", product);
+    //dispatch and update quantity for single product
   }
 
   render() {
@@ -85,14 +79,14 @@ export class Cart extends Component {
             <TableHeaderColumn>Delete</TableHeaderColumn>
           </TableRow>
         </TableHeader>
-        <TableBody displayRowCheckbox={showCheckboxes} >
+        <TableBody displayRowCheckbox={showCheckboxes}  >
              { products && products.map(product => (
                 <TableRow key={product.id}>
                   <TableRowColumn><img src={product.photoURL}/></TableRowColumn>
                   <TableRowColumn>{product.name}</TableRowColumn>
                   <TableRowColumn>{product.description}</TableRowColumn>
                   <TableRowColumn>
-                      <TextField defaultValue = {product.quantity} name="quantitytext"  />
+                      <TextField  defaultValue = {product.quantity} name="quantitytext" onChange={evt=>{console.log("qq", evt.target.value); this.upquantity(evt.target.value, {product});}}/>
                   </TableRowColumn>
                   <TableRowColumn>
                     {
@@ -107,11 +101,12 @@ export class Cart extends Component {
             }
 
 
-
-
+            <TableRow>
+            </TableRow>
         </TableBody>
       </Table>
 
+      <RaisedButton type="submit" label="DELETE" onClick = {evt=>{ evt.preventDefault(); this.sub();}}/>
     </div>
 
 
@@ -122,7 +117,7 @@ export class Cart extends Component {
 
 import {connect} from 'react-redux'
 const mapStateToProps = ({auth, user}) => ({
-  auth, user
+  auth, products
 })
 export default connect (
   mapStateToProps,
