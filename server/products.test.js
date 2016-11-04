@@ -26,6 +26,7 @@ describe('/api/products', () => {
             photoURL: 'http://luxurylaunches.com/wp-content/uploads/2012/11/pharrells-gshock-gold-watch.jpg'
           }
   ]
+  
   let watch, dogCollar
   const makeProducts = () =>
     db.Promise.map(products,
@@ -57,8 +58,6 @@ describe('/api/products', () => {
         angelina.addProduct(dogCollar),
       ])
 
-
-  // TODO: test is now returning an error because the reviews table also references the products table
   before('sync database & make products', () =>
     db.didSync
       .then(() => Product.destroy({truncate: true, cascade: true}))

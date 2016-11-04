@@ -62,7 +62,6 @@ const Promise = require('bluebird');
                           celeb_id: celebs[0].id
                          }))
        )
-       .then(() => console.log('done with associations'))
    )
 
    it('GET / lists all celebrities', () =>
@@ -98,7 +97,7 @@ const Promise = require('bluebird');
        .get(`/api/celebs/2`)
        .expect(200)
        .then(res => {
-         console.log(res.body)
+         // console.log(res.body)
          expect(res.body[0].products[0]).to.be.an('object')
          expect(res.body[0].products[0].name).to.equal("Mary Jane outfit")
          expect(res.body[0].products[1].name).to.equal("Giant Diamond Ring")
