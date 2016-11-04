@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
+import WhoAmI from './WhoAmI';
 import AppBar from 'material-ui/AppBar';
-
 
 export class Container extends Component {
 
@@ -17,7 +17,7 @@ export class Container extends Component {
             </div>
           </div>
           <ul>
-            <li>{this.props.auth == null ? <Link to='/login'>Login</Link> : <Link to='/logout'>Logout</Link> }</li>
+            <li>{!this.props.auth ? <Link to='/login'>Login</Link> : <WhoAmI />}</li>
             <li>Cart</li>
           </ul>
         </div>
