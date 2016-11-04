@@ -45,6 +45,7 @@ describe('/api/orders', () => {
    ]
 
    let usableProductIds = []
+   let orderIds = []
 
    before('sync database & make products', () =>
      db.didSync
@@ -55,8 +56,10 @@ describe('/api/orders', () => {
           products: Promise.map(products, (prod) => Product.create(prod))
         })
        )
-       .then(({orders, products}) =>
+       .then(({orders, products}) => {
          products.map((product) => usableProductIds.push(product.id))
+         orders.map((order) => orderIds.push(order.id))
+       }
        )
    )
 
@@ -69,9 +72,18 @@ describe('/api/orders', () => {
     })
   )
 
-  it('Get /:status lists all the order of certain status', () =>
+  it('Get /:orderId gets order with corresponding id', () =>
      request(app)
-    .get(`/api/orders/shipped`)
+     .get(`/api/orders/${orderIds[0]}`)
+     .expect(200)
+     .then(res => {
+      expect(res.body).to.be.an('object')
+     })
+  )
+
+  it('Get /status/:status lists all the order of certain status', () =>
+     request(app)
+    .get(`/api/orders/status/shipped`)
     .expect(200)
     .then(res => {
       expect(res.body).to.have.length(1)

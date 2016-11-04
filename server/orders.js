@@ -11,7 +11,13 @@ router.get('/', (req, res, next) =>
   .catch(next)
 )
 
-router.get('/:status', (req, res, next) =>
+router.get('/:orderId', (req, res, next) =>
+  Order.findById(req.params.orderId)
+  .then(order => res.send(order))
+  .catch(next)
+)
+
+router.get('/status/:status', (req, res, next) =>
   Order.findAll({where: {status: req.params.status}})
   .then(orders => res.send(orders))
   .catch(next)
@@ -47,7 +53,6 @@ router.post('/', (req, res, next) =>{
         quantity: orderProduct.quantity
       })
     ).then(rows => {
-        console.log(rows)
         res.status(201).send(order)
       }
       )
