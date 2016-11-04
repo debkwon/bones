@@ -11,7 +11,7 @@ describe('/api/products', () => {
   const products = [
           {
             name: 'Grandfather\'s gold watch',
-            quantity: 1, 
+            quantity: 1,
             description: 'Brad\'s grandfather gave this watch to Brad on his deathbed. Soooooo sad :(' ,
             price: 3000000,
             categories: ['shiny', 'tragic'],
@@ -19,12 +19,12 @@ describe('/api/products', () => {
           },
           {
             name: 'Dog collar',
-            quantity: 4, 
+            quantity: 4,
             description: 'Angie wore these around her wrists and ankles at a naughty party one night' ,
             price: 1000,
             categories: ['pointy', 'tight'],
             photoURL: 'http://luxurylaunches.com/wp-content/uploads/2012/11/pharrells-gshock-gold-watch.jpg'
-          }   
+          }
   ]
   let watch, dogCollar
   const makeProducts = () =>
