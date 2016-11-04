@@ -1,10 +1,10 @@
 const Product = require('APP/db/models/product')
 const Celeb = require('APP/db/models/celeb')
-const CelebProduct = require('APP/db/models/celeb')
+const CelebProduct = require('APP/db/models/index').CelebProduct
 const router = module.exports = require('express').Router()
 
 
-// If there is a query route for a celebrity, 
+// If there is a query route for a celebrity,
 // find all the products associated with them,
 // otherwise, find all products
 
@@ -12,12 +12,16 @@ const router = module.exports = require('express').Router()
 // **** for the req.query portion ****
 router.get('/', function (req, res, next) {
   if (req.query.name) {
-    Celeb.findOne({where: { name: req.query.name }})
-      .then(celeb => {
-        CelebProduct.findAll()
-      })
-      .then(celebproduct => console.log(celebproduct))
-      .catch(next)
+    Product.findAll({include: {
+      model: Celeb,
+      where: {
+        name: req.query.name
+      }
+    }})
+    .then(products =>{
+      res.status(200).send(products)
+    })
+    .catch(next)
   }
   else {
     Product.findAll()
@@ -38,7 +42,7 @@ router.get('/:productId', function (req, res, next) {
 // Create a new product
 router.post('/', function (req, res, next) {
   Product.create(req.data)
-    .then(() => 
+    .then(() =>
       res.status(201).send('You\'ve added a shiny new celeb product! Glitter time!!!'))
     .catch(next)
 })

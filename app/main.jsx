@@ -1,3 +1,5 @@
+// MAIN
+
 'use strict'
 import React from 'react'
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
@@ -12,7 +14,10 @@ import Login from './components/Login'
 import User from './components/User'
 import Review from './components/Review'
 import ProductsContainer from './components/Products'
+import ProductContainer from './components/Product'
+
 import { fetchProducts } from './reducers/products'
+import { fetchCurrentProduct } from './reducers/product'
 
 
 // for Google's Material UI themes
@@ -40,6 +45,10 @@ render (
             path="/products" 
             component={ProductsContainer} 
             onEnter={onProductsEnter()} />
+          <Route 
+            path="/products/:productId"
+            component={ProductContainer}
+            onEnter={onCurrentProductEnter}/>
           <Route path="/login" component={Login} />
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
@@ -54,3 +63,10 @@ function onProductsEnter () {
   const thunk = fetchProducts();
   store.dispatch(thunk)
 }
+
+function onCurrentProductEnter (nextRouterState) {
+  console.log("this is the nextRouterState: ",nextRouterState)
+  const productId = nextRouterState.params.productId;
+  const thunk = fetchCurrentProduct(productId);
+  store.dispatch(thunk);
+};

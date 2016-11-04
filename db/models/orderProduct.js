@@ -11,7 +11,14 @@ const OrderProduct = db.define('order_product', {
   },
   pricePerUnit: {
     type: Sequelize.FLOAT
-  }
+  },
+  },
+  {
+    instanceMethods: {
+      updateQuantity: function(quantity) {
+        this.quantity = quantity
+      }
+    }
 });
 
 

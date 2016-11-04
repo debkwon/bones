@@ -11,6 +11,7 @@ api
   .use('/celebs', require('./celebs'))
   .use('/reviews', require('./reviews'))
   .use('/products', require('./products'))
+  .use('/orders', require('./orders'))
 
 // Send along any errors
 api.use((err, req, res, next) => {
