@@ -1,10 +1,67 @@
 const request = require('supertest-as-promised');
 const {expect} = require('chai');
 const db = require('APP/db');
+const Product = require('APP/db/models/product');
+const User = require('APP/db/models/user');
 const Review = require('APP/db/models/review');
 const app = require('./start');
 
 describe('/api/reviews', () => {
+
+  // Create products for database
+  const products = [
+            {
+              id: 1, 
+              name: 'Grandfather\'s gold watch',
+              quantity: 1,
+              description: 'Brad\'s grandfather gave this watch to Brad on his deathbed. Soooooo sad :(' ,
+              price: 3000000,
+              categories: ['shiny', 'tragic'],
+              photoURL: 'http://luxurylaunches.com/wp-content/uploads/2012/11/pharrells-gshock-gold-watch.jpg'
+            },
+            {
+              id: 2,
+              name: 'Dog collar',
+              quantity: 4,
+              description: 'Angie wore these around her wrists and ankles at a naughty party one night' ,
+              price: 1000,
+              categories: ['pointy', 'tight'],
+              photoURL: 'http://luxurylaunches.com/wp-content/uploads/2012/11/pharrells-gshock-gold-watch.jpg'
+            }
+  ]
+  
+  let watch, dogCollar
+  const makeProducts = () =>
+    db.Promise.map(products,
+      product => {
+        return Product.create(product)
+      })
+    .then(products => {
+      watch = products[0]
+      dogCollar = products[1]
+    })
+
+  // create a user for the database
+
+  const users = [
+          {   
+              email:"alice@wonderland.com",
+              firstName: 'alice',
+              lastName: 'wonderland',
+              username:'throughthelookingglass',
+          },
+  ]
+
+  let user1
+  const makeUsers = () =>
+    db.Promise.map(users,
+      user => {
+        return User.create(user)})
+    .then(users => {
+      user1 = users[0]
+    })
+    
+  // Create reviews for database
   const reviews = [
           {
             stars: 3,
@@ -25,15 +82,23 @@ describe('/api/reviews', () => {
             user_id: 1
           }
   ]
-  const [three, four, zero]
-    = reviews
 
-  before('sync database & make products', () =>
+  let three, four, five
+  const makeReviews = () =>
+    db.Promise.map(reviews,
+      review => Review.create(review))
+    .then(reviews => {
+      three = reviews[0]
+      four = reviews[1]
+      five = reviews[2] })
+
+  // Sync database and create products, users, and reviews
+  before('sync database & make reviews', () =>
     db.didSync
-      .then(() => Review.destroy({where:{}}))
-      .then(() => db.Promise.map(reviews,
-        review => Review.create(review)
-      ))
+      .then(() => Product.destroy({truncate: true, cascade: true, force: true}))
+      .then(makeProducts)
+      .then(makeUsers)
+      .then(makeReviews)
   )
 
 

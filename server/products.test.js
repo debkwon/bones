@@ -11,7 +11,7 @@ describe('/api/products', () => {
   const products = [
           {
             name: 'Grandfather\'s gold watch',
-            quantity: 1, 
+            quantity: 1,
             description: 'Brad\'s grandfather gave this watch to Brad on his deathbed. Soooooo sad :(' ,
             price: 3000000,
             categories: ['shiny', 'tragic'],
@@ -19,13 +19,14 @@ describe('/api/products', () => {
           },
           {
             name: 'Dog collar',
-            quantity: 4, 
+            quantity: 4,
             description: 'Angie wore these around her wrists and ankles at a naughty party one night' ,
             price: 1000,
             categories: ['pointy', 'tight'],
             photoURL: 'http://luxurylaunches.com/wp-content/uploads/2012/11/pharrells-gshock-gold-watch.jpg'
-          }   
+          }
   ]
+  
   let watch, dogCollar
   const makeProducts = () =>
     db.Promise.map(products,
@@ -58,13 +59,13 @@ describe('/api/products', () => {
       ])
 
 
-  // TODO: test is now returning an error because the reviews table also references the products table
   before('sync database & make products', () =>
     db.didSync
       .then(() => Product.destroy({truncate: true, cascade: true}))
       .then(makeProducts)
       .then(makeCelebs)
       .then(associateProductsWithCelebs)
+      .then(console.log("we associated allll the celebs"))
   )
 
 
@@ -77,10 +78,9 @@ describe('/api/products', () => {
       })
   )
 
-  // TODO: Uncheck this spec and get it to pass
-  xit('**Fix this with understanding of join tables** GET / lists all products by celeb\'s id', () =>
+  it('GET / lists all products by celeb\'s id', () =>
     request(app)
-      .get(`/api/products?name=angelina+jolie`)
+      .get(`/api/products?name=Angelina+Jolie`)
       .expect(200)
       .then(res => {
         expect(res.body).to.have.length(products.length)

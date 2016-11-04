@@ -15,22 +15,40 @@ import ProductsContainer from './components/Products'
 import WhoAmI from './components/WhoAmI'
 import { fetchProducts } from './reducers/products'
 
+
+// for Google's Material UI themes
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { grey300 } from 'material-ui/styles/colors';
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: grey300,
+    primary2Color: grey300,
+  },
+});
+
+
 render (
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={Container}>
-        <IndexRedirect to="/products" />
-        <Route
-          path="/products"
-          component={ProductsContainer}
-          onEnter={onProductsEnter()} />
-        <Route path="/user" component={User} />
-        <Route path="/reviews" component={Review} />
-      </Route>
-      <Route path="/login" component={Login} />
-      <Route path="/logout" component={WhoAmI} />
-    </Router>
-  </Provider>,
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <Provider store={store}>
+      <Router history={browserHistory}>
+        <Route path="/" component={Container}>
+          <IndexRedirect to="/products" />
+          <Route
+            path="/products"
+            component={ProductsContainer}
+            onEnter={onProductsEnter()} />
+          <Route path="/login" component={Login} />
+          <Route path="/logout" component={WhoAmI} />
+          <Route path="/user" component={User} />
+          <Route path="/reviews" component={Review} />
+        </Route>
+      </Router>
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('main')
 )
 

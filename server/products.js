@@ -1,5 +1,6 @@
 const Product = require('APP/db/models/product')
 const Celeb = require('APP/db/models/celeb')
+const CelebProduct = require('APP/db/models/celeb')
 const router = module.exports = require('express').Router()
 
 
@@ -13,8 +14,9 @@ router.get('/', function (req, res, next) {
   if (req.query.name) {
     Celeb.findOne({where: { name: req.query.name }})
       .then(celeb => {
-        Product.findAll({where: { celebId: celeb.id }})
+        CelebProduct.findAll()
       })
+      .then(celebproduct => console.log(celebproduct))
       .catch(next)
   }
   else {
