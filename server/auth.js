@@ -122,7 +122,8 @@ auth.get('/whoami', (req, res) => res.send(req.user))
 
 auth.post('/:strategy/login', (req, res, next) =>
   passport.authenticate(req.params.strategy, {
-    successRedirect: '/' //this also does not redirect
+    successRedirect: '/',
+    failureRedirect: '/doesntexist' //this also does not redirect
   })(req, res, next)
 )
 
