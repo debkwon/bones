@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
-
-
+import WhoAmI from './WhoAmI';
 export class Container extends Component {
 
   render() {
@@ -15,7 +14,7 @@ export class Container extends Component {
             <span>Your source for celebrity memoribilia</span>
           </div>
           <ul>
-            <li>{this.props.auth == null ? <Link to='/login'>Login</Link> : <Link to='/logout'>Logout</Link> }</li>
+            <li>{!this.props.auth ? <Link to='/login'>Login</Link> : <WhoAmI />}</li>
             <li>Cart</li>
           </ul>
         </div>
