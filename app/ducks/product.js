@@ -20,8 +20,9 @@ export const receiveCurrentProduct = currentProduct => ({
 })
 
 export const fetchCurrentProduct = (productId) => {
+  console.log('the productId:', productId)
   return function (dispatch) {
-    axios.get('/api/products/:productId')
+    axios.get(`/api/products/${productId}`)
       .then(function (response) {
         console.log(response)
         const action = receiveCurrentProduct(response.data);
