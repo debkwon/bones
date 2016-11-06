@@ -15,21 +15,22 @@ import User from './components/User'
 import Review from './components/Review'
 import ProductsContainer from './components/Products'
 import ProductContainer from './components/Product'
+import OrdersContainer from './components/Orders'
 
-import { fetchProducts } from './reducers/products'
-import { fetchCurrentProduct } from './reducers/product'
+import { fetchProducts } from './ducks/products'
+import { fetchCurrentProduct } from './ducks/product'
+import { fetchOrders } from './ducks/orders'
 
 
 // for Google's Material UI themes
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { grey300 } from 'material-ui/styles/colors';
+import { grey300, pink400 } from 'material-ui/styles/colors';
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: grey300,
+    primary1Color: pink400,
     primary2Color: grey300,
   },
 });
@@ -52,6 +53,10 @@ render (
           <Route path="/login" component={Login} />
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
+          <Route 
+            path="/orders" 
+            component={OrdersContainer}
+            onEnter={onOrdersEnter} />
         </Route>
       </Router>
     </Provider>
@@ -70,3 +75,8 @@ function onCurrentProductEnter (nextRouterState) {
   const thunk = fetchCurrentProduct(productId);
   store.dispatch(thunk);
 };
+
+function onOrdersEnter () {
+  const thunk = fetchOrders();
+  store.dispatch(thunk)
+}
