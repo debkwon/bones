@@ -15,17 +15,11 @@ import User from './components/User'
 import Review from './components/Review'
 import ProductsContainer from './components/Products'
 import ProductContainer from './components/Product'
-<<<<<<< HEAD
 import OrdersContainer from './components/Orders'
-
-import { fetchProducts } from './ducks/products'
-import { fetchCurrentProduct } from './ducks/product'
-import { fetchOrders } from './ducks/orders'
-=======
 
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
->>>>>>> parent of 81e56d5... Merge branch 'master' of https://github.com/debkwon/selleb
+import { fetchOrders } from './reducers/orders'
 
 
 // for Google's Material UI themes
@@ -48,11 +42,11 @@ render (
       <Router history={browserHistory}>
         <Route path="/" component={Container}>
           <IndexRedirect to="/products" />
-          <Route 
-            path="/products" 
-            component={ProductsContainer} 
-            onEnter={onProductsEnter()} />
-          <Route 
+          <Route
+            path="/products"
+            component={ProductsContainer}
+            onEnter={onProductsEnter} />
+          <Route
             path="/products/:productId"
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
@@ -76,17 +70,13 @@ function onProductsEnter () {
 }
 
 function onCurrentProductEnter (nextRouterState) {
-  console.log("this is the nextRouterState: ",nextRouterState)
+  console.log("this is the nextRouterState: ", nextRouterState)
   const productId = nextRouterState.params.productId;
   const thunk = fetchCurrentProduct(productId);
   store.dispatch(thunk);
-<<<<<<< HEAD
 };
 
 function onOrdersEnter () {
   const thunk = fetchOrders();
   store.dispatch(thunk)
 }
-=======
-};
->>>>>>> parent of 81e56d5... Merge branch 'master' of https://github.com/debkwon/selleb

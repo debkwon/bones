@@ -78,6 +78,16 @@ describe('/api/products', () => {
       })
   )
 
+  it('GET /:productId returns product', () =>
+     request(app)
+     .get(`/api/products/${dogCollar.id}`)
+     .expect(200)
+     .then(res => {
+        expect(res.body).to.be.an('object')
+        expect(res.body.name).to.eql(dogCollar.name)
+      })
+  )
+
   it('GET / lists all products by celeb\'s id', () =>
     request(app)
       .get(`/api/products?name=Angelina+Jolie`)

@@ -8,17 +8,17 @@ export class Container extends Component {
 
   render() {
     return (
-      <div className="mdl-layout">
+      <div className="mdl-layout mdl-js-layout">
       <nav>
         <div id="nav-top">
           <div>
             <div>
-              <img src="logo.png"/>
+              <img src="/logo.png" alt="Selleb: your source for celebrity memoribilia"/>
             </div>
           </div>
           <ul>
-            <li>{this.props.auth == null ? <Link to='/login'>Login</Link> : <Link to='/logout'>Logout</Link> }</li>
-            <li>Cart</li>
+            <li>{typeof this.props.auth == 'object' ? <Link to='/logout'>Logout</Link> : <Link to='/login'>Login</Link> }</li>
+            <li><i className="fa fa-shopping-cart" aria-hidden="true"> </i>Cart</li>
           </ul>
         </div>
         <div id="main-menu">

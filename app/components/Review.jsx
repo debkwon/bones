@@ -33,7 +33,10 @@ export default class Review extends React.Component {
   render() {
     return(
        <div className="review-form">
-         <form>
+         <form onSubmit={(e)=>{
+          e.preventDefault()
+          this.addReview(this.state)
+          }}>
          <input className="star star-1" id="star-1" type="radio" name="star1" value="1" onChange={(e) => this.updateStar(e)}/>
          <label className="star star-1" htmlFor="star-1"></label>
          <input className="star star-2" id="star-2" type="radio" name="star2" value="2" onChange={(e) => this.updateStar(e)}/>
@@ -46,12 +49,9 @@ export default class Review extends React.Component {
          <label className="star star-5" htmlFor="star-5"></label> <br />
          <label>Your Review:</label><br />
          <br />
-         <textarea rows="20" cols="100" onChange={(e) => this.updateText(e)}></textarea><br />
-         <button type="submit" onClick={(e)=>{
-          e.preventDefault()
-          this.addReview(this.state)
-          }}
-        >Submit
+         <textarea onChange={(e) => this.updateText(e)}></textarea><br />
+         <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
+         Submit
          </button>
          </form>
        </div>
