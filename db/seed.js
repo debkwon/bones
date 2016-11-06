@@ -1,16 +1,14 @@
 const db = require('APP/db')
 
 const seedUsers = () => db.Promise.map([
-
   {firstName: 'Michelle', lastName: 'Obama', email: 'michelle@firstlady.rocks', password: '1234', username: 'totalbadass'},
   {firstName: 'Barack', lastName: 'Obama', email: 'barack@president.rocks', password: '1234', username: 'realpowerfuldude'},
-
 ], user => db.model('users').create(user))
 
 const seedProducts = () => db.Promise.map([
-  {name: `Hillary's Pantsuit`, price: 350.00, description: 'Classic red pantsuit, worn at the Democratic National Convention 2016', categories: ['Clothing']},
-  {name: `Elijah Woods's Frodo Ring`, price: 13000, description: 'Made from real Elven magic', categories:['Film', 'Fantasy']},
-  {name: `Emma Watson's Hermione Wig`, description:'The bushy but loveable mess from Harry Potter and the Chamber of Secrets', price: 175.00,categories: ['Costume', 'Hair']},
+  {name: `Hillary's Pantsuit`, price: 350.00, description: 'Classic red pantsuit, worn at the Democratic National Convention 2016', categories: ['Clothing'], quantity: 5},
+  {name: `Elijah Woods's Frodo Ring`, price: 13000, description: 'Made from real Elven magic', categories:['Film', 'Fantasy'], quantity: 8},
+  {name: `Emma Watson's Hermione Wig`, description:'The bushy but loveable mess from Harry Potter and the Chamber of Secrets', price: 175.00,categories: ['Costume', 'Hair'], quantity: 10},
 ], product => db.model('products').create(product))
 
 const seedCelebs = () => db.Promise.map([
@@ -25,6 +23,21 @@ const seedReviews = () => db.Promise.map([
   {stars: 4, text: 'This ring is pretty great, but Elijah Wood didn\'t really care when I showed him that I bought it and that offends me. 4 stars. I\'ll show you, Elijah!'},
 ], review => db.model('reviews').create(review))
 
+const seedOrders = () => db.Promise.map([
+  {shippingDate: 3/22/16, status: 'shipped', total: 32.45},
+  {shippingDate: '4/22/16', status: 'cancelled', total: 42.45},
+  {shippingDate: '5/22/16', status: 'processing', total: 52.45},
+], review => db.model('orders').create(order))
+
+const seedOrderProducts = () => db.Promise.map([
+  {quantity: 1, pricePerUnit: 12.50, orderId: 1, productId: 1},
+  {quantity: 2, pricePerUnit: 6.50, orderId: 1, productId: 2},
+  {quantity: 2, pricePerUnit: 11.99, orderId: 2, productId: 1},
+  {quantity: 2, pricePerUnit: 2.49, orderId: 2, productId: 3},
+  {quantity: 3, pricePerUnit: 3.50, orderId: 3, productId: 2},
+  {quantity: 3, pricePerUnit: 3.50, orderId: 3, productId: 3},
+], review => db.model('orderProducts').create(orderProduct))
+
 db.didSync
   .then(() => db.sync({force: true}))
   .then(seedUsers)
@@ -35,5 +48,9 @@ db.didSync
   .then(celebs => console.log(`Seeded ${celebs.length} celebs OK`))
   .then(seedReviews)
   .then(reviews => console.log(`Seeded ${reviews.length} reviews OK`))
+  .then(seedOrders)
+  .then(orders => console.log(`Seeded ${orders.length} orders OK`))
+  .then(seedOrderProducts)
+  .then(orderProducts => console.log(`Seeded ${orderProducts.length} orderProducts OK`))
   .catch(error => console.error(error))
   .finally(() => db.close())
