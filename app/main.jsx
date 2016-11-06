@@ -17,9 +17,9 @@ import ProductsContainer from './components/Products'
 import ProductContainer from './components/Product'
 import OrdersContainer from './components/Orders'
 
-import { fetchProducts } from './ducks/products'
-import { fetchCurrentProduct } from './ducks/product'
-import { fetchOrders } from './ducks/orders'
+import { fetchProducts } from './reducers/products'
+import { fetchCurrentProduct } from './reducers/product'
+import { fetchOrders } from './reducers/orders'
 
 
 // for Google's Material UI themes
