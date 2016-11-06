@@ -14,7 +14,6 @@ import Login from './components/Login'
 import User from './components/User'
 import Review from './components/Review'
 import ProductsContainer from './components/Products'
-import WhoAmI from './components/WhoAmI'
 import ProductContainer from './components/Product'
 import OrdersContainer from './components/Orders'
 
@@ -52,7 +51,6 @@ render (
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
           <Route path="/login" component={Login} />
-          <Route path="/logout" component={WhoAmI} />
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
           <Route 
@@ -71,18 +69,14 @@ function onProductsEnter () {
   store.dispatch(thunk)
 }
 
-
 function onCurrentProductEnter (nextRouterState) {
   console.log("this is the nextRouterState: ", nextRouterState)
   const productId = nextRouterState.params.productId;
   const thunk = fetchCurrentProduct(productId);
   store.dispatch(thunk);
 };
-<<<<<<< HEAD
-=======
 
 function onOrdersEnter () {
   const thunk = fetchOrders();
   store.dispatch(thunk)
 }
->>>>>>> master

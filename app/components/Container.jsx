@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
-import WhoAmI from './WhoAmI';
 import AppBar from 'material-ui/AppBar';
+
 
 export class Container extends Component {
 
