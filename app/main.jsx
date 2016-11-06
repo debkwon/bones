@@ -14,6 +14,7 @@ import Login from './components/Login'
 import User from './components/User'
 import Review from './components/Review'
 import ProductsContainer from './components/Products'
+import WhoAmI from './components/WhoAmI'
 import ProductContainer from './components/Product'
 import OrdersContainer from './components/Orders'
 
@@ -42,15 +43,16 @@ render (
       <Router history={browserHistory}>
         <Route path="/" component={Container}>
           <IndexRedirect to="/products" />
-          <Route 
-            path="/products" 
-            component={ProductsContainer} 
+          <Route
+            path="/products"
+            component={ProductsContainer}
             onEnter={onProductsEnter()} />
-          <Route 
+          <Route
             path="/products/:productId"
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
           <Route path="/login" component={Login} />
+          <Route path="/logout" component={WhoAmI} />
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
           <Route 
@@ -68,6 +70,7 @@ function onProductsEnter () {
   const thunk = fetchProducts();
   store.dispatch(thunk)
 }
+
 
 function onCurrentProductEnter (nextRouterState) {
   console.log("this is the nextRouterState: ",nextRouterState)
