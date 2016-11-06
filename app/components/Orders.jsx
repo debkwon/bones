@@ -18,6 +18,12 @@ const styles = {
   },
 };
 
+const orders = [
+  {shippingDate: 3/22/16, status: 'shipped', total: 32.45},
+  {shippingDate: '4/22/16', status: 'cancelled', total: 42.45},
+  {shippingDate: '5/22/16', status: 'processing', total: 52.45},
+]
+
 export class Orders extends React.Component {
 
   constructor() {
@@ -37,8 +43,8 @@ export class Orders extends React.Component {
   render() {
 
     // create all orders for rendering
-    const {orders} = this.props || [];
-    console.log(this.props)
+    // const {orders} = this.props || [];
+    // console.log(this.props)
 
     return (
       <div id="orders-container" style={{margin: 5, padding: 5}}>
@@ -58,21 +64,26 @@ export class Orders extends React.Component {
           <Tab label="Processing" value="processing">
             <div>
               <h2 style={styles.headline}>Processed Orders</h2>
+              <OrdersPanel filteredOrders={
+                orders.filter(order => return order.status === 'processing')} />
             </div>
           </Tab>
           <Tab label="Shipped" value="shipped">
             <div>
               <h2 style={styles.headline}>Shipped Orders</h2>
+              <OrdersPanel filteredOrders={orders.filter(order) => return order.status === 'shipped'} />
             </div>
           </Tab>
           <Tab label="Delivered" value="delivered">
             <div>
               <h2 style={styles.headline}>Delivered Orders</h2>
+              <OrdersPanel filteredOrders={orders.filter(order) => return order.status === 'delivered'} />
             </div>
           </Tab>
           <Tab label="Cancelled" value="cancelled">
             <div>
               <h2 style={styles.headline}>Cancelled Orders</h2>
+              <OrdersPanel filteredOrders={orders.filter(order) => return order.status === 'cancelled'} />
             </div>
           </Tab>
         </Tabs>

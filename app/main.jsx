@@ -58,7 +58,7 @@ render (
           <Route 
             path="/orders" 
             component={OrdersContainer}
-            onEnter={onOrdersEnter} />
+            onEnter={onOrdersEnter()} />
         </Route>
       </Router>
     </Provider>

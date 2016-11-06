@@ -3,8 +3,9 @@ import axios from 'axios'
 
 // orders reducer
 
-export default function reducer (state = null, action) {
+export default function reducer (state = [], action) {
   switch(action.type) {
+    
     case RECEIVE_ORDERS:
       return action.orders;
 
