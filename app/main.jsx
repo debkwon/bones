@@ -41,11 +41,11 @@ render (
       <Router history={browserHistory}>
         <Route path="/" component={Container}>
           <IndexRedirect to="/products" />
-          <Route 
-            path="/products" 
-            component={ProductsContainer} 
-            onEnter={onProductsEnter()} />
-          <Route 
+          <Route
+            path="/products"
+            component={ProductsContainer}
+            onEnter={onProductsEnter} />
+          <Route
             path="/products/:productId"
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
@@ -65,7 +65,7 @@ function onProductsEnter () {
 }
 
 function onCurrentProductEnter (nextRouterState) {
-  console.log("this is the nextRouterState: ",nextRouterState)
+  console.log("this is the nextRouterState: ", nextRouterState)
   const productId = nextRouterState.params.productId;
   const thunk = fetchCurrentProduct(productId);
   store.dispatch(thunk);
