@@ -24,19 +24,24 @@ router.get('/status/:status', (req, res, next) =>
 )
 
 router.get('/users/:userId', (req, res, next) => {
-  Order.findAll({
-    where: {
-      user_id: req.params.userId
-    },
-    include: [{
-      model: Product
-    }]
-  })
-  .then(orders => {
-    res.send(orders)})
-  .catch(err => console.log(err))
-}
-)
+  console.log(req.session)
+  if (req.session.passport.user > 0) {
+    Order.findAll({
+      where: {
+        user_id: req.params.userId
+      },
+      include: [{
+        model: Product
+      }]
+    })
+    .then(orders => {
+      res.send(orders)})
+    .catch(err => console.log(err))
+  }
+  else {
+    res.status(403).send('Please log in to access your order history')
+  }
+})
 
 //unused, filtering on the client-side
 router.get('/users/:userid/:status', (req, res, next) =>
@@ -45,7 +50,7 @@ router.get('/users/:userid/:status', (req, res, next) =>
   .catch(next)
 )
 
-router.post('/', (req, res, next) =>{
+router.post('/', (req, res, next) => {
   let orderInfo = {
     total: req.body.total,
     user_id: req.body.user

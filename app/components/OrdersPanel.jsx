@@ -50,7 +50,7 @@ export class OrdersPanel extends React.Component {
                               href="products/:productId"
                               secondary={true}
                             >
-                              <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                              <i className="fa fa-shopping-bag" aria-hidden="true"></i>
                             </RaisedButton>
                           </TableRowColumn>
                         </TableRow>

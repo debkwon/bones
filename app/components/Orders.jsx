@@ -49,11 +49,6 @@ export class Orders extends React.Component {
               <OrdersPanel filteredOrders={orders} />
             </div>
           </Tab>
-          <Tab label="Not Submitted" value="not submitted" >
-            <div>
-              <h1>Please link this section to the cart!</h1>
-            </div>
-          </Tab>
           <Tab label="Processing" value="processing">
             <div>
               <OrdersPanel filteredOrders={
