@@ -49,12 +49,11 @@ export class User extends Component {
   //fake login testing
   login( ){
     console.log("login");
-    const body = {username:"god@example.com", password:"1234"}
+    const body = {username:"barack@president.rocks", password:"1234"}
     axios.post('/api/auth/local/login', body)
     .then(function(res){
-      console.log("ressss",res)
-      var tmp = store.getState();
-      console.log("TMP", tmp);
+      console.log("response", res);
+
     })
 
   }

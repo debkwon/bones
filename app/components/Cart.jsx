@@ -70,7 +70,8 @@ export class Cart extends Component {
   }
 
   render() {
-    console.log("products", products);
+    console.log("PROPS!!", this.props);
+
   return (
     <div style={Divstyle}>
     <h1>My Cart</h1>
@@ -82,6 +83,7 @@ export class Cart extends Component {
             <TableHeaderColumn>Description</TableHeaderColumn>
             <TableHeaderColumn>Quantity</TableHeaderColumn>
             <TableHeaderColumn>Categories</TableHeaderColumn>
+            <TableHeaderColumn>Price</TableHeaderColumn>
             <TableHeaderColumn></TableHeaderColumn>
           </TableRow>
         </TableHeader>
@@ -101,6 +103,7 @@ export class Cart extends Component {
                       ))
                     }
                   </TableRowColumn>
+                  <TableRowColumn>{product.price}</TableRowColumn>
                   <TableRowColumn><RaisedButton type="submit" label="DELETE" primary={true} onClick={evt=>{ evt.preventDefault(); this.del({product});}}/></TableRowColumn>
                 </TableRow>
               ))
@@ -122,8 +125,8 @@ export class Cart extends Component {
 }
 
 import {connect} from 'react-redux'
-const mapStateToProps = ({auth, user, orderid}) => ({
-  auth, products, orderid
+const mapStateToProps = ({auth, user, cart}) => ({
+  auth, products, cart
 })
 export default connect (
   mapStateToProps,

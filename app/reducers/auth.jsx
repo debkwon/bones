@@ -33,19 +33,26 @@ export const whoami = () =>
     axios.get('/api/auth/whoami')
       .then(response => {
         const user = response.data
-        dispatch(authenticated(user))
+        return dispatch(authenticated(user))
       })
-      .then(()=>{
-        var user = store.getstate().auth;
-         dispatch(getcart(user));
+      .then( res =>{
+        return axios.get(`/api/orders/users/${res.user.id}/not%20submitted`);
       })
+      .then(res=>{
+         console.log("orders",res.data );
+         if(res.data.length !=0){
+          dispatch(updateCartId(res.data))
+         }
+      })
+
       .catch(failed => dispatch(authenticated(null)))
 
-export const getcart =  user=>
-  dispatch =>
-    axios.get(`/api/orders/users/${user.id}/not%20submitted`)
-    .then((orders)=>{
-      dispatch(updateCartId(orders))
-    })
+// export const getcart =  user=>
+//   dispatch =>
+//     axios.get(`/api/orders/users/${user.id}/not%20submitted`)
+//     .then((orders)=>{
+//       console.log("ordres",ordres);
+//       dispatch(updateCartId(orders))
+//     })
 
 export default reducer

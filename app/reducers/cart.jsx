@@ -1,13 +1,22 @@
-const reducer = (state=null, action) => {
+const reducer = (state={}, action) => {
   switch(action.type) {
     case INITIAL_CARTS:
         return action.orders
+    case REMOVE_PRODUCT:
+        var index;
+        for(var i = 0; i < state.length; i++){
+            if(state[i].id == action.product.id){
+                index = i;
+                break;
+            }
+        }
+        return action.orders.splice(i,1);
 
    }
      return state
 }
 const INITIAL_CARTS = 'INITIAL_CARTS';
-
+const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 // const AUTHENTICATED = 'AUTHENTICATED'
 // const UPDATE_USER = 'UPDATE_USER'
 // export const authenticated = user => ({
@@ -18,7 +27,10 @@ export const updateCartId = orders => ({
     type: INITIAL_CARTS,
     orders
 })
-
+export const removeProductId = product => ({
+    type: REMOVE_PRODUCT,
+    product
+})
 
 
 // export const login = (username, password) =>

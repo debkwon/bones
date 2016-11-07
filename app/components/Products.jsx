@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
+import RaisedButton from 'material-ui/RaisedButton';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import Chip from 'material-ui/Chip';
 
@@ -14,6 +15,19 @@ const styles = {
 };
 
 export class Products extends React.Component {
+  constructor() {
+    super()
+    this.add = this.add.bind(this);
+    this.del = this.del.bind(this);
+
+  }
+  add(product){
+        console.log("ADD",product);
+    }
+  del(product){
+    console.log("DEL",product);
+  }
+
   render() {
     const { products } = this.props || []
     return (
@@ -27,13 +41,14 @@ export class Products extends React.Component {
               <TableHeaderColumn>Description</TableHeaderColumn>
               <TableHeaderColumn>Quantity</TableHeaderColumn>
               <TableHeaderColumn>Categories</TableHeaderColumn>
+              <TableHeaderColumn></TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody>
             {
               products && products.map(product => (
                 <TableRow key={product.id}>
-                  <TableRowColumn>
+                  <TableRowColumn >
                     <Link to={`/products/${product.id}`}>
                       <img src={product.photoURL}/>
                     </Link>
@@ -61,9 +76,13 @@ export class Products extends React.Component {
 
                     }
                   </TableRowColumn>
+                  <TableRowColumn>
+                    <RaisedButton type="submit" label="ADD" primary={true} onClick={evt=>{ evt.preventDefault(); this.add({product});}}/>
+                    <RaisedButton type="submit" label="DELETE" primary={true}  onClick={evt=>{ evt.preventDefault(); this.del({product});}}/>
+                  </TableRowColumn>
                 </TableRow>
               ))
-            }     
+            }
           </TableBody>
         </Table>
       </div>
@@ -71,7 +90,7 @@ export class Products extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({ 
+const mapStateToProps = (state) => ({
   products: state.products })
 
 export default connect(mapStateToProps)(Products);
