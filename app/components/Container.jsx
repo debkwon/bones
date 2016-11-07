@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
-import WhoAmI from './WhoAmI';
 import AppBar from 'material-ui/AppBar';
+
 
 export class Container extends Component {
 
   render() {
     return (
-      <div className="mdl-layout">
+      <div className="mdl-layout mdl-js-layout">
       <nav>
         <div id="nav-top">
           <div>
             <div>
-              <img src="logo.png"/>
+              <img src="/logo.png" alt="Selleb: your source for celebrity memoribilia"/>
             </div>
           </div>
           <ul>
-            <li>{!this.props.auth ? <Link to='/login'>Login</Link> : <WhoAmI />}</li>
-            <li>Cart</li>
+            <li><Link to='orders'>Orders</Link></li>
+            <li>{typeof this.props.auth == 'object' ? <Link to='/logout'>Logout</Link> : <Link to='/login'>Login</Link> }</li>
+            <li><i className="fa fa-shopping-cart" aria-hidden="true"> </i>Cart</li>
           </ul>
         </div>
         <div id="main-menu">

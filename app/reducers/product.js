@@ -21,9 +21,8 @@ export const receiveCurrentProduct = currentProduct => ({
 
 export const fetchCurrentProduct = (productId) => {
   return function (dispatch) {
-    axios.get('/api/products/:productId')
+    axios.get(`/api/products/${productId}`)
       .then(function (response) {
-        console.log(response)
         const action = receiveCurrentProduct(response.data);
         return dispatch(action)
       })

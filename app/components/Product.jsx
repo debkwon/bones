@@ -41,47 +41,73 @@ export class Product extends React.Component {
   }
 
   render() {
-    // console.log(this.props)
+    console.log("this.props?", this.props)
     const { currentProduct } = this.props || {}
     return (
-      <div className="container">
-        <img 
-          src={currentProduct.photoURL} />
-        <h2>{currentProduct.name}</h2>
-        <Tabs
-          value={this.state.value}
-          onChange={this.handleChange}
-        >
-          <Tab label="Description" value="description" >
-            <div>
-              <h2 style={styles.headline}>Why It's Fabulous</h2>
-              <p>{currentProduct.description}
-              </p>
-            </div>
-          </Tab>
-          <Tab label="Reviews" value="reviews">
-            <div>
-              <h2 style={styles.headline}>Who Loves It</h2>
-                <Review />
-            </div>
-          </Tab>
-        </Tabs>
+      <div className="container mdl-grid" id="product">
+        <div className="mdl-cell mdl-cell--5-col">
+          <img src={currentProduct.photoURL} />
+        </div>
+        <div className="mdl-cell mdl-cell--7-col">
+          <h1>{currentProduct.name}</h1>
+          <Tabs
+            value={this.state.value}
+            onChange={this.handleChange}
+          >
+            <Tab label="Description" value="description" >
+              <div>
+                <h2>Why It's Fabulous</h2>
+                <p>{currentProduct.description}
+                </p>
+              </div>
+            </Tab>
+            <Tab label="Reviews" value="reviews">
+              <div>
+                <h2>Who Loves It</h2>
+                  {this.props.reviews ? this.props.reviews.map(review =>(
+                    <div className="review">
+                      <span>{review.stars}</span>
+                      <p>{review.text}</p>
+                      <span>{review.user}</span>
+                    </div>
+                  ))
+                  :
+                  <h3>
+                  There are no reviews for this product yet
+                  </h3>
+                  }
+                  <Review />
+              </div>
+            </Tab>
+          </Tabs>
+          <div className="below-tabs">
+          <span>Price: ${currentProduct.price}</span>
+          <div>
+          <label>Quantity</label>
+          <select>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            <option value='5'>5</option>
+            <option value='6'>6</option>
+            <option value='7'>7</option>
+            <option value='8'>8</option>
+            <option value='9'>9</option>
+            <option value='10'>10</option>
+          </select>
+          </div>
+          <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+         BUY
+         </button>
+         </div>
+        </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({ 
+const mapStateToProps = (state) => ({
   currentProduct: state.currentProduct })
 
-const mapDispatchToProps = function (dispatch, ownProps) {
-  return {
-    onLoadCurrentProduct: function () {
-      const currentProductId = ownProps.params.productId;
-      const thunk = loadCurrentProduct(currentProductId);
-      dispatch(thunk)
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, null)(Product);

@@ -6,6 +6,7 @@ export class User extends Component {
   constructor() {
     super()
     //this.state = store.getState();
+    //fake state;
       this.state = {
                     firstName:"fake firstName",
                     lastName:"fake lastName",
@@ -16,14 +17,17 @@ export class User extends Component {
 
     this.update = this.update.bind(this);
     this.login = this.login.bind(this);
+    this.authenticate = this.authenticate.bind(this);
 
   }
   componentWillMount () {
       store.subscribe(() => this.setState(store.getState()));
+
   }
   update( firstName, lastName, username, email, password){
 
-
+    console.log("auth", this.state.auth.password_digest);
+    var password_digest = this.state.auth.password_digest;
 
     var id = this.state.auth.id;
     var user = {firstName: firstName,
@@ -37,7 +41,7 @@ export class User extends Component {
     .then(function(res){
       console.log("RES",res);
       if(res.status ==200){
-        location.reload();
+        //location.reload();
         //console.log("Success!!");
       }
     })
@@ -47,35 +51,42 @@ export class User extends Component {
 
   }
   //fake login testing
+
+  authenticate(plaintext) {
+      return new Promise((resolve, reject) =>
+        bcrypt.compare(plaintext, this.password_digest,
+          (err, result) =>
+            err ? reject(err) : resolve(result))
+        )
+  }
+
   login( ){
     console.log("login");
     const body = {username:"barack@president.rocks", password:"1234"}
     axios.post('/api/auth/local/login', body)
     .then(function(res){
       console.log("response", res);
-
     })
 
   }
 
   render() {
   return (
-    <div>
-    {this.state.auth?
-    <form  onSubmit = {evt=>{ evt.preventDefault(); this.update(evt.target.firstname.value, evt.target.lastname.value, evt.target.username.value, evt.target.email.value, evt.target.password.value);}}>
-      <p>First Name: <input type="text"  defaultValue = {this.state.auth.firstName} name="firstname"/></p>
-      <p>Last Name: <input type="text"  defaultValue = {this.state.auth.lastName} name="lastname"/></p>
-      <p>Username: <input type="text"  defaultValue = {this.state.auth.username} name="username"/></p>
-      <p>Eamil: <input type="text"  defaultValue = {this.state.auth.email} name="email"/></p>
-      <p>Password: <input type="text"  defaultValue = {this.state.auth.password} name="password"/></p>
-      <button type="submit">UPDATE</button>
-    </form>
-    :
-    <form  onSubmit = {evt=>{ evt.preventDefault(); this.login();}}>
-
-      <button type="submit">login</button>
-    </form>
-    }
+    <div style={Divstyle}>
+      {this.state.auth?
+      <form  onSubmit = {evt=>{ evt.preventDefault(); this.update(evt.target.firstname.value, evt.target.lastname.value, evt.target.username.value, evt.target.email.value, evt.target.password.value);}}>
+        <p>First Name:<TextField defaultValue = {this.state.auth.firstName} name="firstname" style={Textstyles}/></p>
+        <p>Last Name: <TextField  defaultValue = {this.state.auth.lastName} name="lastname"  style={Textstyles}/></p>
+        <p>Username: <TextField  defaultValue = {this.state.auth.username} name="username"  style={Textstyles}/></p>
+        <p>Eamil: <TextField  defaultValue = {this.state.auth.email} name="email"  style={Textstyles}/></p>
+        <p>Password: <TextField  defaultValue = "fakepassword" name="password" type = "password"  style={Textstyles}/></p>
+        <RaisedButton type="submit" label="UPDATE" primary={true} style={style} />
+      </form>
+      :
+      <form  onSubmit = {evt=>{ evt.preventDefault(); this.login();}}>
+        <RaisedButton type="submit" label="FAKE LOGIN" primary={true} style={style} />
+      </form>
+      }
     </div>
 
 

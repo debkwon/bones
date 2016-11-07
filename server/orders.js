@@ -23,12 +23,25 @@ router.get('/status/:status', (req, res, next) =>
   .catch(next)
 )
 
-router.get('/users/:userid', (req, res, next) =>
-  Order.findAll({where: {user_id: req.params.userid}})
-  .then(orders => res.send(orders))
-  .catch(next)
+// TODO: get all these routes to send OrderProduct info
+router.get('/users/:userId', (req, res, next) => {
+  console.log('request object', req.body)
+  Order.findAll({
+    where: {
+      user_id: req.params.userId
+    },
+    include: [{
+      model: Product
+    }]
+  })
+  .then(orders => {
+    console.log(orders)
+    res.send(orders)})
+  .catch(err => console.log(err))
+}
 )
 
+//unused, filtering on the client-side
 router.get('/users/:userid/:status', (req, res, next) =>
   Order.findAll({where: {user_id: req.params.userid, status: req.params.status}})
   .then(orders => res.send(orders))

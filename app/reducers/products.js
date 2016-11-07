@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default function reducer (state = null, action) {
+export default function reducer (state = [], action) {
   switch(action.type) {
 
     case RECEIVE_PRODUCTS:
@@ -10,6 +10,8 @@ export default function reducer (state = null, action) {
       return state;
   }
 }
+
+// to receive all products stored on server
 
 const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 

@@ -33,9 +33,10 @@ router.get('/', function (req, res, next) {
 
 // Find one existing product based on id
 router.get('/:productId', function (req, res, next) {
-  Product.findbyId(req.params.productId)
-    .then(product =>
-      res.send(product))
+  Product.findById(req.params.productId)
+    .then(product =>{
+      res.send(product)
+    })
     .catch(next)
 })
 
