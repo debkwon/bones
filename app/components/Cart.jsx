@@ -71,6 +71,7 @@ export class Cart extends Component {
 
   render() {
     console.log("PROPS!!", this.props);
+    console.log("state", store.getState());
 
   return (
     <div style={Divstyle}>
@@ -88,7 +89,7 @@ export class Cart extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={showCheckboxes}  >
-             { products && products.map(product => (
+             { this.props.cart.products && this.props.cart.products.map(product => (
                 <TableRow key={product.id}>
                   <TableRowColumn><img src={product.photoURL}/></TableRowColumn>
                   <TableRowColumn>{product.name}</TableRowColumn>

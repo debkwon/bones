@@ -1,6 +1,33 @@
 import React, {Component} from 'react'
 import store from '../store';
 import axios from 'axios';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import {orange500, blue500} from 'material-ui/styles/colors';
+const Divstyle ={
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center'
+}
+const style = {
+  margin: 12,
+  color:blue500
+};
+const Textstyles = {
+  paddingLeft:'10px',
+  errorStyle: {
+    color: orange500,
+  },
+  underlineStyle: {
+    borderColor: orange500,
+  },
+  floatingLabelStyle: {
+    color: orange500,
+  },
+  floatingLabelFocusStyle: {
+    color: blue500,
+  },
+};
 export class User extends Component {
 
   constructor() {

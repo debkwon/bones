@@ -18,6 +18,7 @@ import ProductsContainer from './components/Products'
 import ProductContainer from './components/Product'
 import OrdersContainer from './components/Orders'
 import OrdersPanelContainer from './components/OrdersPanel'
+import WhoAmI from './components/WhoAmI'
 
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
@@ -56,7 +57,7 @@ render (
           <Route path="/logout" component={WhoAmI} />
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
-          <Route path="/cart" component={Cart} />
+          <Route path="/cart"   component={Cart} />
           <Route
             path="/orders"
             component={OrdersContainer}
@@ -77,6 +78,7 @@ function onCurrentProductEnter (nextRouterState) {
   console.log("this is the nextRouterState: ", nextRouterState)
   const productId = nextRouterState.params.productId;
   const thunk = fetchCurrentProduct(productId);
+
   store.dispatch(thunk);
 };
 
@@ -87,3 +89,4 @@ function onOrdersEnter (nextRouterState) {
   const thunk = fetchOrders(userId);
   store.dispatch(thunk)
 }
+

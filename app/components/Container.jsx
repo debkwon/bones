@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
+import WhoAmI from './WhoAmI';
 
 
 export class Container extends Component {
@@ -13,13 +14,13 @@ export class Container extends Component {
         <div id="nav-top">
           <div>
             <div>
-              <img src="/logo.png" alt="Selleb: your source for celebrity memoribilia"/>
+              <Link to='/'><img src="/logo.png" alt="Selleb: your source for celebrity memoribilia"/></Link>
             </div>
           </div>
           <ul>
             <li><Link to='orders'>Orders</Link></li>
-            <li>{typeof this.props.auth == 'object' ? <Link to='/logout'>Logout</Link> : <Link to='/login'>Login</Link> }</li>
-            <li><i className="fa fa-shopping-cart" aria-hidden="true"> </i>Cart</li>
+            <li>{!this.props.auth ? <Link to='/login'>Login</Link> : <WhoAmI />}</li>
+            <li><Link to="cart"><i className="fa fa-shopping-cart" aria-hidden="true"> </i>Cart</Link></li>
           </ul>
         </div>
         <div id="main-menu">

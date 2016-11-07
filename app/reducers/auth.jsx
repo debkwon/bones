@@ -19,7 +19,7 @@ export const login = (username, password) =>
     axios.post('/api/auth/local/login',
       {username, password})
       .then(() => dispatch(whoami()))
-      .catch(() => dispatch(whoami()))      
+      .catch(() => dispatch(whoami()))
 
 export const logout = () =>
   dispatch =>
@@ -34,17 +34,15 @@ export const whoami = () =>
         const user = response.data
         return dispatch(authenticated(user))
       })
-      .then( res =>{
-        return axios.get(`/api/orders/users/${res.user.id}/not%20submitted`);
-      })
+      .then(res => axios.get(`/api/orders/users/${res.user.id}/not%20submitted`))
+      .then(res=> { if(res.data.length !== 0) axios.get(`/api/orders/ordersproducts/${res.data[0].id}`)})
       .then(res=>{
-         console.log("orders",res.data );
-         if(res.data.length !=0){
-          dispatch(updateCartId(res.data))
+         if(res && res.data.length !== 0){
+          dispatch(updateCartId({user_id:res.data[0].user_id, order_id:res.data[0].id, products:res.data[0].products}))
          }
       })
 
-      .catch(failed => dispatch(authenticated(null)))
+      .catch(failed => console.log(failed))
 
 // export const getcart =  user=>
 //   dispatch =>

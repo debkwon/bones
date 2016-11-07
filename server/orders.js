@@ -3,7 +3,7 @@ const Product = require('APP/db/models/product');
 const OrderProduct = require('APP/db/models/orderProduct')
 const router = require('express').Router();
 const Promise = require('bluebird');
-
+var session = require('express-session');
 
 router.get('/', (req, res, next) =>
   Order.findAll()
@@ -48,6 +48,21 @@ router.get('/users/:userid/:status', (req, res, next) =>
   .catch(next)
 )
 
+router.get('/ordersproducts/:orderId', (req, res, next) => {
+  return Order.findAll({
+    where: {
+      id: req.params.orderId
+    },
+    include: [{
+      model: Product
+      // through: OrderProduct
+    }]
+  })
+  .then(response=> res.send(response))
+  .catch(err => console.log(err))
+}
+  )
+
 router.post('/', (req, res, next) =>{
   console.log("data", req.body);
   let orderInfo = {
@@ -67,7 +82,12 @@ router.post('/', (req, res, next) =>{
         quantity: orderProduct.quantity
       })
     ).then(rows => {
-        res.status(201).send(order)
+      if(!req.session.orderId){
+
+        req.session.orderId = order.id;
+
+      }
+       res.status(201).send({order:order, sessionOrderId:req.session.orderId})
       }
       )
   )
@@ -93,7 +113,7 @@ router.put('/:orderId', (req, res, next) => {
           if(rowsChanged[0] === 0) {
             OrderProduct.create({
               order_id: req.params.orderId,
-              product_id: orderProduct.product_id,
+              product_id: orderProduct.id,
               pricePerUnit: orderProduct.price,
               quantity: orderProduct.quantity
             })
