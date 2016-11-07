@@ -1,6 +1,6 @@
 const Product = require('APP/db/models/product')
 const Celeb = require('APP/db/models/celeb')
-const CelebProduct = require('APP/db/models/index').CelebProduct
+const User = require('APP/db/models/user')
 const Review = require('APP/db/models/review')
 const router = module.exports = require('express').Router()
 
@@ -34,16 +34,14 @@ router.get('/', function (req, res, next) {
 
 // Find one existing product based on id
 router.get('/:productId', function (req, res, next) {
-  Product.findById(req.params.productId)
-    .then(retproduct =>{
-      let product = retproduct
-      Review.findAll({where: {product_id: req.params.productId}})
-      .then(retreviews => {
-        let reviews = retreviews
-        res.send({product, reviews})
-      })
-    })
-    .catch(err => console.log(err))
+  Product.findById(req.params.productId, {
+    include: [{
+        model: Review,
+        include: [{
+          model: User
+        }]}]})
+  .then(product => res.send(product))
+  .catch(err => console.log(err))
 })
 
 // Create a new product

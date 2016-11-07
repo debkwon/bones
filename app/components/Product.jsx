@@ -64,11 +64,13 @@ export class Product extends React.Component {
             <Tab label="Reviews" value="reviews">
               <div>
                 <h2>Who Loves It</h2>
-                  {this.props.reviews ? this.props.reviews.map(review =>(
-                    <div className="review">
-                      <span>{review.stars}</span>
-                      <p>{review.text}</p>
-                      <span>{review.user}</span>
+                  {this.props.currentProduct.reviews ? this.props.currentProduct.reviews.map(review =>(
+                    <div className="review mdl-card mdl-card mdl-shadow--2dp">
+                      <div className='mdl-card__title'>
+                        <div>{review.stars} stars</div>
+                        <div>{review.user.firstName} {review.user.lastName.substr(0, 1)}.</div>
+                        </div>
+                      <div className='mdl-card__supporting-text'>{review.text}</div>
                     </div>
                   ))
                   :
@@ -113,6 +115,7 @@ export class Product extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentProduct: state.currentProduct });
+  currentProduct: state.currentProduct,
+   });
 
 export default connect(mapStateToProps, null)(Product);
