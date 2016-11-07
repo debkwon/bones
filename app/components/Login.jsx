@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {login} from 'APP/app/ducks/auth'
+import {login} from 'APP/app/reducers/auth'
 import {connect} from 'react-redux'
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -16,9 +16,6 @@ export const Login = ({ login }) => (
     <input type="submit" value="Login" />
   </form>
 )
-
-import {login} from 'APP/app/reducers/auth'
-import {connect} from 'react-redux'
 
 export default connect (
   state => ({}),

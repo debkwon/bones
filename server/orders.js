@@ -23,12 +23,16 @@ router.get('/status/:status', (req, res, next) =>
   .catch(next)
 )
 
+// TODO: get all these routes to send OrderProduct info
 router.get('/users/:userid', (req, res, next) =>
   Order.findAll({where: {user_id: req.params.userid}})
-  .then(orders => res.send(orders))
+  .then(orders => orders.map(order =>
+    OrderProduct.findAll({where: {order_id: order.id}})))
+  .then(orderProducts => res.send(orders))
   .catch(next)
 )
 
+//unused, filtering on the client-side
 router.get('/users/:userid/:status', (req, res, next) =>
   Order.findAll({where: {user_id: req.params.userid, status: req.params.status}})
   .then(orders => res.send(orders))

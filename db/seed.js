@@ -24,9 +24,11 @@ const seedReviews = () => db.Promise.map([
 ], review => db.model('reviews').create(review))
 
 const seedOrders = () => db.Promise.map([
-  {shippingDate: 3/22/16, status: 'shipped', total: 32.45},
-  {shippingDate: '4/22/16', status: 'cancelled', total: 42.45},
-  {shippingDate: '5/22/16', status: 'processing', total: 52.45},
+  {shippingDate: 3/22/16, status: 'shipped', total: 32.45, user_id: 1},
+  {shippingDate: '4/22/16', status: 'cancelled', total: 42.45, user_id: 1},
+  {shippingDate: '5/22/16', status: 'processing', total: 52.45, user_id: 2},
+  {shippingDate: '6/22/16', status: 'delivered', total: 62.45, user_id: 2},
+  {shippingDate: '7/22/16', status: 'processing', total: 72.45, user_id: 2},
 ], order => db.model('orders').create(order))
 
 const seedOrderProducts = () => db.Promise.map([

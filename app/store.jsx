@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware } from 'redux'
-import rootReducer from './ducks'
+import rootReducer from './reducers'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 
-import {whoami} from './ducks/auth'
-import {fetchProducts} from './ducks/products'
+import {whoami} from './reducers/auth'
+import {fetchProducts} from './reducers/products'
 
 const store = createStore(rootReducer, applyMiddleware(createLogger(), thunkMiddleware))
 
