@@ -89,10 +89,10 @@ export class User extends Component {
 
   login( ){
     console.log("login");
-    const body = {username:"god@example.com", password:"1234"}
+    const body = {username:"barack@president.rocks", password:"1234"}
     axios.post('/api/auth/local/login', body)
     .then(function(res){
-      console.log("ressss",res);
+      console.log("response", res);
     })
 
   }

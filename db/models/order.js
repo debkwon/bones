@@ -9,7 +9,7 @@ const Order = db.define('orders', {
     status: {
       type: Sequelize.ENUM,
       values: ['not submitted','processing', 'shipped', 'delivered', 'cancelled'],
-      defaultValue: 'processing'
+      defaultValue: 'not submitted'
     },
     total: {
       type: Sequelize.INTEGER
