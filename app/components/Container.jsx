@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router';
 import WhoAmI from './WhoAmI';
 import AppBar from 'material-ui/AppBar';
-import WhoAmI from './WhoAmI';
 
 
 export class Container extends Component {

@@ -41,14 +41,13 @@ export class Product extends React.Component {
   }
 
   render() {
-    console.log("this.props?", this.props)
     const { currentProduct } = this.props || {}
     return (
-      <div className="container mdl-grid" id="product">
+      <div className="container mdl-grid group" id="product">
         <div className="mdl-cell mdl-cell--5-col">
           <img src={currentProduct.photoURL} />
         </div>
-        <div className="mdl-cell mdl-cell--7-col">
+        <div className="mdl-cell mdl-cell--7-col group">
           <h1>{currentProduct.name}</h1>
           <Tabs
             value={this.state.value}
@@ -65,14 +64,15 @@ export class Product extends React.Component {
               <div>
                 <h2>Who Loves It</h2>
                   {this.props.currentProduct.reviews ? this.props.currentProduct.reviews.map(review =>(
-                    <div className="review mdl-card mdl-card mdl-shadow--2dp">
+                    <div className="review-card mdl-card mdl-card mdl-shadow--2dp">
                       <div className='mdl-card__title'>
-                        <div>{review.stars} stars</div>
                         <div>{review.user.firstName} {review.user.lastName.substr(0, 1)}.</div>
-                        </div>
+                        <div>{review.stars} stars</div>
+                      </div>
                       <div className='mdl-card__supporting-text'>{review.text}</div>
-                    </div>
-                  ))
+                      <div className='mdl-card__actions'>{review.created_at.substr(0, 10)}</div>
+                    </div>)
+                  )
                   :
                   <h3>
                   There are no reviews for this product yet

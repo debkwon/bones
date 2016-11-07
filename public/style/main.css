@@ -77,6 +77,23 @@ footer {
   display: block;
 }
 
+.review-card {
+  width: 100%;
+  min-height: 150px;
+}
+.review-card .mdl-card__title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.review-card .mdl-card__actions {
+  text-align: right;
+}
+
+.review-form {
+  padding-top: 1rem;
+}
+
 .review-form textarea {
   width: 100%;
   height: 15rem;
@@ -130,4 +147,19 @@ label.star:hover { transform: rotate(-15deg) scale(1.3); }
 label.star:before {
   content: '\f006';
   font-family: FontAwesome;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+  }
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
 }
