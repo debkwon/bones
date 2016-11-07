@@ -9,15 +9,15 @@ import Paper from 'material-ui/Paper';
 
 export class OrdersPanel extends React.Component {
 
-  componentWillMount () {
-      store.subscribe(() => this.setState(store.getState()));
-  }
+  // componentWillMount () {
+  //     store.subscribe(() => this.setState(store.getState()));
+  // }
 
   render () {
     // This never shows that you're logged in -- how do you grab the auth state?
     const {filteredOrders} = this.props;
     let displayOrders;
-    
+    //console.log(this.props.user)
 
     if (!this.props.auth) {
       return (
@@ -41,4 +41,8 @@ export class OrdersPanel extends React.Component {
   }
 }
 
-export default connect(null)(OrdersPanel);
+const mapStateToProps = (state) => ({
+  user: state.auth
+})
+
+export default connect(mapStateToProps)(OrdersPanel);

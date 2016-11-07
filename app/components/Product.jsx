@@ -142,14 +142,4 @@ export class Product extends React.Component {
 const mapStateToProps = (state) => ({
   currentProduct: state.currentProduct })
 
-const mapDispatchToProps = function (dispatch, ownProps) {
-  return {
-    onLoadCurrentProduct: function () {
-      const currentProductId = ownProps.params.productId;
-      const thunk = loadCurrentProduct(currentProductId);
-      dispatch(thunk)
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, null)(Product);

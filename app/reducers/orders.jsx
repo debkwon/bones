@@ -18,14 +18,16 @@ export default function reducer (state = [], action) {
 
 const RECEIVE_ORDERS = 'RECEIVE_ORDERS';
 
-export const receiveOrders = orders => ({
-  type: RECEIVE_ORDERS, orders
+export const receiveOrders = (orders, userId) => ({
+  type: RECEIVE_ORDERS, orders, userId
 })
 
-export function fetchOrders () {
+export const fetchOrders = (userId) => {
+  console.log('the userId:', userId)
   return function (dispatch) {
     // TODO: need to use /api/orders/users/:userid, but don't know how to get logged in user info from state
-    return axios.get('/api/orders')
+
+    axios.get(`/api/orders/users/${userId}`)
     .then(function (response) {
       const action = receiveOrders(response.data);
       return dispatch(action);
