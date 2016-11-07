@@ -23,8 +23,8 @@ import WhoAmI from './components/WhoAmI'
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
 import { fetchOrders } from './reducers/orders'
-
-
+import { updateCartId } from './reducers/cart'
+import axios from 'axios'
 // for Google's Material UI themes
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -43,7 +43,7 @@ render (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
       <Router history={browserHistory}>
-        <Route path="/" component={Container}>
+        <Route path="/" component={Container} onEnter={onCartEnter}>
           <IndexRedirect to="/products" />
           <Route
             path="/products"
@@ -57,7 +57,7 @@ render (
           <Route path="/logout" component={WhoAmI} />
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
-          <Route path="/cart"   component={Cart} />
+          <Route path="/cart" component={Cart} />
           <Route
             path="/orders"
             component={OrdersContainer}
@@ -80,6 +80,11 @@ function onCurrentProductEnter (nextRouterState) {
   const thunk = fetchCurrentProduct(productId);
 
   store.dispatch(thunk);
+  var id = parseInt(window.localStorage.getItem('orderId'));
+  if (id){
+    axios.get(`/api/orders/ordersproducts/${id}`)
+    .then(orders => store.dispatch(updateCartId(orders)))
+  }
 };
 
 function onOrdersEnter (nextRouterState) {
@@ -90,3 +95,10 @@ function onOrdersEnter (nextRouterState) {
   store.dispatch(thunk)
 }
 
+function onCartEnter(nextRouterState){
+  var id = parseInt(window.localStorage.getItem('orderId'));
+  if (id){
+    axios.get(`/api/orders/ordersproducts/${id}`)
+    .then(orders => store.dispatch(updateCartId(orders)))
+  }
+}
