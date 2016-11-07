@@ -12,7 +12,7 @@ const Order = db.define('orders', {
       defaultValue: 'not submitted'
     },
     total: {
-      type: Sequelize.INTEGER
+      type: Sequelize.DECIMAL(15, 2)
     }
   }
 );
