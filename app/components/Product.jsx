@@ -80,38 +80,6 @@ export class Product extends React.Component {
               </div>
             </Tab>
           </Tabs>
-          <div id='product-tabs' className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-            <div className="mdl-tabs__tab-bar">
-                <a href="#description-panel" className="mdl-tabs__tab is-active">Description</a>
-                <a href="#reviews-panel" className="mdl-tabs__tab">Reviews</a>
-            </div>
-
-            <div className="mdl-tabs__panel is-active" id="description-panel">
-              <div>
-                <h2>Why It's Fabulous</h2>
-                <p>{currentProduct.description}
-                </p>
-              </div>
-            </div>
-            <div className="mdl-tabs__panel" id="reviews-panel">
-              <div>
-                <h2>Who Loves It</h2>
-                  {this.props.reviews ? this.props.reviews.map(review =>(
-                    <div className="review">
-                      <span>{review.stars}</span>
-                      <p>{review.text}</p>
-                      <span>{review.user}</span>
-                    </div>
-                  ))
-                  :
-                  <h3>
-                  There are no reviews for this product yet
-                  </h3>
-                  }
-                  <Review />
-              </div>
-            </div>
-          </div>
           <div className="below-tabs">
           <span>Price: ${currentProduct.price}</span>
           <div>
