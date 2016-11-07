@@ -76,8 +76,10 @@ user.delete('/:userId', function(req, res, next){
 //   endpoints: ['/users', '/users/:id']
 // })
 
+
 // const {mustBeLoggedIn, selfOnly, forbidden, catcherr} = epilogue.filters
 // users.delete.auth(mustBeLoggedIn)
 // users.delete.auth(selfOnly('delete'))
 // //users.list.auth(forbidden('cannot list users'))
 // users.read.auth(mustBeLoggedIn)
+

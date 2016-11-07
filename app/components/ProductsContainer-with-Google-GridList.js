@@ -91,7 +91,7 @@ export class Products extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({ 
+const mapStateToProps = (state) => ({
   products: state.products })
 
 export default connect(mapStateToProps)(Products);
