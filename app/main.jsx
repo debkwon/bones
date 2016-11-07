@@ -6,19 +6,20 @@ import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 
-import styles from './style/main.css'
+//import styles from './style/main.css'
 import store from './store'
 
 import Container from './components/Container'
 import Login from './components/Login'
 import User from './components/User'
 import Review from './components/Review'
+import Cart from './components/Cart'
 import ProductsContainer from './components/Products'
 import ProductContainer from './components/Product'
 import OrdersContainer from './components/Orders'
 import OrdersPanelContainer from './components/OrdersPanel'
 import WhoAmI from './components/WhoAmI'
-
+import AdminContainer from './components/Admin'
 
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
@@ -65,10 +66,16 @@ render (
           <Route
             path="/reviews"
             component={Review} />
+          <Route 
+            path="/cart"   
+            component={Cart} />
           <Route
             path="/orders"
             component={OrdersContainer}
             onEnter={onOrdersEnter} />
+          <Route
+            path="/admin"
+            component={AdminContainer} />
         </Route>
       </Router>
     </Provider>
@@ -85,6 +92,7 @@ function onCurrentProductEnter (nextRouterState) {
   console.log("this is the nextRouterState: ", nextRouterState)
   const productId = nextRouterState.params.productId;
   const thunk = fetchCurrentProduct(productId);
+
   store.dispatch(thunk);
 };
 
@@ -94,3 +102,4 @@ function onOrdersEnter (nextRouterState) {
   const thunk = fetchOrders(userId);
   store.dispatch(thunk)
 }
+

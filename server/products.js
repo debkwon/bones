@@ -20,14 +20,14 @@ router.get('/', function (req, res, next) {
       }
     }})
     .then(products =>{
-      res.status(200).send(products)
+      res.status(200).send({products:products, sessionOrderId: req.session.orderId ? req.session.orderId : null})
     })
     .catch(next)
   }
   else {
     Product.findAll()
-      .then(products =>
-        res.send(products))
+      .then(products =>{
+        res.send(products)})
       .catch(next)
   }
 })
