@@ -24,7 +24,8 @@ export const Login = ({ login }) => (
            hintText="Password"
          /><br />
          <br />
-       <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">Sign In</button>
+       <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">Login
+       </button>
     </form>
   </div>
 )

@@ -91,7 +91,9 @@ function onCurrentProductEnter (nextRouterState) {
 function onOrdersEnter (nextRouterState) {
   const auth = store.getState().auth || {}
   const userId = auth.id || null;
-  console.log('userId in main', userId)
-  const thunk = fetchOrders(userId);
-  store.dispatch(thunk)
+  if(userId !== null) {
+    console.log('this should not print')
+    const thunk = fetchOrders(userId);
+    store.dispatch(thunk)
+  }
 }
