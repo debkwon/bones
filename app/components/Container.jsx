@@ -17,6 +17,7 @@ export class Container extends Component {
             </div>
           </div>
           <ul>
+            <li><Link to='orders'>Orders</Link></li>
             <li>{typeof this.props.auth == 'object' ? <Link to='/logout'>Logout</Link> : <Link to='/login'>Login</Link> }</li>
             <li><i className="fa fa-shopping-cart" aria-hidden="true"> </i>Cart</li>
           </ul>
