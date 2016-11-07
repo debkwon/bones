@@ -32,7 +32,7 @@ export const clearOrders = () => ({
 
 export const fetchOrders = (userId) => {
   console.log('the userId:', userId)
-  if (userId) {
+  // if (userId) {
     return function (dispatch) {
       axios.get(`/api/orders/users/${userId}`)
       .then(function (response) {
@@ -41,5 +41,5 @@ export const fetchOrders = (userId) => {
       })
       .catch(err => console.error(err.stack));
     };
-  }
+  // }
 };

@@ -19,6 +19,7 @@ import ProductContainer from './components/Product'
 import OrdersContainer from './components/Orders'
 import OrdersPanelContainer from './components/OrdersPanel'
 import WhoAmI from './components/WhoAmI'
+import AdminContainer from './components/Admin'
 
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
@@ -72,6 +73,9 @@ render (
             path="/orders"
             component={OrdersContainer}
             onEnter={onOrdersEnter} />
+          <Route
+            path="/admin"
+            component={AdminContainer} />
         </Route>
       </Router>
     </Provider>
