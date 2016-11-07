@@ -16,6 +16,7 @@ import Review from './components/Review'
 import ProductsContainer from './components/Products'
 import ProductContainer from './components/Product'
 import OrdersContainer from './components/Orders'
+import OrdersPanelContainer from './components/OrdersPanel'
 
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
@@ -50,9 +51,15 @@ render (
             path="/products/:productId"
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
-          <Route path="/login" component={Login} />
-          <Route path="/user" component={User} />
-          <Route path="/reviews" component={Review} />
+          <Route 
+            path="/login" 
+            component={Login} />
+          <Route 
+            path="/user" 
+            component={User} />
+          <Route 
+            path="/reviews" 
+            component={Review} />
           <Route 
             path="/orders" 
             component={OrdersContainer}
