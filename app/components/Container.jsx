@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router';
 import WhoAmI from './WhoAmI';
 import AppBar from 'material-ui/AppBar';
+import WhoAmI from './WhoAmI';
 
 
 export class Container extends Component {
@@ -14,7 +15,7 @@ export class Container extends Component {
         <div id="nav-top">
           <div>
             <div>
-              <img src="/logo.png" alt="Selleb: your source for celebrity memoribilia"/>
+              <Link to='/'><img src="/logo.png" alt="Selleb: your source for celebrity memoribilia"/></Link>
             </div>
           </div>
           <ul>
