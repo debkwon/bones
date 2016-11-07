@@ -1,4 +1,4 @@
-const reducer = (state={}, action) => {
+const reducer = (state={products:[], user_id: null, order_id: null}, action) => {
   switch(action.type) {
     case INITIAL_CARTS:
         return action.orders

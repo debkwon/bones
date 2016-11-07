@@ -36,6 +36,7 @@ router.get('/users/:userid/:status', (req, res, next) =>
 )
 
 router.post('/', (req, res, next) =>{
+  console.log("data", req.body);
   let orderInfo = {
     total: req.body.total,
     user_id: req.body.user
@@ -48,7 +49,7 @@ router.post('/', (req, res, next) =>{
     Promise.map(orderProducts, (orderProduct) =>
       OrderProduct.create({
         order_id: order.id,
-        product_id: orderProduct.product_id,
+        product_id: orderProduct.id,
         pricePerUnit: orderProduct.price,
         quantity: orderProduct.quantity
       })
