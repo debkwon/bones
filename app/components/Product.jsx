@@ -97,7 +97,12 @@ export class Product extends React.Component {
             <option value='10'>10</option>
           </select>
           </div>
-          <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+          onClick={evt => {
+            evt.preventDefault()
+            console.log('in onClick')
+            addProduct(this.props.currentProduct, this.state.quantity)
+          } }>
          BUY
          </button>
          </div>
@@ -108,6 +113,6 @@ export class Product extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentProduct: state.currentProduct })
+  currentProduct: state.currentProduct });
 
 export default connect(mapStateToProps, null)(Product);

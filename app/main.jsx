@@ -33,8 +33,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { grey300, pink400 } from 'material-ui/styles/colors';
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: pink400,
-    primary2Color: grey300,
+    primary1Color: grey300,
+    primary2Color: pink400,
   },
 });
 
@@ -53,11 +53,21 @@ render (
             path="/products/:productId"
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
-          <Route path="/login" component={Login} />
-          <Route path="/logout" component={WhoAmI} />
-          <Route path="/user" component={User} />
-          <Route path="/reviews" component={Review} />
-          <Route path="/cart"   component={Cart} />
+          <Route
+            path="/login"
+            component={Login} />
+          <Route
+            path="/logout"
+            component={WhoAmI} />
+          <Route
+            path="/user"
+            component={User} />
+          <Route
+            path="/reviews"
+            component={Review} />
+          <Route 
+            path="/cart"   
+            component={Cart} />
           <Route
             path="/orders"
             component={OrdersContainer}
@@ -85,7 +95,6 @@ function onCurrentProductEnter (nextRouterState) {
 function onOrdersEnter (nextRouterState) {
   const auth = store.getState().auth || {}
   const userId = auth.id || null;
-  console.log('userId in main', userId)
   const thunk = fetchOrders(userId);
   store.dispatch(thunk)
 }
