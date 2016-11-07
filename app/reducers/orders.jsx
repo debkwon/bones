@@ -34,8 +34,6 @@ export const fetchOrders = (userId) => {
   console.log('the userId:', userId)
   if (userId) {
     return function (dispatch) {
-      // TODO: need to use /api/orders/users/:userid, but don't know how to get logged in user info from state
-
       axios.get(`/api/orders/users/${userId}`)
       .then(function (response) {
         const action = receiveOrders(response.data);
@@ -45,4 +43,3 @@ export const fetchOrders = (userId) => {
     };
   }
 };
-
