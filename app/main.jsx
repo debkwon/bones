@@ -17,6 +17,8 @@ import ProductsContainer from './components/Products'
 import ProductContainer from './components/Product'
 import OrdersContainer from './components/Orders'
 import OrdersPanelContainer from './components/OrdersPanel'
+import WhoAmI from './components/WhoAmI'
+
 
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
@@ -31,8 +33,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { grey300, pink400 } from 'material-ui/styles/colors';
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: pink400,
-    primary2Color: grey300,
+    primary1Color: grey300,
+    primary2Color: pink400,
   },
 });
 
@@ -51,17 +53,20 @@ render (
             path="/products/:productId"
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
-          <Route 
-            path="/login" 
+          <Route
+            path="/login"
             component={Login} />
-          <Route 
-            path="/user" 
+          <Route
+            path="/logout"
+            component={WhoAmI} />
+          <Route
+            path="/user"
             component={User} />
-          <Route 
-            path="/reviews" 
+          <Route
+            path="/reviews"
             component={Review} />
-          <Route 
-            path="/orders" 
+          <Route
+            path="/orders"
             component={OrdersContainer}
             onEnter={onOrdersEnter} />
         </Route>
