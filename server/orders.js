@@ -23,9 +23,7 @@ router.get('/status/:status', (req, res, next) =>
   .catch(next)
 )
 
-// TODO: get all these routes to send OrderProduct info
 router.get('/users/:userId', (req, res, next) => {
-  console.log('request object', req.body)
   Order.findAll({
     where: {
       user_id: req.params.userId
@@ -35,7 +33,6 @@ router.get('/users/:userId', (req, res, next) => {
     }]
   })
   .then(orders => {
-    console.log(orders)
     res.send(orders)})
   .catch(err => console.log(err))
 }

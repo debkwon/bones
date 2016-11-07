@@ -1,6 +1,12 @@
 import axios from 'axios'
+
 import store from '../store'
 import {updateCartId} from './cart'
+
+import { browserHistory } from 'react-router'
+import {clearOrders} from 'APP/app/reducers/orders'
+
+
 const reducer = (state=null, action) => {
   switch(action.type) {
   case AUTHENTICATED:
@@ -18,13 +24,17 @@ export const login = (username, password) =>
   dispatch =>
     axios.post('/api/auth/local/login',
       {username, password})
-      .then(() => dispatch(whoami()))
+      .then(() => {
+        browserHistory.push('/orders')
+        return dispatch(whoami())})
       .catch(() => dispatch(whoami()))
 
 export const logout = () =>
   dispatch =>
     axios.post('/api/auth/logout')
-      .then(() => dispatch(whoami()))
+      .then(() => {
+        dispatch(clearOrders())
+        dispatch(whoami())})
       .catch(() => dispatch(whoami()))
 
 export const whoami = () =>

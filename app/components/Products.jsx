@@ -73,6 +73,7 @@ export class Products extends React.Component {
 
   render() {
     const { products } = this.props || []
+    let idx = 0;
     return (
       <div id="productsTable">
         <div className='mdl-grid'>
@@ -88,7 +89,7 @@ export class Products extends React.Component {
                   </div>
                   <div className="mdl-card__supporting-text">
                   {product.categories && product.categories.map(category => (
-                      <div className='mdl-chip'>
+                      <div className='mdl-chip' key={idx++}>
                         <span className="mdl-chip__text">{category}</span>
                       </div>
                     ))
