@@ -10,6 +10,8 @@ import {Table, TableBody, TableHeader, TableFooter, TableHeaderColumn, TableRow,
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import { grey200 } from 'material-ui/styles/colors';
+import RaisedButton from 'material-ui/RaisedButton';
+import FontIcon from 'material-ui/FontIcon';
 
 export class OrdersPanel extends React.Component {
 
@@ -32,6 +34,7 @@ export class OrdersPanel extends React.Component {
                     <TableHeaderColumn>Product</TableHeaderColumn>
                     <TableHeaderColumn>Purchase Price</TableHeaderColumn>
                     <TableHeaderColumn>Quantity</TableHeaderColumn>
+                    <TableHeaderColumn></TableHeaderColumn>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -41,15 +44,25 @@ export class OrdersPanel extends React.Component {
                           <TableRowColumn>{unit.name}</TableRowColumn>
                           <TableRowColumn>{unit.order_product.pricePerUnit}</TableRowColumn>
                           <TableRowColumn>{unit.order_product.quantity}</TableRowColumn>
+                          <TableRowColumn>
+                            <RaisedButton
+                              label="Reorder Item"
+                              href="products/:productId"
+                              secondary={true}
+                            >
+                              <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                            </RaisedButton>
+                          </TableRowColumn>
                         </TableRow>
                       ))
                   }
                 </TableBody>
                 <TableFooter>
                   <TableRow>
-                    <TableRowColumn></TableRowColumn>
-                    <TableRowColumn></TableRowColumn>
                     <TableRowColumn style={{fontWeight: 'bold'}}>Total: ${order.total}</TableRowColumn>
+                    <TableRowColumn></TableRowColumn>
+                    <TableRowColumn></TableRowColumn>
+                    <TableRowColumn></TableRowColumn>
                   </TableRow>
                 </TableFooter>
               </Table>
