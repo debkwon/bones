@@ -16,6 +16,7 @@ const CelebProduct = db.define('CelebProduct', {})
 
 Review.belongsTo(User);
 Review.belongsTo(Product);
+Product.hasMany(Review);
 Celeb.belongsToMany(Product, {through: CelebProduct});
 Product.belongsToMany(Celeb, {through: CelebProduct});
 Order.belongsTo(User);

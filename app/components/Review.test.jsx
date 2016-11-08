@@ -25,7 +25,7 @@ describe('<Review />', () => {
   })
 
   it('has a default state of 0 stars', () => {
-    expect(review.state().starRating).to.equal(0)
+    expect(review.state().stars).to.equal(0)
   })
 
   it('has a default state where text is an empty string', () => {
@@ -33,8 +33,8 @@ describe('<Review />', () => {
   })
 
   it('updates state on star rating change', () => {
-    review.find("input[name='star4']").simulate('change',{target: {value: '4'}})
-    expect(review.state().starRating).to.equal(4)
+    review.find("input[name='star2']").simulate('change',{target: {value: '4'}})
+    expect(review.state().stars).to.equal(4)
   })
 
   it('updates state on text change', () => {

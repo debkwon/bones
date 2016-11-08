@@ -18,9 +18,9 @@ export class Container extends Component {
             </div>
           </div>
           <ul>
-            <li><Link to='orders'>Orders</Link></li>
-            <li>{!this.props.auth ? <Link to='/login'>Login</Link> : <WhoAmI />}</li>
-            <li><Link to="cart"><i className="fa fa-shopping-cart" aria-hidden="true"> </i>Cart</Link></li>
+            <li><Link to='/orders'>Orders</Link></li>
+            <li>{!this.props.auth ? <Link to='/login' className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Login</Link> : <WhoAmI />}</li>
+            <li><i className="fa fa-shopping-cart" aria-hidden="true"> </i>Cart</li>
           </ul>
         </div>
         <div id="main-menu">
