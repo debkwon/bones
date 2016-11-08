@@ -120,6 +120,10 @@ footer {
   border: 1px #E0E0E0 solid;
 }
 
+.celeb-listing {
+  padding: 0 .25rem;
+}
+
 .below-tabs {
   display: flex;
   justify-content: space-between;
