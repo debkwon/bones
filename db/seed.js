@@ -40,6 +40,12 @@ const seedOrderProducts = () => db.Promise.map([
   {quantity: 3, pricePerUnit: 3.50, order_id: 3, product_id: 3},
 ], orderProducts => db.model('order_product').create(orderProducts))
 
+const seedCelebProducts = () => db.Promise.map([
+  {celeb_id: 1, product_id: 1},
+  {celeb_id: 2, product_id: 2},
+  {celeb_id: 3, product_id: 3}
+], celebProducts => db.model('CelebProduct').create(celebProducts))
+
 db.didSync
   .then(() => db.sync({force: true}))
   .then(seedUsers)
@@ -54,5 +60,7 @@ db.didSync
   .then(orders => console.log(`Seeded ${orders.length} orders OK`))
   .then(seedOrderProducts)
   .then(orderProducts => console.log(`Seeded ${orderProducts.length} orderProducts OK`))
+  .then(seedCelebProducts)
+  .then(celebProducts => console.log(`Seeded ${celebProducts.length} celebProducts OK`))
   .catch(error => console.error(error))
   .finally(() => db.close())

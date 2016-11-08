@@ -58,6 +58,7 @@ render (
             path="/products/:productId"
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
+
           <Route path="/login" component={Login} />
           <Route path="/logout" component={WhoAmI} />
           <Route path="/user" component={User} />
