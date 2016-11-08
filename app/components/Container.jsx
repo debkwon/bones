@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router';
 import WhoAmI from './WhoAmI';
 import AppBar from 'material-ui/AppBar';
-import WhoAmI from './WhoAmI';
 
 
 export class Container extends Component {
@@ -19,7 +18,7 @@ export class Container extends Component {
             </div>
           </div>
           <ul>
-            <li><Link to='/products/orders'>Orders</Link></li>
+            <li><Link to='/orders'>Orders</Link></li>
             <li>{!this.props.auth ? <Link to='/login' className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Login</Link> : <WhoAmI />}</li>
             <li><i className="fa fa-shopping-cart" aria-hidden="true"> </i>Cart</li>
           </ul>
