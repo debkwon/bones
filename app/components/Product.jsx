@@ -58,6 +58,8 @@ export class Product extends React.Component {
                 <h2>Why It's Fabulous</h2>
                 <p>{currentProduct.description}
                 </p>
+                <b>Celebs: </b>{currentProduct.celebs && currentProduct.celebs.map(celeb =>
+                  <span className='celeb-listing'>{celeb.name}</span>)}
               </div>
             </Tab>
             <Tab label="Reviews" value="reviews" className="reviews">
