@@ -16,10 +16,8 @@ router.post('/', (req,res,next) =>
   )
 
 router.get('/:celebId', (req,res,next) =>
-  Celeb.findAll({
-    where: {
-      id: req.params.celebId
-    },
+  Celeb.findById(req.params.celebId,
+  {
     include: {
       model: Product
     }
