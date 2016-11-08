@@ -23,6 +23,15 @@ select {
   border: none;
 }
 
+h1 {
+  font-size: 40px;
+  margin: 0 0 12px;
+}
+
+h2 {
+  font-size: 32px;
+}
+
 #nav-top {
   display: flex;
   justify-content: space-between;
@@ -77,22 +86,63 @@ footer {
   display: block;
 }
 
+.review-card {
+  width: 100%;
+  min-height: 150px;
+}
+.review-card .mdl-card__title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.review-card .mdl-card__actions {
+  text-align: right;
+}
+
+.review-form {
+  padding-top: 1rem;
+}
+
 .review-form textarea {
   width: 100%;
   height: 15rem;
 }
 
-#product-tabs {
-  max-height: 60vh;
+#product {
+  width: 80%;
+  max-width: 1024px;
+}
+
+#product-right>div:nth-child(2)>div:last-child {
+  max-height: 36vh;
   overflow: scroll;
+  padding: .5rem;
+  border: 1px #E0E0E0 solid;
 }
 
 .below-tabs {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: .5rem;
 }
 
-#product .mdl-tabs__tab {
-  width: 50%;
+.below-tabs select {
+  display: inline-block;
+  margin: .5rem;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+  }
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
 }

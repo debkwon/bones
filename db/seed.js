@@ -18,9 +18,9 @@ const seedCelebs = () => db.Promise.map([
 ], celeb => db.model('celebs').create(celeb))
 
 const seedReviews = () => db.Promise.map([
-  {stars: 2, text: 'My dog does not enjoy wearing these dog collars even though he loooooves Angelina Jolie'},
-  {stars: 5, text: 'OMG Frodo wore this!! My ring finger has never been happier'},
-  {stars: 4, text: 'This ring is pretty great, but Elijah Wood didn\'t really care when I showed him that I bought it and that offends me. 4 stars. I\'ll show you, Elijah!'},
+  {stars: 2, text: 'My dog does not enjoy wearing these dog collars even though he loooooves Angelina Jolie', user_id: 1, product_id: 1},
+  {stars: 5, text: 'OMG Frodo wore this!! My ring finger has never been happier', user_id: 2, product_id: 2},
+  {stars: 4, text: 'This ring is pretty great, but Elijah Wood didn\'t really care when I showed him that I bought it and that offends me. 4 stars. I\'ll show you, Elijah!', user_id: 1, product_id: 3},
 ], review => db.model('reviews').create(review))
 
 const seedOrders = () => db.Promise.map([
