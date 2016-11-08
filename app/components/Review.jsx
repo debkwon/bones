@@ -28,8 +28,8 @@ export default class Review extends React.Component {
 
   addReview(state) {
     axios.post('/api/reviews', state)
-    .then(()=>{
-      browserHistory.push('/')
+    .then((res)=>{
+      if (res.status === 201) browserHistory.push('/')
     })
     .catch(err => console.error(err.stack))
   }
