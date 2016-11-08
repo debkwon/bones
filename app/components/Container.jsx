@@ -30,11 +30,16 @@ export class Container extends Component {
               <li>Browse by Category</li>
               <li>Browse by Celebrity</li>
               <li id="searchbar">
-                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input className="mdl-textfield__input" type="text" id="keyword"></input>
-                  <label className="mdl-textfield__label" for="keyword">Keywords</label>
-                </div>
-                <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Search</button>
+                <form onSubmit={(evt)=>{
+                  evt.preventDefault()
+                  console.log(evt.target.keyword.value)
+                }}>
+                  <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input className="mdl-textfield__input" type="text" id="keyword"></input>
+                    <label className="mdl-textfield__label" for="keyword">Search by product name</label>
+                  </div>
+                  <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type='submit'>Search</button>
+                </form>
               </li>
             </ul>
           </AppBar>

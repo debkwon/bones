@@ -81,6 +81,12 @@ nav ul li:last-child{
 
 #searchbar label {
   padding-left: .5rem;
+  margin-top: -20px;
+  margin-bottom: -20px;
+}
+
+#searchbar div {
+  padding: 0;
 }
 
 #login form {
