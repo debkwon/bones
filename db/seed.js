@@ -12,9 +12,9 @@ const seedProducts = () => db.Promise.map([
 ], product => db.model('products').create(product))
 
 const seedCelebs = () => db.Promise.map([
-  {name: 'Hillary Clinton', celebType: 'Future President',list: 'A', alive: true},
-  {name: 'Elijah Wood', celebType: 'actor', list: 'A', alive: true},
-  {name: 'Emma Watson', celebType: 'actor', list: 'A', alive: true},
+  {name: 'Hillary Clinton', celebType: 'Future President',list: 'A', alive: true, photoURL: 'http://content-img.newsinc.com/jpg/2975/31007135/39164252.jpg?t=1465906020'},
+  {name: 'Elijah Wood', celebType: 'actor', list: 'A', alive: true, photoURL: 'https://s-media-cache-ak0.pinimg.com/originals/72/6e/34/726e34f3b045660736abff784a1775a3.jpg'},
+  {name: 'Emma Watson', celebType: 'actor', list: 'A', alive: true, photoURL: 'http://media.vogue.com/r/c_1,h_4000,w_3280/2015/02/20/05-emma-watson-prince-harry.jpg'},
 ], celeb => db.model('celebs').create(celeb))
 
 const seedReviews = () => db.Promise.map([

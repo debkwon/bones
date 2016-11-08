@@ -132,6 +132,10 @@ footer {
   margin: .5rem;
 }
 
+#celebs img {
+  max-height: 250px;
+}
+
 div.stars {
  width: 270px;
  display: inline-block;

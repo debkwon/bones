@@ -20,9 +20,11 @@ import OrdersContainer from './components/Orders'
 import OrdersPanelContainer from './components/OrdersPanel'
 import WhoAmI from './components/WhoAmI'
 import AdminContainer from './components/Admin'
+import Celeb from './components/Celeb'
 
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
+import { fetchCelebs } from './reducers/celeb'
 import { fetchOrders } from './reducers/orders'
 import { updateCartId } from './reducers/cart'
 import axios from 'axios'
@@ -59,6 +61,7 @@ render (
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
           <Route path="/cart" component={Cart} />
+          <Route path='/celebs' component={Celeb} onEnter={onCelebsEnter}/>
           <Route
             path="/orders"
             component={OrdersContainer}
@@ -75,6 +78,11 @@ render (
 
 function onProductsEnter () {
   const thunk = fetchProducts();
+  store.dispatch(thunk)
+}
+
+function onCelebsEnter () {
+  const thunk = fetchCelebs();
   store.dispatch(thunk)
 }
 
