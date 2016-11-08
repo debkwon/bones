@@ -37,7 +37,7 @@ export default class Review extends React.Component {
           e.preventDefault()
           this.addReview(this.state)
           }}>
-         <input className="star star-1" id="star-5" type="radio" name="star5" value="5" onChange={(e) => this.updateStar(e)}/>
+         <input className="star star-5" id="star-5" type="radio" name="star5" value="5" onChange={(e) => this.updateStar(e)}/>
          <label className="star star-5" htmlFor="star-5"></label>
          <input className="star star-4" id="star-4" type="radio" name="star4" value="4" onChange={(e) => this.updateStar(e)}/>
          <label className="star star-4" htmlFor="star-4"></label>
