@@ -1,44 +1,7 @@
-'use strict'
 
-import React, { Component } from 'react';
-import { Link } from 'react-router';
-import { render } from 'react-dom';
-import { connect } from 'react-redux';
-import {OrdersPanel} from './OrdersPanel';
-
-import {Tabs, Tab} from 'material-ui/Tabs';
-
-const styles = {
-  headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400,
-  },
-};
-
-export class Orders extends React.Component {
-
-  constructor() {
-    super();
-    this.state = {
-      value: 'all orders',
-    }
-    this.handleChange.bind(this)
-  }
-
-  handleChange (value) {
-    this.setState({
-      value: value,
-    });
-  };
+export class AdminOrders extends Component {
 
   render() {
-
-    const {orders} = this.props || [];
-
-    console.log(this.props)
-
     return (
       <div id="orders-container" style={{margin: 5, padding: 5}}>
         <Tabs
@@ -47,6 +10,12 @@ export class Orders extends React.Component {
           <Tab label="All Orders" value="all orders" >
             <div>
               <OrdersPanel filteredOrders={orders} />
+            </div>
+          </Tab>
+          <Tab label="Not Submitted" value="not submitted" >
+            <div>
+              <OrdersPanel filteredOrders={
+                orders.filter(order => order.status === 'not submitted')} />
             </div>
           </Tab>
           <Tab label="Processing" value="processing">
@@ -75,12 +44,14 @@ export class Orders extends React.Component {
           </Tab>
         </Tabs>
       </div>
-    )
-  }
+  )}
 }
 
-const mapStateToProps = (state) => ({
-  orders: state.orders
+const mapStateToProps = ({auth}) => ({
+  auth
 })
 
-export default connect(mapStateToProps)(Orders);
+export default connect (
+  mapStateToProps,
+  null
+) (Admin)

@@ -41,14 +41,13 @@ export class Product extends React.Component {
   }
 
   render() {
-    console.log("this.props?", this.props)
     const { currentProduct } = this.props || {}
     return (
-      <div className="container mdl-grid" id="product">
+      <div className="mdl-grid" id="product">
         <div className="mdl-cell mdl-cell--5-col">
           <img src={currentProduct.photoURL} />
         </div>
-        <div className="mdl-cell mdl-cell--7-col">
+        <div className="mdl-cell mdl-cell--7-col group" id="product-right">
           <h1>{currentProduct.name}</h1>
           <Tabs
             value={this.state.value}
@@ -61,16 +60,24 @@ export class Product extends React.Component {
                 </p>
               </div>
             </Tab>
-            <Tab label="Reviews" value="reviews">
+            <Tab label="Reviews" value="reviews" className="reviews">
               <div>
                 <h2>Who Loves It</h2>
-                  {this.props.reviews ? this.props.reviews.map(review =>(
-                    <div className="review">
-                      <span>{review.stars}</span>
-                      <p>{review.text}</p>
-                      <span>{review.user}</span>
-                    </div>
-                  ))
+                  {this.props.currentProduct.reviews ? this.props.currentProduct.reviews.map(review =>{
+                    var stars = ''
+                    for (let i = 0; i < review.stars; i++) {
+                      stars += '⭐ '
+                    }
+                    return (
+                    <div className="review-card mdl-card mdl-card mdl-shadow--2dp">
+                      <div className='mdl-card__title'>
+                        <div>{review.user.firstName} {review.user.lastName.substr(0, 1)}.</div>
+                        <div>{stars}/ 5 stars</div>
+                      </div>
+                      <div className='mdl-card__supporting-text'>{review.text}</div>
+                      <div className='mdl-card__actions'>{review.created_at.substr(0, 10)}</div>
+                    </div>)}
+                  )
                   :
                   <h3>
                   There are no reviews for this product yet
@@ -113,6 +120,7 @@ export class Product extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentProduct: state.currentProduct });
+  currentProduct: state.currentProduct,
+   });
 
 export default connect(mapStateToProps, null)(Product);

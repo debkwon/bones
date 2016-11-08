@@ -6,7 +6,7 @@ import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 
-import styles from './style/main.css'
+//import styles from './style/main.css'
 import store from './store'
 
 import Container from './components/Container'
@@ -19,6 +19,7 @@ import ProductContainer from './components/Product'
 import OrdersContainer from './components/Orders'
 import OrdersPanelContainer from './components/OrdersPanel'
 import WhoAmI from './components/WhoAmI'
+import AdminContainer from './components/Admin'
 
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
@@ -62,6 +63,9 @@ render (
             path="/orders"
             component={OrdersContainer}
             onEnter={onOrdersEnter} />
+          <Route
+            path="/admin"
+            component={AdminContainer} />
         </Route>
       </Router>
     </Provider>
