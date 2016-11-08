@@ -3,6 +3,7 @@ import store from '../store';
 import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {orange500, blue500, gray500} from 'material-ui/styles/colors';

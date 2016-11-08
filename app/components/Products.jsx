@@ -17,9 +17,8 @@ export class Products extends React.Component {
   constructor() {
     super()
     this.add = this.add.bind(this);
-    this.del = this.del.bind(this);
-
   }
+
   add(product_obj){
     let total;
     // console.log(this.props, "this.props in add product")
@@ -60,16 +59,6 @@ export class Products extends React.Component {
         store.dispatch(updateCartId({order_id: res.data.id, user_id: this.props.auth.id, products: [product_obj.product]}))
       )
       .catch(err=> console.log(err.stack))
-
-    }
-  }
-
-  del(product){
-    console.log("DEL",product);
-    if (!this.props.auth && !this.props.cart.order_id){ //if user is not logged and the order id is null
-
-
-
     }
   }
 
@@ -99,7 +88,6 @@ export class Products extends React.Component {
                   </div>
                 </Link>
                   <RaisedButton type="submit" label="ADD" primary={true} onClick={evt=>{ evt.preventDefault(); this.add({product});}}/>
-                  <RaisedButton type="submit" label="DELETE" primary={true}  onClick={evt=>{ evt.preventDefault(); this.del({product});}}/>
               </div>
             ))
           }
