@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import IconButton from 'material-ui/IconButton';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
+import {browserHistory} from 'react-router';
 
 export default class Review extends React.Component {
   constructor(){
@@ -27,7 +28,9 @@ export default class Review extends React.Component {
 
   addReview(state) {
     axios.post('/api/reviews', state)
-    .then(res => console.log(res))
+    .then(()=>{
+      browserHistory.push('/')
+    })
     .catch(err => console.error(err.stack))
   }
 

@@ -66,8 +66,8 @@ render (
           <Route
             path="/reviews"
             component={Review} />
-          <Route 
-            path="/cart"   
+          <Route
+            path="/cart"
             component={Cart} />
           <Route
             path="/orders"
