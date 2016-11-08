@@ -29,7 +29,7 @@ export class Celebs extends React.Component {
                     <img src={celeb.photoURL}/>
                   </div>
                   <div className="mdl-card__title">
-                  <Link to={`/products/${celeb.id}`}>
+                  <Link to={`/celebs/${celeb.id}`}>
                     <span>{celeb.name}</span>
                   </Link>
                   </div>
