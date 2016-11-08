@@ -29,7 +29,13 @@ export class Container extends Component {
               <li><Link to='/'>All</Link></li>
               <li>Browse by Category</li>
               <li>Browse by Celebrity</li>
-              <li>Search by Keyword</li>
+              <li id="searchbar">
+                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input className="mdl-textfield__input" type="text" id="keyword"></input>
+                  <label className="mdl-textfield__label" for="keyword">Keywords</label>
+                </div>
+                <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Search</button>
+              </li>
             </ul>
           </AppBar>
         </div>

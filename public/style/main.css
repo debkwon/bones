@@ -71,6 +71,18 @@ nav ul li:last-child{
   margin-left: auto;
 }
 
+#searchbar input {
+  background: #fff;
+  height: 36px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  padding-left: .5rem;
+}
+
+#searchbar label {
+  padding-left: .5rem;
+}
+
 #login form {
   padding: 1rem;
 }
