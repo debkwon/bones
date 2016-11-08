@@ -43,11 +43,11 @@ export class Product extends React.Component {
   render() {
     const { currentProduct } = this.props || {}
     return (
-      <div className="container mdl-grid group" id="product">
+      <div className="mdl-grid" id="product">
         <div className="mdl-cell mdl-cell--5-col">
           <img src={currentProduct.photoURL} />
         </div>
-        <div className="mdl-cell mdl-cell--7-col group">
+        <div className="mdl-cell mdl-cell--7-col group" id="product-right">
           <h1>{currentProduct.name}</h1>
           <Tabs
             value={this.state.value}
@@ -60,7 +60,7 @@ export class Product extends React.Component {
                 </p>
               </div>
             </Tab>
-            <Tab label="Reviews" value="reviews">
+            <Tab label="Reviews" value="reviews" className="reviews">
               <div>
                 <h2>Who Loves It</h2>
                   {this.props.currentProduct.reviews ? this.props.currentProduct.reviews.map(review =>{
