@@ -63,15 +63,20 @@ export class Product extends React.Component {
             <Tab label="Reviews" value="reviews">
               <div>
                 <h2>Who Loves It</h2>
-                  {this.props.currentProduct.reviews ? this.props.currentProduct.reviews.map(review =>(
+                  {this.props.currentProduct.reviews ? this.props.currentProduct.reviews.map(review =>{
+                    var stars = ''
+                    for (let i = 0; i < review.stars; i++) {
+                      stars += '⭐ '
+                    }
+                    return (
                     <div className="review-card mdl-card mdl-card mdl-shadow--2dp">
                       <div className='mdl-card__title'>
                         <div>{review.user.firstName} {review.user.lastName.substr(0, 1)}.</div>
-                        <div>{review.stars} stars</div>
+                        <div>{stars}/ 5 stars</div>
                       </div>
                       <div className='mdl-card__supporting-text'>{review.text}</div>
                       <div className='mdl-card__actions'>{review.created_at.substr(0, 10)}</div>
-                    </div>)
+                    </div>)}
                   )
                   :
                   <h3>
