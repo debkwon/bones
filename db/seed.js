@@ -6,9 +6,9 @@ const seedUsers = () => db.Promise.map([
 ], user => db.model('users').create(user))
 
 const seedProducts = () => db.Promise.map([
-  {name: `Hillary's Pantsuit`, price: 350.00, description: 'Classic red pantsuit, worn at the Democratic National Convention 2016', categories: ['Clothing'], quantity: 5},
-  {name: `Elijah Woods's Frodo Ring`, price: 13000, description: 'Made from real Elven magic', categories:['Film', 'Fantasy'], quantity: 8},
-  {name: `Emma Watson's Hermione Wig`, description:'The bushy but loveable mess from Harry Potter and the Chamber of Secrets', price: 175.00,categories: ['Costume', 'Hair'], quantity: 10},
+  {name: `Hillary's Pantsuit`, price: 350.00, description: 'Classic red pantsuit, worn at the Democratic National Convention 2016', categories: ['Clothing'], quantity: 5, photoURL: 'http://s1.r29static.com//bin/entry/567/x,80/1660164/image.jpg'},
+  {name: `Elijah Woods's Frodo Ring`, price: 13000, description: 'Made from real Elven magic', categories:['Film', 'Fantasy'], quantity: 8, photoURL:'https://flavorwire.files.wordpress.com/2012/08/doom.jpg'},
+  {name: `Emma Watson's Hermione Wig`, description:'The bushy but loveable mess from Harry Potter and the Chamber of Secrets', price: 175.00,categories: ['Costume', 'Hair'], quantity: 10, photoURL: 'http://worldtimes24.com/wp-content/uploads/2015/11/pic713-620x330.jpg'},
 ], product => db.model('products').create(product))
 
 const seedCelebs = () => db.Promise.map([
@@ -24,7 +24,7 @@ const seedReviews = () => db.Promise.map([
 ], review => db.model('reviews').create(review))
 
 const seedOrders = () => db.Promise.map([
-  {shippingDate: 3/22/16, status: 'shipped', total: 32.45, user_id: 1},
+  {shippingDate: '3/22/16', status: 'shipped', total: 32.45, user_id: 1},
   {shippingDate: '4/22/16', status: 'cancelled', total: 42.45, user_id: 1},
   {shippingDate: '5/22/16', status: 'processing', total: 52.45, user_id: 2},
   {shippingDate: '6/22/16', status: 'delivered', total: 62.45, user_id: 2},

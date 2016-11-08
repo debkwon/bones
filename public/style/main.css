@@ -132,6 +132,7 @@ footer {
   margin: .5rem;
 }
 
+#productsTable img,
 #celebs img {
   max-height: 250px;
 }
