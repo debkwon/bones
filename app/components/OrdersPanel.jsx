@@ -19,8 +19,9 @@ export class OrdersPanel extends React.Component {
     // This never shows that you're logged in -- how do you grab the auth state?
     const {filteredOrders} = this.props;
     let displayOrders;
-    console.log(filteredOrders)
+    
     // figure out how to link to user; if(true) will become something like if (this.state.auth)
+
     if (true) {
       return (
         <div>
@@ -28,8 +29,8 @@ export class OrdersPanel extends React.Component {
           filteredOrders && filteredOrders.map(order => (
             <Paper style={{margin: 20, padding: 5, backgroundColor: grey200}}key={order.id}>
               <Subheader style={{margin: 20}}>Order Created on {order.created_at.slice(0, 10)}</Subheader>
-              <Table>
-                <TableHeader>
+              <Table selectable={false} >
+                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                   <TableRow>
                     <TableHeaderColumn>Product</TableHeaderColumn>
                     <TableHeaderColumn>Purchase Price</TableHeaderColumn>
@@ -37,7 +38,7 @@ export class OrdersPanel extends React.Component {
                     <TableHeaderColumn></TableHeaderColumn>
                   </TableRow>
                 </TableHeader>
-                <TableBody>
+                <TableBody displayRowCheckbox={false}>
                   {
                     order.products && order.products.map(unit => (
                         <TableRow key={unit.id}>
@@ -50,7 +51,7 @@ export class OrdersPanel extends React.Component {
                               href="products/:productId"
                               secondary={true}
                             >
-                              <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                              <i className="fa fa-shopping-bag" aria-hidden="true"></i>
                             </RaisedButton>
                           </TableRowColumn>
                         </TableRow>

@@ -10,7 +10,7 @@ const OrderProduct = db.define('order_product', {
     defaultValue: 1
   },
   pricePerUnit: {
-    type: Sequelize.FLOAT
+    type: Sequelize.FLOAT(15,2)
   },
 },
 {
