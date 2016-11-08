@@ -6,7 +6,7 @@ export default class Review extends React.Component {
   constructor(){
     super()
     this.state = {
-      starRating: 0,
+      stars: 0,
       text: ""
     }
     this.updateStar = this.updateStar.bind(this)
@@ -16,7 +16,7 @@ export default class Review extends React.Component {
 
   updateStar(e) {
     let newStarRating = +(e.target.value);
-    this.setState({starRating: newStarRating})
+    this.setState({stars: newStarRating})
   }
 
   updateText(e) {
