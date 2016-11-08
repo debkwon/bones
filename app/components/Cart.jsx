@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {orange500, blue500, gray500} from 'material-ui/styles/colors';
 import Chip from 'material-ui/Chip';
+import {updateProductQuantityInDb} from '../reducers/cart';
 const addStyle = {
   width:5
 };
@@ -62,15 +63,20 @@ export class Cart extends Component {
         // })
 
   }
-  upquantity(q, product){
-    console.log("Quantity: ", q);
-    console.log("product", product);
+  upquantity(newQuantity, product, productIdx){
+    let oldQuantity = product.order_product.quantity //old quantity
+    let amountToChange = (Math.abs(newQuantity - oldQuantity)) * product.price;
+    let storeTotal = this.props.cart.total
+    let tempCart = this.props.cart.products;
+    tempCart[productIdx]['order_product']['quantity'] = newQuantity;
+    if (oldQuantity < newQuantity) { storeTotal+= amountToChange} //if there are more items to be added, increase the store state total
+    else storeTotal -= amountToChange //otherewise, decrease the total
+    store.dispatch(updateProductQuantityInDb(tempCart,storeTotal)) //update the store's cart to reflect new product quantity and cart total
+    axios.put(`/api/orders/${this.props.cart.order_id}`, {total: storeTotal, user_id: this.props.cart.user_id, products: tempCart})
+    .then((res) => console.log(res))
   }
 
   render() {
-    console.log("PROPS!!", this.props);
-    console.log("state", store.getState());
-
   return (
     <div style={Divstyle}>
     <h1>My Cart</h1>
@@ -87,13 +93,13 @@ export class Cart extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={showCheckboxes}  >
-             { this.props.cart.products && this.props.cart.products.map(product => (
+             { this.props.cart.products && this.props.cart.products.map((product, idx) => (
                 <TableRow key={product.id}>
                   <TableRowColumn><img src={product.photoURL}/></TableRowColumn>
                   <TableRowColumn>{product.name}</TableRowColumn>
                   <TableRowColumn>{product.description}</TableRowColumn>
                   <TableRowColumn>
-                     <select onChange={(e) => updateQuantity.setState(e.target.value)}>
+                     <select onChange={(e) => this.upquantity(+(e.target.value), product, idx)} defaultValue={product.order_product.quantity}>
                       <option value='1'>1</option>
                       <option value='2'>2</option>
                       <option value='3'>3</option>
@@ -105,7 +111,6 @@ export class Cart extends Component {
                       <option value='9'>9</option>
                       <option value='10'>10</option>
                     </select>
-                      <TextField defaultValue = {product.quantity} name="quantitytext" onChange={evt=>{console.log("qq", evt.target.value); this.upquantity(evt.target.value, {product});}}/>
                   </TableRowColumn>
                   <TableRowColumn>
                     {
