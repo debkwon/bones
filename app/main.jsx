@@ -24,8 +24,8 @@ import AdminContainer from './components/Admin'
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
 import { fetchOrders } from './reducers/orders'
-
-
+import { updateCartId } from './reducers/cart'
+import axios from 'axios'
 // for Google's Material UI themes
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -44,7 +44,7 @@ render (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
       <Router history={browserHistory}>
-        <Route path="/" component={Container}>
+        <Route path="/" component={Container} onEnter={onCartEnter} >
           <IndexRedirect to="/products" />
           <Route
             path="/products"
@@ -54,21 +54,11 @@ render (
             path="/products/:productId"
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
-          <Route
-            path="/login"
-            component={Login} />
-          <Route
-            path="/logout"
-            component={WhoAmI} />
-          <Route
-            path="/user"
-            component={User} />
-          <Route
-            path="/reviews"
-            component={Review} />
-          <Route 
-            path="/cart"   
-            component={Cart} />
+          <Route path="/login" component={Login} />
+          <Route path="/logout" component={WhoAmI} />
+          <Route path="/user" component={User} />
+          <Route path="/reviews" component={Review} />
+          <Route path="/cart" component={Cart} />
           <Route
             path="/orders"
             component={OrdersContainer}
@@ -92,8 +82,15 @@ function onCurrentProductEnter (nextRouterState) {
   console.log("this is the nextRouterState: ", nextRouterState)
   const productId = nextRouterState.params.productId;
   const thunk = fetchCurrentProduct(productId);
-
   store.dispatch(thunk);
+  // var id = parseInt(window.localStorage.getItem('orderId'));
+  //   console.load("here",id);
+  // if (id){
+  //   console.load("here",id);
+  //   axios.get(`/api/orders/ordersproducts/${id}`)
+  //   .then(orders =>{console.log("load", orders); store.dispatch(updateCartId(orders))})
+  //   //{user_id:res.data[0].user_id, order_id:res.data[0].id, products:res.data[0].products}
+  // }
 };
 
 function onOrdersEnter (nextRouterState) {
@@ -103,3 +100,13 @@ function onOrdersEnter (nextRouterState) {
   store.dispatch(thunk)
 }
 
+function onCartEnter(nextRouterState){
+  var id = parseInt(window.localStorage.getItem('orderId'));
+  if (id){
+    axios.get(`/api/orders/ordersproducts/${id}`)
+    .then(orders => {console.log("here",orders);//store.dispatch(updateCartId(orders))
+                    if(orders.data.length>0) store.dispatch(updateCartId({user_id:null, order_id:id, products:orders.data[0].products}))
+                    else store.dispatch(updateCartId({user_id:null, order_id:id, products:[]}))
+  })
+  }
+}

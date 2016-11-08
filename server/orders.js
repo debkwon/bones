@@ -78,14 +78,10 @@ router.post('/', (req, res, next) =>{
         pricePerUnit: orderProduct.price,
         quantity: orderProduct.quantity
       })
-    ).then(rows => {
-      if(!req.session.orderId){
+    ).then(rows =>
 
-        req.session.orderId = order.id;
+       res.status(201).send(order)
 
-      }
-       res.status(201).send({order:order, sessionOrderId:req.session.orderId})
-      }
       )
   )
   .catch(next)

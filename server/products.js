@@ -70,5 +70,8 @@ router.delete('/:productId', function (req, res, next){
       res.status(200).send('You\'ve deleted your unshiny product. Good riddance, matte.'))
     .catch(next)
 })
+// router.get('/delete', function(req, res, next){
+//    window.localStorage.removeItem('image');
+// })
 
 module.exports = router;
