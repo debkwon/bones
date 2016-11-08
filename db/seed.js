@@ -6,15 +6,15 @@ const seedUsers = () => db.Promise.map([
 ], user => db.model('users').create(user))
 
 const seedProducts = () => db.Promise.map([
-  {name: `Hillary's Pantsuit`, price: 350.00, description: 'Classic red pantsuit, worn at the Democratic National Convention 2016', categories: ['Clothing'], quantity: 5},
-  {name: `Elijah Woods's Frodo Ring`, price: 13000, description: 'Made from real Elven magic', categories:['Film', 'Fantasy'], quantity: 8},
-  {name: `Emma Watson's Hermione Wig`, description:'The bushy but loveable mess from Harry Potter and the Chamber of Secrets', price: 175.00,categories: ['Costume', 'Hair'], quantity: 10},
+  {name: `Hillary's Pantsuit`, price: 350.00, description: 'Classic red pantsuit, worn at the Democratic National Convention 2016', categories: ['Clothing'], quantity: 5, photoURL: 'http://s1.r29static.com//bin/entry/567/x,80/1660164/image.jpg'},
+  {name: `Elijah Woods's Frodo Ring`, price: 13000, description: 'Made from real Elven magic', categories:['Film', 'Fantasy'], quantity: 8, photoURL:'https://flavorwire.files.wordpress.com/2012/08/doom.jpg'},
+  {name: `Emma Watson's Hermione Wig`, description:'The bushy but loveable mess from Harry Potter and the Chamber of Secrets', price: 175.00,categories: ['Costume', 'Hair'], quantity: 10, photoURL: 'http://worldtimes24.com/wp-content/uploads/2015/11/pic713-620x330.jpg'},
 ], product => db.model('products').create(product))
 
 const seedCelebs = () => db.Promise.map([
-  {name: 'Hillary Clinton', celebType: 'Future President',list: 'A', alive: true},
-  {name: 'Elijah Wood', celebType: 'actor', list: 'A', alive: true},
-  {name: 'Emma Watson', celebType: 'actor', list: 'A', alive: true},
+  {name: 'Hillary Clinton', celebType: 'Future President',list: 'A', alive: true, photoURL: 'http://content-img.newsinc.com/jpg/2975/31007135/39164252.jpg?t=1465906020'},
+  {name: 'Elijah Wood', celebType: 'actor', list: 'A', alive: true, photoURL: 'https://s-media-cache-ak0.pinimg.com/originals/72/6e/34/726e34f3b045660736abff784a1775a3.jpg'},
+  {name: 'Emma Watson', celebType: 'actor', list: 'A', alive: true, photoURL: 'http://media.vogue.com/r/c_1,h_4000,w_3280/2015/02/20/05-emma-watson-prince-harry.jpg'},
 ], celeb => db.model('celebs').create(celeb))
 
 const seedReviews = () => db.Promise.map([
@@ -24,7 +24,7 @@ const seedReviews = () => db.Promise.map([
 ], review => db.model('reviews').create(review))
 
 const seedOrders = () => db.Promise.map([
-  {shippingDate: 3/22/16, status: 'shipped', total: 32.45, user_id: 1},
+  {shippingDate: '3/22/16', status: 'shipped', total: 32.45, user_id: 1},
   {shippingDate: '4/22/16', status: 'cancelled', total: 42.45, user_id: 1},
   {shippingDate: '5/22/16', status: 'processing', total: 52.45, user_id: 2},
   {shippingDate: '6/22/16', status: 'delivered', total: 62.45, user_id: 2},

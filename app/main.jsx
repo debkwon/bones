@@ -20,11 +20,15 @@ import OrdersContainer from './components/Orders'
 import OrdersPanelContainer from './components/OrdersPanel'
 import WhoAmI from './components/WhoAmI'
 import AdminContainer from './components/Admin'
+import Celeb from './components/Celeb'
+import CelebProducts from './components/CelebProducts'
 
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
+import { fetchCelebs } from './reducers/celeb'
 import { fetchOrders } from './reducers/orders'
 import { updateCartId } from './reducers/cart'
+import { fetchCurrentCeleb } from './reducers/celebProducts'
 import axios from 'axios'
 // for Google's Material UI themes
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -54,22 +58,14 @@ render (
             path="/products/:productId"
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
-          <Route
-            path="/login"
-            component={Login} />
-          <Route
-            path="/logout"
-            component={WhoAmI} />
-          <Route
-            path="/user"
-            component={User} />
-          <Route
-            path="/reviews"
-            component={Review} />
-          <Route
-            path="/cart"
-            component={Cart} />
 
+          <Route path="/login" component={Login} />
+          <Route path="/logout" component={WhoAmI} />
+          <Route path="/user" component={User} />
+          <Route path="/reviews" component={Review} />
+          <Route path="/cart" component={Cart} />
+          <Route path='/celebs' component={Celeb} onEnter={onCelebsEnter}/>
+          <Route path='/celebs/:celebId' component={CelebProducts} onEnter={onCelebProductEnter}/>
           <Route
             path="/orders"
             component={OrdersContainer}
@@ -89,6 +85,11 @@ function onProductsEnter () {
   store.dispatch(thunk)
 }
 
+function onCelebsEnter () {
+  const thunk = fetchCelebs();
+  store.dispatch(thunk)
+}
+
 function onCurrentProductEnter (nextRouterState) {
   console.log("this is the nextRouterState: ", nextRouterState)
   const productId = nextRouterState.params.productId;
@@ -103,6 +104,13 @@ function onCurrentProductEnter (nextRouterState) {
   //   //{user_id:res.data[0].user_id, order_id:res.data[0].id, products:res.data[0].products}
   // }
 };
+
+function onCelebProductEnter (nextRouterState) {
+  console.log("this is the nextRouterState", nextRouterState)
+  const celebId = nextRouterState.params.celebId;
+  const thunk = fetchCurrentCeleb(celebId);
+  store.dispatch(thunk);
+}
 
 function onOrdersEnter (nextRouterState) {
   const auth = store.getState().auth || {}
