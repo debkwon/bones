@@ -48,7 +48,7 @@ export const whoami = () =>
         console.log("RES",res);
         return axios.get(`/api/orders/users/${res.user.id}/not%20submitted`)
       }
-        )
+      )
       .then(res=> {console.log("get res", res); if(res){console.log("data1", res.data); return axios.get(`/api/orders/ordersproducts/${res.data[0].id}`)}})
       .then(res=>{
          if(res && res.data.length !== 0){
@@ -56,7 +56,6 @@ export const whoami = () =>
           dispatch(updateCartId({user_id:res.data[0].user_id, order_id:res.data[0].id, products:res.data[0].products}))
          }
       })
-
       .catch(failed => console.log(failed))
 
 // export const getcart =  user=>
