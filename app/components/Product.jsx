@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import Review from './Review';
+import { Link } from 'react-router'
 
 import Chip from 'material-ui/Chip';
 import {Tabs, Tab} from 'material-ui/Tabs';
