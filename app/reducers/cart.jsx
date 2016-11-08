@@ -1,4 +1,4 @@
-const reducer = (state={products:[], user_id: null, order_id: null}, action) => {
+const reducer = (state={products:[], user_id: null, order_id: null, total:0}, action) => {
   switch(action.type) {
     case INITIAL_CARTS:
         return action.orders
@@ -11,17 +11,14 @@ const reducer = (state={products:[], user_id: null, order_id: null}, action) => 
             }
         }
         return action.orders.splice(i,1);
-
+    case UPDATE_QUANTITY:
+        return Object.assign({}, state, {products: action.products, total:action.total})
    }
      return state
 }
 const INITIAL_CARTS = 'INITIAL_CARTS';
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
-// const AUTHENTICATED = 'AUTHENTICATED'
-// const UPDATE_USER = 'UPDATE_USER'
-// export const authenticated = user => ({
-//   type: AUTHENTICATED, user
-// })
+const UPDATE_QUANTITY = 'UPDATE_QUANTITY';
 
 export const updateCartId = orders => ({
     type: INITIAL_CARTS,
@@ -32,6 +29,11 @@ export const removeProductId = product => ({
     product
 })
 
+export const updateProductQuantityInDb = (cartStateCopy,total) => ({
+    type: UPDATE_QUANTITY,
+    products: cartStateCopy,
+    total:total
+})
 
 // export const login = (username, password) =>
 //   dispatch => {

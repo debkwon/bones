@@ -3,7 +3,6 @@ import store from '../store';
 import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {orange500, blue500, gray500} from 'material-ui/styles/colors';
@@ -30,7 +29,6 @@ export class Cart extends Component {
   constructor() {
     super()
     this.state = store.getState();
-
     this.del = this.del.bind(this);
     this.sub = this.sub.bind(this);
     this.upquantity = this.upquantity.bind(this);
@@ -67,7 +65,6 @@ export class Cart extends Component {
   upquantity(q, product){
     console.log("Quantity: ", q);
     console.log("product", product);
-    //dispatch and update quantity for single product
   }
 
   render() {
@@ -96,7 +93,19 @@ export class Cart extends Component {
                   <TableRowColumn>{product.name}</TableRowColumn>
                   <TableRowColumn>{product.description}</TableRowColumn>
                   <TableRowColumn>
-                      <TextField  defaultValue = {product.quantity} name="quantitytext" onChange={evt=>{console.log("qq", evt.target.value); this.upquantity(evt.target.value, {product});}}/>
+                     <select onChange={(e) => updateQuantity.setState(e.target.value)}>
+                      <option value='1'>1</option>
+                      <option value='2'>2</option>
+                      <option value='3'>3</option>
+                      <option value='4'>4</option>
+                      <option value='5'>5</option>
+                      <option value='6'>6</option>
+                      <option value='7'>7</option>
+                      <option value='8'>8</option>
+                      <option value='9'>9</option>
+                      <option value='10'>10</option>
+                    </select>
+                      <TextField defaultValue = {product.quantity} name="quantitytext" onChange={evt=>{console.log("qq", evt.target.value); this.upquantity(evt.target.value, {product});}}/>
                   </TableRowColumn>
                   <TableRowColumn>
                     {

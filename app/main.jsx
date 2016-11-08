@@ -105,8 +105,12 @@ function onCartEnter(nextRouterState){
   if (id){
     axios.get(`/api/orders/ordersproducts/${id}`)
     .then(orders => {console.log("here",orders);//store.dispatch(updateCartId(orders))
-                    if(orders.data.length>0) store.dispatch(updateCartId({user_id:null, order_id:id, products:orders.data[0].products}))
-                    else store.dispatch(updateCartId({user_id:null, order_id:id, products:[]}))
+                    if(orders.data.length>0) store.dispatch(updateCartId({user_id:null, order_id:id, products:orders.data[0].products, total:orders.data[0].total}))
+
   })
+  }
+  else{
+      store.dispatch(updateCartId({user_id:null, order_id:id, products:[], total:0}));
+
   }
 }

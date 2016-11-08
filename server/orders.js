@@ -89,6 +89,7 @@ router.post('/', (req, res, next) =>{
 
 router.put('/:orderId', (req, res, next) => {
   let orderInfo = {}
+  console.log(req.body, "this is req.body in the put /orderId request!")
   //need to account for what is included in update request
   if (req.body.total) orderInfo.total = req.body.total;
   if (req.body.user_id) orderInfo.user_id = req.body.user_id;
@@ -100,15 +101,15 @@ router.put('/:orderId', (req, res, next) => {
     if (orderProducts) {
       Promise.map(orderProducts, (orderProduct)=>
         OrderProduct.update({pricePerUnit: orderProduct.price,
-        quantity: orderProduct.quantity},{where: {order_id: req.params.orderId,
-          product_id: orderProduct.product_id}})
+        quantity: orderProduct['order_product']['quantity']},{where: {order_id: req.params.orderId,
+          product_id: orderProduct.id}})
         .then((rowsChanged) => {
           if(rowsChanged[0] === 0) {
             OrderProduct.create({
               order_id: req.params.orderId,
               product_id: orderProduct.id,
               pricePerUnit: orderProduct.price,
-              quantity: orderProduct.quantity
+              quantity: orderProduct['order_product']['quantity']
             })
           }
         })
@@ -121,7 +122,7 @@ router.put('/:orderId', (req, res, next) => {
     }
   }
   )
-  .catch(next)
+  .catch(err=> console.log("err",err.stack))
   }
 )
 
