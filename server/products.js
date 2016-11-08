@@ -25,7 +25,9 @@ router.get('/', function (req, res, next) {
     .catch(next)
   }
   else {
-    Product.findAll()
+    Product.findAll({include: [
+      {model: Celeb}
+      ]})
       .then(products =>{
         res.send(products)})
       .catch(next)
@@ -39,7 +41,8 @@ router.get('/:productId', function (req, res, next) {
         model: Review,
         include: [{
           model: User
-        }]}]})
+        }]},
+        {model: Celeb}]})
   .then(product => res.send(product))
   .catch(err => console.log(err))
 })
