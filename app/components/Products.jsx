@@ -42,8 +42,10 @@ export class Products extends React.Component {
       let id = parseInt(window.localStorage.getItem('orderId'));
       total = this.props.cart.total + (product_obj.product.price * product_obj.product.quantity)
       axios.put(`/api/orders/${id}`, {total: total, user_id: null, status: this.props.cart.status, products:this.props.cart.products.concat(product_obj.product)})
-      .then(res=>
-        store.dispatch(updateCartId({order_id: id, user_id: null, products: this.props.cart.data[0].products.concat(product_obj.product)}))
+      .then(res=>{
+        console.log("what", res);
+        store.dispatch(updateCartId({order_id: id, user_id: null, products: this.props.cart.products.concat(product_obj.product)}))
+      }
       )
     }else if(this.props.cart.order_id){
       total = this.props.cart.total + (product_obj.product.price * product_obj.product.quantity)

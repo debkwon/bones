@@ -25,7 +25,7 @@ export const login = (username, password) =>
     axios.post('/api/auth/local/login',
       {username, password})
       .then(() => {
-        browserHistory.push('/orders')
+        browserHistory.push('/')
         return dispatch(whoami())})
       .catch(() => dispatch(whoami()))
 
@@ -44,10 +44,15 @@ export const whoami = () =>
         const user = response.data
         return dispatch(authenticated(user))
       })
-      .then(res => axios.get(`/api/orders/users/${res.user.id}/not%20submitted`))
-      .then(res=> { if(res.data.length !== 0) axios.get(`/api/orders/ordersproducts/${res.data[0].id}`)})
+      .then(res =>{
+        console.log("RES",res);
+        return axios.get(`/api/orders/users/${res.user.id}/not%20submitted`)
+      }
+        )
+      .then(res=> {console.log("get res", res); if(res){console.log("data1", res.data); return axios.get(`/api/orders/ordersproducts/${res.data[0].id}`)}})
       .then(res=>{
          if(res && res.data.length !== 0){
+          console.log("data", res.data);
           dispatch(updateCartId({user_id:res.data[0].user_id, order_id:res.data[0].id, products:res.data[0].products}))
          }
       })

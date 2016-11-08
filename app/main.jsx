@@ -43,7 +43,7 @@ render (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
       <Router history={browserHistory}>
-        <Route path="/" component={Container} onEnter={onCartEnter}>
+        <Route path="/" component={Container} onEnter={onCartEnter} >
           <IndexRedirect to="/products" />
           <Route
             path="/products"
@@ -53,29 +53,11 @@ render (
             path="/products/:productId"
             component={ProductContainer}
             onEnter={onCurrentProductEnter}/>
-<<<<<<< HEAD
           <Route path="/login" component={Login} />
           <Route path="/logout" component={WhoAmI} />
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
           <Route path="/cart" component={Cart} />
-=======
-          <Route
-            path="/login"
-            component={Login} />
-          <Route
-            path="/logout"
-            component={WhoAmI} />
-          <Route
-            path="/user"
-            component={User} />
-          <Route
-            path="/reviews"
-            component={Review} />
-          <Route 
-            path="/cart"   
-            component={Cart} />
->>>>>>> c2091454d62a71192d4bb79973dc222efc846e11
           <Route
             path="/orders"
             component={OrdersContainer}
@@ -96,13 +78,15 @@ function onCurrentProductEnter (nextRouterState) {
   console.log("this is the nextRouterState: ", nextRouterState)
   const productId = nextRouterState.params.productId;
   const thunk = fetchCurrentProduct(productId);
-
   store.dispatch(thunk);
-  var id = parseInt(window.localStorage.getItem('orderId'));
-  if (id){
-    axios.get(`/api/orders/ordersproducts/${id}`)
-    .then(orders => store.dispatch(updateCartId(orders)))
-  }
+  // var id = parseInt(window.localStorage.getItem('orderId'));
+  //   console.load("here",id);
+  // if (id){
+  //   console.load("here",id);
+  //   axios.get(`/api/orders/ordersproducts/${id}`)
+  //   .then(orders =>{console.log("load", orders); store.dispatch(updateCartId(orders))})
+  //   //{user_id:res.data[0].user_id, order_id:res.data[0].id, products:res.data[0].products}
+  // }
 };
 
 function onOrdersEnter (nextRouterState) {
@@ -116,6 +100,9 @@ function onCartEnter(nextRouterState){
   var id = parseInt(window.localStorage.getItem('orderId'));
   if (id){
     axios.get(`/api/orders/ordersproducts/${id}`)
-    .then(orders => store.dispatch(updateCartId(orders)))
+    .then(orders => {console.log("here",orders);//store.dispatch(updateCartId(orders))
+                    if(orders.data.length>0) store.dispatch(updateCartId({user_id:null, order_id:id, products:orders.data[0].products}))
+                    else store.dispatch(updateCartId({user_id:null, order_id:id, products:[]}))
+  })
   }
 }
