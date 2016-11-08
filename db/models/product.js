@@ -35,13 +35,6 @@ const Product = db.define('products', {
     defaultValue: 'http://placehold.it/250x150'
   }
 },
-  { 
-    setterMethods: {
-      setDollarValue: function(float) {
-
-      }
-    }
-  },
   {
     instanceMethods: {
       avg_rating: function(){

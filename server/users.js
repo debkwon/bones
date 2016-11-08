@@ -15,7 +15,7 @@ user.get('/', function(req, res, next){
     User.findAll()
     .then(function(users){
         //console.log("users for routes", users);
-        res.json(users);
+        res.send(users);
     })
     .catch(next);
 })

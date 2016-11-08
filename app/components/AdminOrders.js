@@ -1,7 +1,30 @@
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import { Link } from 'react-router';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import AdminOrdersPanel from './AdminOrdersPanel';
+
 
 export class AdminOrders extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 'all orders',
+    }
+  }
+
+  handleChange = (value) => {
+    this.setState({
+      value: value,
+    })
+  }
+
   render() {
+    console.log("These are your props: ", this.props)
+    const { allOrders } = this.props || [];
+    console.log("These are all the orders: ", allOrders)
+
     return (
       <div id="orders-container" style={{margin: 5, padding: 5}}>
         <Tabs
@@ -9,37 +32,32 @@ export class AdminOrders extends Component {
           onChange={e => this.handleChange(e)}>
           <Tab label="All Orders" value="all orders" >
             <div>
-              <OrdersPanel filteredOrders={orders} />
+              <AdminOrdersPanel />
             </div>
           </Tab>
           <Tab label="Not Submitted" value="not submitted" >
             <div>
-              <OrdersPanel filteredOrders={
-                orders.filter(order => order.status === 'not submitted')} />
+              <AdminOrdersPanel />
             </div>
           </Tab>
           <Tab label="Processing" value="processing">
             <div>
-              <OrdersPanel filteredOrders={
-                orders.filter(order => order.status === 'processing')} />
+              <AdminOrdersPanel />
             </div>
           </Tab>
           <Tab label="Shipped" value="shipped">
             <div>
-              <OrdersPanel filteredOrders={
-                orders.filter(order => order.status === 'shipped')} />
+              <AdminOrdersPanel />
             </div>
           </Tab>
           <Tab label="Delivered" value="delivered">
             <div>
-              <OrdersPanel filteredOrders={
-                orders.filter(order => order.status === 'delivered')} />
+              <AdminOrdersPanel />
             </div>
           </Tab>
           <Tab label="Cancelled" value="cancelled">
             <div>
-              <OrdersPanel filteredOrders={
-                orders.filter(order => order.status === 'cancelled')} />
+              <AdminOrdersPanel />
             </div>
           </Tab>
         </Tabs>
@@ -47,11 +65,11 @@ export class AdminOrders extends Component {
   )}
 }
 
-const mapStateToProps = ({auth}) => ({
-  auth
+const mapStateToProps = (state) => ({
+  allOrders: state.allOrders
 })
 
 export default connect (
   mapStateToProps,
   null
-) (Admin)
+) (AdminOrders)

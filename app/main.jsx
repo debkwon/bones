@@ -25,16 +25,18 @@ import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
 import { fetchOrders } from './reducers/orders'
 
+import { fetchOrdersAdmin, fetchProductsAdmin, fetchReviewsAdmin, fetchUsersAdmin } from './reducers/admin'
+
 
 // for Google's Material UI themes
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { grey300, pink400 } from 'material-ui/styles/colors';
+import { grey400, pink400 } from 'material-ui/styles/colors';
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: grey300,
+    primary1Color: grey400,
     primary2Color: pink400,
   },
 });
@@ -75,7 +77,8 @@ render (
             onEnter={onOrdersEnter} />
           <Route
             path="/admin"
-            component={AdminContainer} />
+            component={AdminContainer}
+            onEnter={onAdminEnter} />
         </Route>
       </Router>
     </Provider>
@@ -89,10 +92,8 @@ function onProductsEnter () {
 }
 
 function onCurrentProductEnter (nextRouterState) {
-  console.log("this is the nextRouterState: ", nextRouterState)
   const productId = nextRouterState.params.productId;
   const thunk = fetchCurrentProduct(productId);
-
   store.dispatch(thunk);
 };
 
@@ -102,4 +103,25 @@ function onOrdersEnter (nextRouterState) {
   const thunk = fetchOrders(userId);
   store.dispatch(thunk)
 }
+
+function onAdminEnter () {
+  const thunk1 = fetchOrdersAdmin()
+  const thunk2 = fetchProductsAdmin()
+  const thunk3 = fetchReviewsAdmin()
+  const thunk4 = fetchUsersAdmin()
+  // does this syntax work, or do I have to send individually?
+  store.dispatch(thunk1)
+  store.dispatch(thunk2)
+  store.dispatch(thunk3)
+  store.dispatch(thunk4)
+}
+
+
+// const mapDispatch = dispatch => ({
+//  fetchInitialData: () => {
+//     dispatch(fetchUsers())
+//     dispatch(fetchStories())
+//     dispatch(retrieveLoggedInUser())
+//   }
+// })
 
