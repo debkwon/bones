@@ -92,7 +92,7 @@ export class Products extends React.Component {
                   </Link>
                   <div className="mdl-card__supporting-text">
                   <b>Celeb(s): </b>{product.celebs && product.celebs.map(celeb =>
-                    <span className='celeb-listing'>{celeb.name}</span>)}
+                    <Link to={`/celebs/${celeb.id}`} className='celeb-listing'>{celeb.name}</Link>)}
                   <br/>
                   {product.categories && product.categories.map(category => (
                       <div className='mdl-chip' key={idx++}>
