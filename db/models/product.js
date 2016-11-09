@@ -19,7 +19,7 @@ const Product = db.define('products', {
   },
   description: Sequelize.TEXT,
   price: {
-    type: Sequelize.DECIMAL(15, 2),
+    type: Sequelize.INTEGER,
     validate: {
       notEmpty: true
     }

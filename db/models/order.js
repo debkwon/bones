@@ -12,7 +12,7 @@ const Order = db.define('orders', {
       defaultValue: 'not submitted'
     },
     total: {
-      type: Sequelize.DECIMAL(15, 2)
+      type: Sequelize.DECIMAL(20, 2)
     },
     email:{
       type:Sequelize.STRING

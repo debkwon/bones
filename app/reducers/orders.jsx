@@ -37,7 +37,7 @@ export const fetchOrders = (userId) => {
       axios.get(`/api/orders/users/${userId}`)
       .then(function (response) {
         const action = receiveOrders(response.data);
-        return store.dispatch(action);
+        return dispatch(action);
       })
       .catch(err => console.error(err.stack));
     };
