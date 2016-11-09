@@ -2,19 +2,16 @@ import React from 'react'
 import chai, {expect} from 'chai'
 chai.use(require('chai-enzyme'))
 import {shallow} from 'enzyme'
-
+import IconButton from 'material-ui/IconButton';
 import Review from './Review'
 
 describe('<Review />', () => {
 
-  let review;
+  let review, starButton;
   beforeEach('render the review component', () =>
     review = shallow(<Review />)
+    starButton = shallow(<IconButton name="two-star"/>)
   )
-
-  it('has five star inputs', () => {
-    expect(review.find("input[type='radio']")).to.have.length(5)
-  })
 
   it('has a place to enter text', () => {
     expect(review.find("textarea")).to.have.length(1)
@@ -30,11 +27,6 @@ describe('<Review />', () => {
 
   it('has a default state where text is an empty string', () => {
     expect(review.state().text).to.equal("")
-  })
-
-  it('updates state on star rating change', () => {
-    review.find("input[name='star2']").simulate('change',{target: {value: '4'}})
-    expect(review.state().stars).to.equal(4)
   })
 
   it('updates state on text change', () => {

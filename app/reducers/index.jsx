@@ -11,6 +11,8 @@ const rootReducer = combineReducers({
   adminProducts: require('./adminProducts').default,
   adminUsers: require('./adminUsers').default,
   adminReviews: require('./adminReviews').default,
+  celebs: require('./celeb').default,
+  currentCeleb: require('./celebProducts').default
 })
 
 export default rootReducer

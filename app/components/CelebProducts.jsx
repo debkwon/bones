@@ -13,7 +13,7 @@ import {updateCartId} from '../reducers/cart'
 
 
 
-export class Products extends React.Component {
+export class CelebProducts extends React.Component {
   constructor() {
     super()
     this.add = this.add.bind(this);
@@ -74,13 +74,13 @@ export class Products extends React.Component {
   }
 
   render() {
-    const { products } = this.props || []
+    const { celeb } = this.props || []
     let idx = 0;
     return (
       <div id="productsTable">
         <div className='mdl-grid'>
-          <h2 className='mdl-cell mdl-cell--12-col'>All Products</h2>
-          {products && products.map(product => (
+          <h2 className='mdl-cell mdl-cell--12-col'>{celeb.name} Products</h2>
+          {celeb.products && celeb.products.map(product => (
               <div key={product.id} className="mdl-card mdl-cell mdl-cell--4-col mdl-shadow--2dp">
                 <Link to={`/products/${product.id}`}>
                   <div className="mdl-card__media">
@@ -89,11 +89,7 @@ export class Products extends React.Component {
                   <div className="mdl-card__title">
                     <span>{product.name}</span>
                   </div>
-                  </Link>
                   <div className="mdl-card__supporting-text">
-                  <b>Celeb(s): </b>{product.celebs && product.celebs.map(celeb =>
-                    <Link to={`/celebs/${celeb.id}`} className='celeb-listing'>{celeb.name}</Link>)}
-                  <br/>
                   {product.categories && product.categories.map(category => (
                       <div className='mdl-chip' key={idx++}>
                         <span className="mdl-chip__text">{category}</span>
@@ -101,7 +97,8 @@ export class Products extends React.Component {
                     ))
                   }
                   </div>
-                 <RaisedButton type="submit" label="ADD" primary={true} onClick={evt=>{ evt.preventDefault(); this.add({product});}}/>
+                </Link>
+                  <RaisedButton type="submit" label="ADD" primary={true} onClick={evt=>{ evt.preventDefault(); this.add({product});}}/>
                   <RaisedButton type="submit" label="DELETE" primary={true}  onClick={evt=>{ evt.preventDefault(); this.del({product});}}/>
               </div>
             ))
@@ -113,12 +110,8 @@ export class Products extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  products: state.products,
-  cart: state.cart,
-  auth: state.auth
+  celeb: state.currentCeleb
  })
 
 
-export default connect(mapStateToProps)(Products);
-
-
+export default connect(mapStateToProps)(CelebProducts);
