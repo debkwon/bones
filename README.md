@@ -1,75 +1,23 @@
-# Hi, I'm bones
+# Welcome to the $elleb store!
 
-I'm a happy little skeleton. You can clone me to use as a starter on your projects!
-I have React, Redux, Sequelize, and Express all just rattling around in here ready
-to go.
+We have been collecting rare and valuable items from all around the world..but only ones belonging to celebs, obv.
 
-## I need node >= 6.7.0
+Take a look around our store and get shopping! 💁
 
-If you don't have it, I'll complain and tell you how to install it.
+## What you can do in the $elleb store
 
-## 1. Make me into something!
+You can view all our products, select certain items, add them to your cart, and checkout.
 
-Create a git repo however you want to. You can fork me on Github, but you can only do
-that once (so weird!). You can also create a Github repo and clone it, or just do
-`git init` in an empty directory on your machine.
+Don't worry about signing up for an account just yet - that is optional! It will make checkout faster down the road.
 
-After you have a repo on your machine:
+If you are a user and logged in, you can check on your previous orders and open orders, as well as write up reviews for items you've purchased.
 
-```
-git remote add bones https://github.com/queerviolet/bones.git
-git fetch bones
-git merge bones/master
-```
 
-And then you'll have me! If I change—which I probably will—you can get the most recent
-version by doing this again:
+## 1. If you want to work on the $elleb store
 
-```
-git fetch bones
-git merge bones/master
-```
-
-## 2. I need a name.
-
-I don't have a name. I think I used to have one, but it turned to dust right along with my
-heart and liver and pituitary gland and all that stuff.
-
-Anyway, I'll need one. Give me a name in `package.json`.
-
-## 3. Start my dusty heart
-
-Short and sweet:
-
-```
+Fork and clone our repo
 npm install
-npm run build-watch
 npm start
-```
-
-`npm start` doesn't build, so watch out for that. The reason it doesn't build is because you
-probably want to watch the build and run me in separate terminals. Otherwise, build errors get
-all mixed in with HTTP request logging.
-
-## My anatomy
-
-`/app` has the React/Redux setup. `main.jsx` is the entry point.
-
-`/db` has the Sequelize models and database setup. It'll create the database for you if it doesn't exist,
-assuming you're using postgres.
-
-`/server` has the Express server and routes. `start.js` is the entry point.
-
-`/bin` has scripts. (Right now it has *one* script that creates a useful symlink.)
-
-## Conventions
-
-I use `require` and `module.exports` in `.js` files.
-
-I use `import` and `export` in `.jsx` files, unless `require` makes for cleaner code.
-
-I use two spaces, no semi-colons, and trailing commas where possible. I'll
-have a linter someday soon.
-
-
-
+npm run build-watch
+npm run seed
+navigate to localhost:1337
