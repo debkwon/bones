@@ -37,8 +37,6 @@ import { fetchUsersAdmin } from './reducers/adminUsers'
 import { updateCartId } from './reducers/cart'
 import { fetchCurrentCeleb } from './reducers/celebProducts'
 
-import axios from 'axios'
-
 
 // for Google's Material UI themes
 import injectTapEventPlugin from 'react-tap-event-plugin';
