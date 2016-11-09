@@ -72,9 +72,11 @@ export class Cart extends Component {
   }
 
   determineQ(product){
+    console.log(product, "PRODUCT in determineq")
     let q;
     if(product.order_product) q = product.order_product.quantity;
-    else q = product.quantity;
+    else q = product.product.quantity;
+    console.log("q",q);
     return q;
   }
   upquantity(newQuantity, product, productIdx){
