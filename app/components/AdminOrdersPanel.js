@@ -19,17 +19,17 @@ import DatePicker from 'material-ui/DatePicker';
 
 export class OrdersPanel extends React.Component {
 
-  convertToMoney (num) {
-    let numWithDecs
-    if (num === num.toFixed(0)) numWithDecs = Number(num + '.00')
-    else if (num === num.toFixed(1)) numWithDecs = Number(num + '0')
-    else numWithDecs = num;
-    return ('$' + Number(numWithDecs))
-  }
+  // convertToMoney (num) {
+  //   let numWithDecs
+  //   if (num === num.toFixed(0)) numWithDecs = Number(num + '.00')
+  //   else if (num === num.toFixed(1)) numWithDecs = Number(num + '0')
+  //   else numWithDecs = num;
+  //   return ('$' + Number(numWithDecs))
+  // }
 
   constructor () {
     super()
-    this.convertToMoney.bind(this)
+    // this.convertToMoney.bind(this)
     this.handleChange.bind(this)
   }
 
@@ -63,9 +63,9 @@ export class OrdersPanel extends React.Component {
                     order.products && order.products.map(unit => (
                       <TableRow style={{fontSize: 16}} key={unit.id}>
                         <TableRowColumn>{unit.name}</TableRowColumn> 
-                        <TableRowColumn>{this.convertToMoney(unit.order_product.pricePerUnit)}</TableRowColumn>
+                        <TableRowColumn>{unit.order_product.pricePerUnit}</TableRowColumn>
                         <TableRowColumn>{unit.order_product.quantity}</TableRowColumn>
-                        <TableRowColumn>{this.convertToMoney(unit.order_product.pricePerUnit * unit.order_product.quantity)}</TableRowColumn>
+                        <TableRowColumn>{unit.order_product.pricePerUnit * unit.order_product.quantity}</TableRowColumn>
                         <TableRowColumn>
                           <RaisedButton
                             label="Remove item from order"
@@ -90,7 +90,7 @@ export class OrdersPanel extends React.Component {
                       <MenuItem value={'cancelled'} primaryText="Cancelled" />
                     </SelectField>
                   </TableRowColumn>
-                  <TableHeaderColumn>Total Cost: {() => this.convertToMoney(order.total)}</TableHeaderColumn>
+                  <TableHeaderColumn>Total Cost: {order.total}</TableHeaderColumn>
                 </TableFooter>
               </Table>
             </Paper>
