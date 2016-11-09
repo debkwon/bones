@@ -2,15 +2,6 @@ const reducer = (state={products:[], user_id: null, order_id: null, total:0}, ac
   switch(action.type) {
     case INITIAL_CARTS:
         return action.orders
-    case REMOVE_PRODUCT:
-        var index;
-        for(var i = 0; i < state.length; i++){
-            if(state[i].id == action.product.id){
-                index = i;
-                break;
-            }
-        }
-        return action.orders.splice(i,1);
     case UPDATE_QUANTITY:
         return Object.assign({}, state, {products: action.products, total:action.total})
    }

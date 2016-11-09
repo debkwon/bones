@@ -99,9 +99,13 @@ router.put('/:orderId', (req, res, next) => {
   Order.update(orderInfo,{where: {id: req.params.orderId}})
   .then(order => {
     if (orderProducts) {
-      Promise.map(orderProducts, (orderProduct)=>
+      let quantityLookup;
+      console.log(orderProducts, "this is orderProducts")
+      Promise.map(orderProducts, (orderProduct)=>{
+        if (orderProduct['order_product']) quantityLookup = orderProduct['order_product']['quantity'];
+        else quantityLookup = orderProduct['quantity'];
         OrderProduct.update({pricePerUnit: orderProduct.price,
-        quantity: orderProduct['order_product']['quantity']},{where: {order_id: req.params.orderId,
+        quantity: quantityLookup},{where: {order_id: req.params.orderId,
           product_id: orderProduct.id}})
         .then((rowsChanged) => {
           if(rowsChanged[0] === 0) {
@@ -109,10 +113,12 @@ router.put('/:orderId', (req, res, next) => {
               order_id: req.params.orderId,
               product_id: orderProduct.id,
               pricePerUnit: orderProduct.price,
-              quantity: orderProduct['order_product']['quantity']
+              quantity: quantityLookup
             })
           }
         })
+
+      }
       ).then( rows => {
         res.status(200).send(order)
       }
@@ -134,8 +140,15 @@ router.delete('/:orderId', (req, res, next) =>{
 
 //need a route for deleting a certain product from an order
 router.delete('/:orderId/:productId', (req, res, next) => {
+  let newTotal = req.body.total
   OrderProduct.destroy({where: {order_id: req.params.orderId, product_id: req.params.productId}})
-  .then(removedProduct => res.send({message:'product has been removed'}))
-  .catch(next)
+  .then(() => {
+    Order.findById(req.params.orderId)
+    .then((foundOrder) => {
+      foundOrder.update({total: newTotal})
+    })
+  })
+  .then(() => res.send({message: 'product has been removed'}) )
+  .catch(err=> console.log(err.stack))
 })
 module.exports = router;

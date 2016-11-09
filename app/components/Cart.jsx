@@ -7,7 +7,7 @@ import TextField from 'material-ui/TextField';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {orange500, blue500, gray500} from 'material-ui/styles/colors';
 import Chip from 'material-ui/Chip';
-import {updateProductQuantityInDb} from '../reducers/cart';
+import {updateProductQuantityInDb, updateCartId} from '../reducers/cart';
 const addStyle = {
   width:5
 };
@@ -33,35 +33,48 @@ export class Cart extends Component {
     this.del = this.del.bind(this);
     this.sub = this.sub.bind(this);
     this.upquantity = this.upquantity.bind(this);
-
-  }
-  componentWillMount () {
-      store.subscribe(() => this.setState(store.getState()));
+    this.determineQ = this.determineQ.bind(this);
   }
 
-
-  del( product){
-    console.log("del", product.product.id);
-    var id = product.product.id;
-    var url = `/api/products/${id}`;
-    // axios.del(url)
-    // .then(function(res){
-    //   console.log("ressss",res)
-    //   var tmp = store.getState();
-    //   console.log("TMP", tmp);
-    // })
+  del(product, index){
+    console.log(product, "PRODUCT in delete")
+        let q;
+    if(product.product.order_product) q = product.product.order_product.quantity;
+    else q = product.product.quantity;
+    let diff = product.product.price * q;
+    let total = this.props.cart.total - diff;
+    axios.delete(`/api/orders/${this.props.cart.order_id}/${product.product.id}`, {total: total})
+    .then((res) => //{
+      // if (res.message == 'product has been removed'){
+        axios.get(`/api/orders/${this.props.cart.order_id}`)
+        .then(orders => {
+          let ordersFromProducts;
+          if (orders.data[0]) ordersFromProducts = orders.data[0].products
+          else ordersFromProducts = [];
+          store.dispatch(updateCartId({user_id:this.props.cart.user_id, order_id:this.props.cart.order_id, products:ordersFromProducts, total: total}))
+        })
+        .then(() => location.reload() )
+        .catch(err => console.log(err.stack))
+      //}}
+    )
 
   }
+
   sub( ){
     console.log("submit form", products);
-
     //var id = product.product.id;
     //var url = `/api/products/${id}`;
     // axios.del(url)
     // .then(function(res){
     //   console.log("ressss",res)
         // })
+  }
 
+  determineQ(product){
+    let q;
+    if(product.order_product) q = product.order_product.quantity;
+    else q = product.quantity;
+    return q;
   }
   upquantity(newQuantity, product, productIdx){
     let oldQuantity = product.order_product.quantity //old quantity
@@ -99,7 +112,7 @@ export class Cart extends Component {
                   <TableRowColumn>{product.name}</TableRowColumn>
                   <TableRowColumn>{product.description}</TableRowColumn>
                   <TableRowColumn>
-                     <select onChange={(e) => this.upquantity(+(e.target.value), product, idx)} defaultValue={product.order_product.quantity}>
+                     <select onChange={(e) => this.upquantity(+(e.target.value), product, idx)} defaultValue={this.determineQ({product, idx})}>
                       <option value='1'>1</option>
                       <option value='2'>2</option>
                       <option value='3'>3</option>
