@@ -13,6 +13,12 @@ const Order = db.define('orders', {
     },
     total: {
       type: Sequelize.DECIMAL(15, 2)
+    },
+    email:{
+      type:Sequelize.STRING
+    },
+    address:{
+      type:Sequelize.STRING
     }
   }
 );

@@ -53,7 +53,7 @@ export const whoami = () =>
       .then(res=>{
          if(res && res.data.length !== 0){
           console.log("data", res.data);
-          dispatch(updateCartId({user_id:res.data[0].user_id, order_id:res.data[0].id, products:res.data[0].products}))
+          dispatch(updateCartId({user_id:res.data[0].user_id, order_id:res.data[0].id, products:res.data[0].products, total:res.data[0].total}))
          }
       })
       .catch(failed => console.log(failed))

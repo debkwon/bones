@@ -5,9 +5,9 @@ import React from 'react'
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-
-//import styles from './style/main.css'
+import axios from 'axios'
 import store from './store'
+
 
 import Container from './components/Container'
 import Login from './components/Login'
@@ -20,6 +20,7 @@ import OrdersContainer from './components/Orders'
 import OrdersPanelContainer from './components/OrdersPanel'
 import WhoAmI from './components/WhoAmI'
 import AdminContainer from './components/Admin'
+import Checkout from './components/Checkout'
 import Celeb from './components/Celeb'
 import CelebProducts from './components/CelebProducts'
 
@@ -35,7 +36,9 @@ import { fetchUsersAdmin } from './reducers/adminUsers'
 
 import { updateCartId } from './reducers/cart'
 import { fetchCurrentCeleb } from './reducers/celebProducts'
+
 import axios from 'axios'
+
 
 // for Google's Material UI themes
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -49,6 +52,7 @@ const muiTheme = getMuiTheme({
     primary2Color: pink400,
   },
 });
+//import styles from './style/main.css'
 
 
 render (
@@ -71,6 +75,7 @@ render (
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
           <Route path="/cart" component={Cart} />
+          <Route path="/checkout" component={Checkout} />
           <Route path='/celebs' component={Celeb} onEnter={onCelebsEnter}/>
           <Route path='/celebs/:celebId' component={CelebProducts} onEnter={onCelebProductEnter}/>
           <Route
@@ -113,7 +118,6 @@ function onCurrentProductEnter (nextRouterState) {
 };
 
 function onCelebProductEnter (nextRouterState) {
-  console.log("this is the nextRouterState", nextRouterState)
   const celebId = nextRouterState.params.celebId;
   const thunk = fetchCurrentCeleb(celebId);
   store.dispatch(thunk);
@@ -136,8 +140,12 @@ function onCartEnter(nextRouterState){
   if (id){
     axios.get(`/api/orders/ordersproducts/${id}`)
     .then(orders => {console.log("here",orders);//store.dispatch(updateCartId(orders))
-                    if(orders.data.length>0) store.dispatch(updateCartId({user_id:null, order_id:id, products:orders.data[0].products}))
-                    else store.dispatch(updateCartId({user_id:null, order_id:id, products:[]}))
+                    if(orders.data.length>0) store.dispatch(updateCartId({user_id:null, order_id:id, products:orders.data[0].products, total:orders.data[0].total}))
+
   })
+  }
+  else{
+      store.dispatch(updateCartId({user_id:null, order_id:id, products:[], total:0}));
+
   }
 }
