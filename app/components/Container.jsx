@@ -16,7 +16,7 @@ export class Container extends Component {
         <div id="nav-top">
           <div>
             <div>
-              <Link to='/'><img src="/logo.png" alt="Selleb: your source for celebrity memoribilia"/></Link>
+              <Link to='/'><img src="/newLogo.png" alt="Selleb: your source for celebrity memoribilia"/></Link>
             </div>
           </div>
           <ul>
@@ -30,9 +30,7 @@ export class Container extends Component {
           <AppBar>
             <ul>
               <li><Link to='/'>All</Link></li>
-              <li>Browse by Category</li>
               <li><Link to='/celebs'>Browse by Celebrity</Link></li>
-              <li>Search by Keyword</li>
             </ul>
           </AppBar>
         </div>
