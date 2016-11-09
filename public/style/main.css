@@ -74,7 +74,6 @@ nav ul li:last-child{
 footer {
   width: 100%;
   padding: 0 1rem;
-  border-top: 1px #000 solid;
 }
 
 .mdl-card__media img {
