@@ -50,7 +50,6 @@ export class Products extends React.Component {
       let id = parseInt(window.localStorage.getItem('orderId'));
       total = this.props.cart.total + product_obj.product.price
       if (productIsInCart){
-          console.log("===quantity===", this.props.cart.products[cartIndex]['order_product']['quantity']);
           let tempCart = this.props.cart.products;
           tempCart[cartIndex]['order_product']['quantity'] = (tempCart[cartIndex]['order_product']['quantity'] + quantity);
           store.dispatch(updateProductQuantityInDb(tempCart,total))

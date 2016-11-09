@@ -87,6 +87,14 @@ router.post('/', (req, res, next) =>{
   .catch(next)
 })
 
+router.put('/submitorder/:orderId', function(req, res, next){
+  Order.findById(req.params.orderId)
+  .then(function(order){
+    order.update({email: req.body.email, address:req.body.address, status:"processing"})
+  })
+  .then(response=> res.status(201).send())
+})
+
 router.put('/:orderId', (req, res, next) => {
   let orderInfo = {}
   console.log(req.body, "this is req.body in the put /orderId request!")

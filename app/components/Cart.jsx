@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import store from '../store';
+import {Link} from 'react-router';
 import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -144,7 +145,7 @@ export class Cart extends Component {
         </TableBody>
       </Table>
 
-      <RaisedButton type="submit" label="SUBMIT" onClick = {evt=>{ evt.preventDefault(); this.sub();}}/>
+      <Link to="/checkout"><RaisedButton type="submit" label="Checkout" /></Link>
     </div>
 
 

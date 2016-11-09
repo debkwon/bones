@@ -33,7 +33,7 @@ export class Product extends React.Component {
     super(props);
     this.state = {
       value: 'description',
-      quantity: 0
+      quantity: 1
     }
     this.addProduct = this.addProduct.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -53,11 +53,7 @@ export class Product extends React.Component {
   }
 
   addProduct = (currentProduct, quantity) => {
-      console.log(typeof currentProduct.price, "====first line of addProduct, this is currentProduct")
-      console.log(typeof this.state.quantity, "===is this quantity a string?")
-      console.log(typeof this.props.cart.total, "===is this total a string?")
       let total;
-      // console.log(this.props, "this.props in add product")
       let productIsInCart = false;
       let cartIndex;
       this.props.cart.products.forEach((prod, idx) => {
