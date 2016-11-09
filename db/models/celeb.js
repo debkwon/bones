@@ -14,6 +14,10 @@ const Celeb = db.define('celebs', {
     type: Sequelize.BOOLEAN,
     allowNull: false
   },
+  photoURL: {
+    type: Sequelize.STRING,
+    defaultValue: 'http://placehold.it/250x150'
+  }
 })
 
 

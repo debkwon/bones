@@ -28,7 +28,7 @@ export class Container extends Component {
             <ul>
               <li><Link to='/'>All</Link></li>
               <li>Browse by Category</li>
-              <li>Browse by Celebrity</li>
+              <li><Link to='/celebs'>Browse by Celebrity</Link></li>
               <li>Search by Keyword</li>
             </ul>
           </AppBar>
