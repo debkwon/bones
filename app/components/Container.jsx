@@ -36,7 +36,7 @@ export class Container extends Component {
         </div>
       </nav>
       {this.props.children}
-      <footer>
+      <footer className='mdl-mini-footer'>
         <p>$elleb<br/>&copy; 2016</p>
       </footer>
       </div>
