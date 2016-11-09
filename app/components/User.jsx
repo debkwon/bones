@@ -34,13 +34,6 @@ export class User extends Component {
     super()
     //this.state = store.getState();
     //fake state;
-      this.state = {
-                    firstName:"fake firstName",
-                    lastName:"fake lastName",
-                    username:"fakeusename",
-                    email:"fake@email",
-                    password:"fakepassword",
-                    id:1}
 
     this.update = this.update.bind(this);
     this.login = this.login.bind(this);
