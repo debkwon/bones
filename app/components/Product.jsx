@@ -6,11 +6,14 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import Review from './Review';
+import { updateCartId} from '../reducers/cart';
 import { Link } from 'react-router'
 
 import Chip from 'material-ui/Chip';
 import {Tabs, Tab} from 'material-ui/Tabs';
-
+import store from '../store';
+import axios from 'axios';
+import { updateProductQuantityInDb } from '../reducers/cart';
 const styles = {
   chip: {
     margin: 4,
@@ -32,14 +35,95 @@ export class Product extends React.Component {
     super(props);
     this.state = {
       value: 'description',
+      quantity: 1
     }
+    this.addProduct = this.addProduct.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.updateQuantity = this.updateQuantity.bind(this)
   }
 
-  handleChange = (value) => {
+   handleChange = (value) => {
     this.setState({
       value: value,
     })
   }
+
+  updateQuantity = (num) => {
+    this.setState({
+      quantity: num
+    })
+  }
+
+  addProduct = (currentProduct, quantity) => {
+      let total;
+      let productIsInCart = false;
+      let cartIndex;
+      this.props.cart.products.forEach((prod, idx) => {
+        if (prod.id === currentProduct.id) {
+          productIsInCart = true;
+          cartIndex = idx;
+        }
+      })
+
+      if (!this.props.auth && !window.localStorage.getItem('orderId')){ //if user is not logged and the order id is null
+        total = currentProduct.price * quantity
+        axios.post('/api/orders', {total: total, user: null, products:[currentProduct]})
+        .then((res) =>{
+          window.localStorage.setItem('orderId', (res.data.id).toString());
+          store.dispatch(updateCartId({order_id: res.data.id, user_id: null, products: [currentProduct], total:total}))
+        }
+        )
+        .catch(err=> console.log(err.stack))
+      }
+
+      else if (!this.props.auth && window.localStorage.getItem('orderId')){ //if user is not logged in, but there's an existing created order
+        let id = parseInt(window.localStorage.getItem('orderId'));
+        total = parseInt(this.props.cart.total) + (currentProduct.price * quantity)
+
+        if (productIsInCart){
+          let tempCart = this.props.cart.products;
+          tempCart[cartIndex]['quantity'] = (tempCart[cartIndex]['quantity'] + quantity);
+          store.dispatch(updateProductQuantityInDb(tempCart,total))
+          axios.put(`/api/orders/${this.props.cart.order_id}`, {total: total, user_id: null, status: this.props.cart.status, products: tempCart})
+
+        }
+        else {
+          axios.put(`/api/orders/${id}`, {total: total, user_id: null, status: this.props.cart.status, products:this.props.cart.products.concat(currentProduct)})
+          .then(res=>{
+            console.log(res, "res inside put request for open order")
+            store.dispatch(updateCartId({order_id: id, user_id: null, products: this.props.cart.products.concat(currentProduct), total:total}))
+          }
+        )
+          .catch(err=> console.log(err.stack))
+        }
+      }
+      else if(this.props.cart.order_id){
+        total = this.props.cart.total + (currentProduct.price * quantity)
+
+        if (productIsInCart){
+          let tempCart = this.props.cart.products;
+          tempCart[cartIndex][quantity] = quantity;
+          store.dispatch(updateProductQuantityInDb(tempCart,total))
+          .then(() =>
+            axios.put(`/api/orders/${this.props.cart.order_id}`, {total: total, user_id: this.props.auth.id, status: this.props.cart.status, products: this.props.cart.products})
+          )
+          .catch(err=> console.log(err.stack))
+        }
+        else {
+        axios.put(`/api/orders/${this.props.cart.order_id}`, {total: total, user_id: this.props.auth.id, status: this.props.cart.status, products:this.props.cart.products.concat(currentProduct)})
+        .then(res=>
+          store.dispatch(updateCartId({order_id: this.props.cart.order_id, user_id: this.props.auth.id, products: this.props.cart.products.concat(currentProduct), total:total}))
+        )}
+      }
+      else {
+        total = currentProduct.price;
+        axios.post('/api/orders', {total: total, user: this.props.auth.id, products:[currentProduct]})
+        .then((res) =>
+          store.dispatch(updateCartId({order_id: res.data.id, user_id: this.props.auth.id, products: [currentProduct], total:total}))
+        )
+        .catch(err=> console.log(err.stack))
+      }
+    }
 
   render() {
     const { currentProduct } = this.props || {}
@@ -94,7 +178,7 @@ export class Product extends React.Component {
           <span>Price: ${currentProduct.price}</span>
           <div>
           <label>Quantity</label>
-          <select>
+          <select onChange={(e) => this.updateQuantity(+(e.target.value))}>
             <option value='1'>1</option>
             <option value='2'>2</option>
             <option value='3'>3</option>
@@ -111,7 +195,7 @@ export class Product extends React.Component {
           onClick={evt => {
             evt.preventDefault()
             console.log('in onClick')
-            addProduct(this.props.currentProduct, this.state.quantity)
+            this.addProduct(this.props.currentProduct, this.state.quantity)
           } }>
          BUY
          </button>
@@ -122,8 +206,10 @@ export class Product extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  currentProduct: state.currentProduct,
+const mapStateToProps = ({currentProduct, auth, cart}) => ({
+  currentProduct,
+  auth,
+  cart
    });
 
 export default connect(mapStateToProps, null)(Product);

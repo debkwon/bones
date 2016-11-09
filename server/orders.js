@@ -87,8 +87,17 @@ router.post('/', (req, res, next) =>{
   .catch(next)
 })
 
+router.put('/submitorder/:orderId', function(req, res, next){
+  Order.findById(req.params.orderId)
+  .then(function(order){
+    order.update({email: req.body.email, address:req.body.address, status:"processing"})
+  })
+  .then(response=> res.status(201).send())
+})
+
 router.put('/:orderId', (req, res, next) => {
   let orderInfo = {}
+  console.log(req.body, "this is req.body in the put /orderId request!")
   //need to account for what is included in update request
   if (req.body.total) orderInfo.total = req.body.total;
   if (req.body.user_id) orderInfo.user_id = req.body.user_id;
@@ -98,20 +107,26 @@ router.put('/:orderId', (req, res, next) => {
   Order.update(orderInfo,{where: {id: req.params.orderId}})
   .then(order => {
     if (orderProducts) {
-      Promise.map(orderProducts, (orderProduct)=>
+      let quantityLookup;
+      console.log(orderProducts, "this is orderProducts")
+      Promise.map(orderProducts, (orderProduct)=>{
+        if (orderProduct['order_product']) quantityLookup = orderProduct['order_product']['quantity'];
+        else quantityLookup = orderProduct['quantity'];
         OrderProduct.update({pricePerUnit: orderProduct.price,
-        quantity: orderProduct.quantity},{where: {order_id: req.params.orderId,
-          product_id: orderProduct.product_id}})
+        quantity: quantityLookup},{where: {order_id: req.params.orderId,
+          product_id: orderProduct.id}})
         .then((rowsChanged) => {
           if(rowsChanged[0] === 0) {
             OrderProduct.create({
               order_id: req.params.orderId,
               product_id: orderProduct.id,
               pricePerUnit: orderProduct.price,
-              quantity: orderProduct.quantity
+              quantity: quantityLookup
             })
           }
         })
+
+      }
       ).then( rows => {
         res.status(200).send(order)
       }
@@ -121,7 +136,7 @@ router.put('/:orderId', (req, res, next) => {
     }
   }
   )
-  .catch(next)
+  .catch(err=> console.log("err",err.stack))
   }
 )
 
@@ -133,8 +148,15 @@ router.delete('/:orderId', (req, res, next) =>{
 
 //need a route for deleting a certain product from an order
 router.delete('/:orderId/:productId', (req, res, next) => {
+  let newTotal = req.body.total
   OrderProduct.destroy({where: {order_id: req.params.orderId, product_id: req.params.productId}})
-  .then(removedProduct => res.send({message:'product has been removed'}))
-  .catch(next)
+  .then(() => {
+    Order.findById(req.params.orderId)
+    .then((foundOrder) => {
+      foundOrder.update({total: newTotal})
+    })
+  })
+  .then(() => res.send({message: 'product has been removed'}) )
+  .catch(err=> console.log(err.stack))
 })
 module.exports = router;

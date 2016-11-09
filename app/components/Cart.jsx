@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import store from '../store';
+import {Link} from 'react-router';
 import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -7,6 +8,7 @@ import TextField from 'material-ui/TextField';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {orange500, blue500, gray500} from 'material-ui/styles/colors';
 import Chip from 'material-ui/Chip';
+import {updateProductQuantityInDb, updateCartId} from '../reducers/cart';
 const addStyle = {
   width:5
 };
@@ -29,50 +31,66 @@ export class Cart extends Component {
   constructor() {
     super()
     this.state = store.getState();
-
     this.del = this.del.bind(this);
     this.sub = this.sub.bind(this);
     this.upquantity = this.upquantity.bind(this);
-
-  }
-  componentWillMount () {
-      store.subscribe(() => this.setState(store.getState()));
+    this.determineQ = this.determineQ.bind(this);
   }
 
-
-  del( product){
-    console.log("del", product.product.id);
-    var id = product.product.id;
-    var url = `/api/products/${id}`;
-    // axios.del(url)
-    // .then(function(res){
-    //   console.log("ressss",res)
-    //   var tmp = store.getState();
-    //   console.log("TMP", tmp);
-    // })
+  del(product, index){
+    console.log(product, "PRODUCT in delete")
+        let q;
+    if(product.product.order_product) q = product.product.order_product.quantity;
+    else q = product.product.quantity;
+    let diff = product.product.price * q;
+    let total = this.props.cart.total - diff;
+    axios.delete(`/api/orders/${this.props.cart.order_id}/${product.product.id}`, {total: total})
+    .then((res) => //{
+      // if (res.message == 'product has been removed'){
+        axios.get(`/api/orders/${this.props.cart.order_id}`)
+        .then(orders => {
+          let ordersFromProducts;
+          if (orders.data[0]) ordersFromProducts = orders.data[0].products
+          else ordersFromProducts = [];
+          store.dispatch(updateCartId({user_id:this.props.cart.user_id, order_id:this.props.cart.order_id, products:ordersFromProducts, total: total}))
+        })
+        .then(() => location.reload() )
+        .catch(err => console.log(err.stack))
+      //}}
+    )
 
   }
+
   sub( ){
     console.log("submit form", products);
-
     //var id = product.product.id;
     //var url = `/api/products/${id}`;
     // axios.del(url)
     // .then(function(res){
     //   console.log("ressss",res)
         // })
-
   }
-  upquantity(q, product){
-    console.log("Quantity: ", q);
-    console.log("product", product);
-    //dispatch and update quantity for single product
+
+  determineQ(product){
+    let q;
+    if(product.order_product) q = product.order_product.quantity;
+    else q = product.quantity;
+    return q;
+  }
+  upquantity(newQuantity, product, productIdx){
+    let oldQuantity = product.order_product.quantity //old quantity
+    let amountToChange = (Math.abs(newQuantity - oldQuantity)) * product.price;
+    let storeTotal = this.props.cart.total
+    let tempCart = this.props.cart.products;
+    tempCart[productIdx]['order_product']['quantity'] = newQuantity;
+    if (oldQuantity < newQuantity) { storeTotal+= amountToChange} //if there are more items to be added, increase the store state total
+    else storeTotal -= amountToChange //otherewise, decrease the total
+    store.dispatch(updateProductQuantityInDb(tempCart,storeTotal)) //update the store's cart to reflect new product quantity and cart total
+    axios.put(`/api/orders/${this.props.cart.order_id}`, {total: storeTotal, user_id: this.props.cart.user_id, products: tempCart})
+    .then((res) => console.log(res))
   }
 
   render() {
-    console.log("PROPS!!", this.props);
-    console.log("state", store.getState());
-
   return (
     <div style={Divstyle}>
     <h1>My Cart</h1>
@@ -89,13 +107,24 @@ export class Cart extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={showCheckboxes}  >
-             { this.props.cart.products && this.props.cart.products.map(product => (
+             { this.props.cart.products && this.props.cart.products.map((product, idx) => (
                 <TableRow key={product.id}>
                   <TableRowColumn><img src={product.photoURL}/></TableRowColumn>
                   <TableRowColumn>{product.name}</TableRowColumn>
                   <TableRowColumn>{product.description}</TableRowColumn>
                   <TableRowColumn>
-                      <TextField  defaultValue = {product.quantity} name="quantitytext" onChange={evt=>{console.log("qq", evt.target.value); this.upquantity(evt.target.value, {product});}}/>
+                     <select onChange={(e) => this.upquantity(+(e.target.value), product, idx)} defaultValue={this.determineQ({product, idx})}>
+                      <option value='1'>1</option>
+                      <option value='2'>2</option>
+                      <option value='3'>3</option>
+                      <option value='4'>4</option>
+                      <option value='5'>5</option>
+                      <option value='6'>6</option>
+                      <option value='7'>7</option>
+                      <option value='8'>8</option>
+                      <option value='9'>9</option>
+                      <option value='10'>10</option>
+                    </select>
                   </TableRowColumn>
                   <TableRowColumn>
                     {
@@ -116,7 +145,7 @@ export class Cart extends Component {
         </TableBody>
       </Table>
 
-      <RaisedButton type="submit" label="SUBMIT" onClick = {evt=>{ evt.preventDefault(); this.sub();}}/>
+      <Link to="/checkout"><RaisedButton type="submit" label="Checkout" /></Link>
     </div>
 
 
