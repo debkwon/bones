@@ -1,68 +1,58 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import {Table, TableBody, TableHeader, TableFooter, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
+import {grey200} from 'material-ui/styles/colors';
+import Subheader from 'material-ui/Subheader';
 
 export class AdminReviews extends React.Component {
-  constructor(){
-    super()
-    this.state = {
-      starRating: 0,
-      text: ""
-    }
-    this.updateStar = this.updateStar.bind(this)
-    this.updateText = this.updateText.bind(this)
-    this.addReview = this.addReview.bind(this)
-  }
-
-  updateStar(e) {
-    let newStarRating = +(e.target.value);
-    this.setState({starRating: newStarRating})
-  }
-
-  updateText(e) {
-    let newTextReview = e.target.value;
-    this.setState({text: newTextReview});
-  }
-
-  addReview(state) {
-    axios.post('/api/reviews', state)
-    .then(res => console.log(res))
-    .catch(err => console.error(err.stack))
-  }
 
   render() {
-    return(
-       <div className="review-form">
-         <form onSubmit={(e)=>{
-          e.preventDefault()
-          this.addReview(this.state)
-          }}>
-         <input className="star star-1" id="star-1" type="radio" name="star1" value="1" onChange={(e) => this.updateStar(e)}/>
-         <label className="star star-1" htmlFor="star-1"></label>
-         <input className="star star-2" id="star-2" type="radio" name="star2" value="2" onChange={(e) => this.updateStar(e)}/>
-         <label className="star star-2" htmlFor="star-2"></label>
-         <input className="star star-3" id="star-3" type="radio" name="star3" value="3" onChange={(e) => this.updateStar(e)}/>
-         <label className="star star-3" htmlFor="star-3"></label>
-         <input className="star star-4" id="star-4" type="radio" name="star4" value="4" onChange={(e) => this.updateStar(e)}/>
-         <label className="star star-4" htmlFor="star-4"></label>
-         <input className="star star-5" id="star-5" type="radio" name="star5" value="5" onChange={(e) => this.updateStar(e)}/>
-         <label className="star star-5" htmlFor="star-5"></label> <br />
-         <label>Your Review:</label><br />
-         <br />
-         <textarea onChange={(e) => this.updateText(e)}></textarea><br />
-         <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
-         Submit
-         </button>
-         </form>
-       </div>
+
+    const { adminReviews } = this.props || [];
+    
+    return (
+      <Paper style={{margin: 20, padding: 5, backgroundColor: grey200}}>
+        <Subheader style={{margin: 20}}>All Reviews</Subheader>
+        <Table selectable={false}>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+            <TableRow>
+              <TableHeaderColumn>Stars</TableHeaderColumn>
+              <TableHeaderColumn>Text</TableHeaderColumn>
+              <TableHeaderColumn>Created At</TableHeaderColumn>
+              <TableHeaderColumn>User</TableHeaderColumn>
+              <TableHeaderColumn>Product</TableHeaderColumn>
+              <TableHeaderColumn></TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {
+              adminReviews && adminReviews.map(review => (
+                <TableRow key={review.id}>
+                  <TableRowColumn>{review.stars}</TableRowColumn>
+                  <TableRowColumn>{review.text}</TableRowColumn>
+                  <TableRowColumn>{review.created_at.slice(0,10)}</TableRowColumn>
+                  <TableRowColumn>{review.user_id}</TableRowColumn>
+                  <TableRowColumn>{review.product_id}</TableRowColumn>
+                  <TableRowColumn>
+                    <RaisedButton type="delete" label="Delete Review and Flag User" secondary={true}/>
+                  </TableRowColumn>
+                </TableRow>
+              ))
+            }
+          </TableBody>
+        </Table>
+      </Paper>
     )
   }
 }
 
 
 const mapStateToProps = (state) => ({
-  allProducts: state.allProducts, 
-  allReviews: state.allReviews
+  adminProducts: state.adminProducts, 
+  adminReviews: state.adminReviews
 })
 
 export default connect (

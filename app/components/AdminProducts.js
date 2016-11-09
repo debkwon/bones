@@ -5,73 +5,110 @@ import { Link } from 'react-router';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter} from 'material-ui/Table';
+import Paper from 'material-ui/Paper';
+import {grey200} from 'material-ui/styles/colors';
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
+import SelectField from 'material-ui/SelectField';
+import Chip from 'material-ui/Chip';
+import TextField from 'material-ui/TextField';
 
-
+// we need name, quantity, description, price, categories, photoURL
 
 export class AdminProducts extends React.Component {
 
-  render() {
-    const { allProducts } = this.props || [];
-    console.log("These are all your products: ", allProducts)
+  constructor () {
+    super()
+    this.state = {
+      value: 1,
+    }
+    this.handleRequestDelete.bind(this)
+    this.handleChange.bind(this)
+  }
 
+  handleChange (event, index, value) {
+    this.setState({value});
+  }
+
+  handleRequestDelete () {
+    alert('You clicked the delete button.');
+  }
+
+  render() {
+
+    const { adminProducts } = this.props || [];
+    
+    let idx = 0;
     return (
       <div>
-        { 
-          allProducts && allProducts.map(product => (
-            <Paper style={{margin: 20, padding: 5, backgroundColor: grey200}}key={product.id}>
-              <Subheader style={{margin: 20}}>Product Added on {product.created_at.slice(0, 10)}</Subheader>
-              <Table selectable={false} >
-                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                  <TableRow>
-                    <TableHeaderColumn>Product</TableHeaderColumn>
-                    <TableHeaderColumn>Purchase Price</TableHeaderColumn>
-                    <TableHeaderColumn>Quantity</TableHeaderColumn>
-                    <TableHeaderColumn></TableHeaderColumn>
+        <Paper style={{margin: 20, padding: 5, backgroundColor: grey200}}>
+          <Subheader style={{margin: 20}}>All Products</Subheader>
+          <Table selectable={false} >
+            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+              <TableRow>
+                <TableHeaderColumn>Name</TableHeaderColumn>
+                <TableHeaderColumn>Description</TableHeaderColumn>
+                <TableHeaderColumn>Price</TableHeaderColumn>
+                <TableHeaderColumn>Quantity</TableHeaderColumn>
+                <TableHeaderColumn>Photo URL</TableHeaderColumn>
+                <TableHeaderColumn>Categories</TableHeaderColumn>
+                <TableHeaderColumn>Created On</TableHeaderColumn>
+                <TableHeaderColumn></TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody displayRowCheckbox={false}>
+              { 
+                adminProducts && adminProducts.map(product => (
+                  <TableRow key={product.id}>
+                    <TableRowColumn>
+                      <TextField id="name-field"
+                        defaultValue={product.name}/>
+                    </TableRowColumn>
+                    <TableRowColumn>
+                      <TextField id="description-field"
+                        defaultValue={product.description}/>
+                    </TableRowColumn>
+                    <TableRowColumn>
+                      <TextField id="price-field"
+                        defaultValue={product.price}/>
+                    </TableRowColumn>
+                    <TableRowColumn>
+                      <TextField id="quantity-field"
+                        defaultValue={product.quantity}/>
+                    </TableRowColumn>
+                    <TableRowColumn>
+                      <TextField id="photoURL-field"
+                        defaultValue={product.photoURL}/>
+                    </TableRowColumn>
+                    <TableRowColumn>
+                      { product.categories && product.categories.map(category => (
+                        <Chip id={++idx} style={{margin:5}}
+                          onRequestDelete={this.handleRequestDelete}>
+                          {category}
+                        </Chip>
+                      ))}
+                    </TableRowColumn>
+                    <TableRowColumn>{product.created_at.slice(0,10)}</TableRowColumn>
+                    <TableRowColumn>
+                      <RaisedButton type="delete" label="Delete Product" primary={false} secondary={true}/>
+                    </TableRowColumn>
                   </TableRow>
-                </TableHeader>
-                <TableBody displayRowCheckbox={false}>
-                  {
-                    order.products && order.products.map(unit => (
-                        <TableRow key={unit.id}>
-                          <TableRowColumn>{unit.name}</TableRowColumn>
-                          <TableRowColumn>{unit.order_product.pricePerUnit}</TableRowColumn>
-                          <TableRowColumn>{unit.order_product.quantity}</TableRowColumn>
-                          <TableRowColumn>
-                            <RaisedButton
-                              label="Reorder Item"
-                              href="products/:productId"
-                              secondary={true}
-                            >
-                              <i className="fa fa-shopping-bag" aria-hidden="true"></i>
-                            </RaisedButton>
-                          </TableRowColumn>
-                        </TableRow>
-                      ))
-                  }
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <TableRowColumn style={{fontWeight: 'bold'}}>Total: ${order.total}</TableRowColumn>
-                    <TableRowColumn></TableRowColumn>
-                    <TableRowColumn></TableRowColumn>
-                    <TableRowColumn></TableRowColumn>
-                  </TableRow>
-                </TableFooter>
-              </Table>
-            </Paper>
-          ))
-        }
-        </div>
-      )
+                ))
+              }
+            </TableBody>
+            <TableFooter>  
+            </TableFooter>
+          </Table>
+        </Paper>
+      </div>
+    )
   }
 }
 
 const mapStateToProps = (state) => ({
-  allProducts: state.allProducts,
+  adminProducts: state.adminProducts,
  })
 
 
-export default connect(mapStateToProps)(AdminProducts);
-
-
+export default connect(mapStateToProps, null)(AdminProducts);

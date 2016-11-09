@@ -16,7 +16,6 @@ import FontIcon from 'material-ui/FontIcon';
 export class OrdersPanel extends React.Component {
 
   render () {
-    // This never shows that you're logged in -- how do you grab the auth state?
     const {filteredOrders} = this.props;
     let displayOrders;
     
@@ -27,7 +26,7 @@ export class OrdersPanel extends React.Component {
         <div>
         { 
           filteredOrders && filteredOrders.map(order => (
-            <Paper style={{margin: 20, padding: 5, backgroundColor: grey200}}key={order.id}>
+            <Paper style={{margin: 20, padding: 5, backgroundColor: grey200}} key={order.id}>
               <Subheader style={{margin: 20}}>Order Created on {order.created_at.slice(0, 10)}</Subheader>
               <Table selectable={false} >
                 <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -49,8 +48,7 @@ export class OrdersPanel extends React.Component {
                             <RaisedButton
                               label="Reorder Item"
                               href="products/:productId"
-                              secondary={true}
-                            >
+                              secondary={true} >
                               <i className="fa fa-shopping-bag" aria-hidden="true"></i>
                             </RaisedButton>
                           </TableRowColumn>

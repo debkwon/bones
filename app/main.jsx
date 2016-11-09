@@ -25,7 +25,10 @@ import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
 import { fetchOrders } from './reducers/orders'
 
-import { fetchOrdersAdmin, fetchProductsAdmin, fetchReviewsAdmin, fetchUsersAdmin } from './reducers/admin'
+import { fetchOrdersAdmin } from './reducers/adminOrders'
+import { fetchProductsAdmin } from './reducers/adminProducts'
+import { fetchReviewsAdmin } from './reducers/adminReviews'
+import { fetchUsersAdmin } from './reducers/adminUsers'
 
 
 // for Google's Material UI themes
@@ -105,23 +108,7 @@ function onOrdersEnter (nextRouterState) {
 }
 
 function onAdminEnter () {
-  const thunk1 = fetchOrdersAdmin()
-  const thunk2 = fetchProductsAdmin()
-  const thunk3 = fetchReviewsAdmin()
-  const thunk4 = fetchUsersAdmin()
-  // does this syntax work, or do I have to send individually?
-  store.dispatch(thunk1)
-  store.dispatch(thunk2)
-  store.dispatch(thunk3)
-  store.dispatch(thunk4)
+  const thunk = fetchProductsAdmin()
+  store.dispatch(thunk)
 }
-
-
-// const mapDispatch = dispatch => ({
-//  fetchInitialData: () => {
-//     dispatch(fetchUsers())
-//     dispatch(fetchStories())
-//     dispatch(retrieveLoggedInUser())
-//   }
-// })
-
+// probably could just dispatch all the thunks in the one onAdminEnter function

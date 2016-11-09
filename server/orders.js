@@ -6,7 +6,11 @@ const Promise = require('bluebird');
 var session = require('express-session');
 
 router.get('/', (req, res, next) =>
-  Order.findAll()
+  Order.findAll({
+    include: [{
+      model: Product
+    }]
+  })
   .then(orders => res.send(orders))
   .catch(next)
 )

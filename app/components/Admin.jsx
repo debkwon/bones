@@ -12,12 +12,17 @@ import AdminReviewsContainer from './AdminReviews'
 import {Tabs, Tab} from 'material-ui/Tabs';
 
 
+// If we want to include Reviews again:
+//<Tab label="Reviews" value="reviews">
+  //<AdminReviewsContainer reviews={this.props.reviews}/> 
+//</Tab>
+
 export class Admin extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      value: 'all orders',
+      value: 'orders',
     }
   }
 
@@ -28,38 +33,24 @@ export class Admin extends Component {
   }
 
   render() {
+
     return (
       <div>
         <Tabs
           value={this.state.value}
           onChange={e => this.handleChange(e)}>
-          <Tab label="Products" value="products">
-            <AdminProductsContainer /> 
-          </Tab>
           <Tab label="Orders" value="orders">
-            <AdminOrdersContainer /> 
+            <AdminOrdersContainer orders={this.props.orders}/> 
+          </Tab>
+          <Tab label="Products" value="products">
+            <AdminProductsContainer products={this.props.products}/> 
           </Tab>
           <Tab label="Users" value="users">
-            <AdminUsersContainer /> 
-          </Tab>
-          <Tab label="Reviews" value="reviews">
-            <AdminReviewsContainer /> 
+            <AdminUsersContainer users={this.props.users}/> 
           </Tab>
         </Tabs>
       </div>
   )}
 }
 
-
-
-const mapStateToProps = (state) => ({
-  allOrders: state.allOrders, 
-  allProducts: state.allProducs, 
-  allReviews: state.allReviews, 
-  allUsers: state.allUsers
-})
-
-export default connect (
-  mapStateToProps,
-  null
-) (Admin)
+export default connect (null) (Admin)

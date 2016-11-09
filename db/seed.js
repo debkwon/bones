@@ -24,7 +24,7 @@ const seedReviews = () => db.Promise.map([
 ], review => db.model('reviews').create(review))
 
 const seedOrders = () => db.Promise.map([
-  {shippingDate: 3/22/16, status: 'shipped', total: 32.45, user_id: 1},
+  {shippingDate: '3/22/16', status: 'shipped', total: 32.45, user_id: 1},
   {shippingDate: '4/22/16', status: 'cancelled', total: 42.45, user_id: 1},
   {shippingDate: '5/22/16', status: 'processing', total: 52.45, user_id: 2},
   {shippingDate: '6/22/16', status: 'delivered', total: 62.45, user_id: 2},
@@ -32,12 +32,12 @@ const seedOrders = () => db.Promise.map([
 ], order => db.model('orders').create(order))
 
 const seedOrderProducts = () => db.Promise.map([
-  {quantity: 1, pricePerUnit: 12.50, order_id: 1, product_id: 1},
-  {quantity: 2, pricePerUnit: 6.50, order_id: 1, product_id: 2},
+  {quantity: 1, pricePerUnit: 12.49, order_id: 1, product_id: 1},
+  {quantity: 2, pricePerUnit: 6.49, order_id: 1, product_id: 2},
   {quantity: 2, pricePerUnit: 11.99, order_id: 2, product_id: 1},
   {quantity: 2, pricePerUnit: 2.49, order_id: 2, product_id: 3},
-  {quantity: 3, pricePerUnit: 3.50, order_id: 3, product_id: 2},
-  {quantity: 3, pricePerUnit: 3.50, order_id: 3, product_id: 3},
+  {quantity: 3, pricePerUnit: 3.49, order_id: 3, product_id: 2},
+  {quantity: 3, pricePerUnit: 3.49, order_id: 3, product_id: 3},
 ], orderProducts => db.model('order_product').create(orderProducts))
 
 db.didSync
