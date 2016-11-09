@@ -23,3 +23,4 @@ Order.belongsTo(User);
 Order.belongsToMany(Product, {through: OrderProduct})
 
 module.exports = {User, Review, Celeb, Product, CelebProduct, OrderProduct}
+///
