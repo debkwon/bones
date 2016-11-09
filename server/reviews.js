@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
   Review.findAll()
   .then(reviews =>{
-    res.json(reviews);
+    res.send(reviews);
   })
   .catch(next)
 })

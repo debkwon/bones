@@ -19,8 +19,7 @@ const Product = db.define('products', {
   },
   description: Sequelize.TEXT,
   price: {
-    type: Sequelize.FLOAT(),
-    decimals: 2,
+    type: Sequelize.DECIMAL(15, 2),
     validate: {
       notEmpty: true
     }
@@ -36,13 +35,6 @@ const Product = db.define('products', {
     defaultValue: 'http://placehold.it/250x150'
   }
 },
-  { 
-    setterMethods: {
-      setDollarValue: function(float) {
-
-      }
-    }
-  },
   {
     instanceMethods: {
       avg_rating: function(){

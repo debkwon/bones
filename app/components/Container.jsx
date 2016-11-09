@@ -8,6 +8,8 @@ import AppBar from 'material-ui/AppBar';
 export class Container extends Component {
 
   render() {
+
+    console.log(this.props)
     return (
       <div className="mdl-layout mdl-js-layout">
       <nav>
@@ -18,6 +20,7 @@ export class Container extends Component {
             </div>
           </div>
           <ul>
+            <li>{this.props.auth ? <Link to='/admin'>Admin</Link> : <div/>}</li>
             <li><Link to='/orders'>Orders</Link></li>
             <li>{!this.props.auth ? <Link to='/login' className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Login</Link> : <WhoAmI />}</li>
             <li><i className="fa fa-shopping-cart" aria-hidden="true"> </i>Cart</li>

@@ -34,10 +34,7 @@ export class Orders extends React.Component {
   };
 
   render() {
-
     const {orders} = this.props || [];
-
-    console.log(this.props)
 
     return (
       <div id="orders-container" style={{margin: 5, padding: 5}}>

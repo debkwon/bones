@@ -27,18 +27,25 @@ import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
 import { fetchCelebs } from './reducers/celeb'
 import { fetchOrders } from './reducers/orders'
+
+import { fetchOrdersAdmin } from './reducers/adminOrders'
+import { fetchProductsAdmin } from './reducers/adminProducts'
+import { fetchReviewsAdmin } from './reducers/adminReviews'
+import { fetchUsersAdmin } from './reducers/adminUsers'
+
 import { updateCartId } from './reducers/cart'
 import { fetchCurrentCeleb } from './reducers/celebProducts'
 import axios from 'axios'
+
 // for Google's Material UI themes
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { grey300, pink400 } from 'material-ui/styles/colors';
+import { grey400, pink400 } from 'material-ui/styles/colors';
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: grey300,
+    primary1Color: grey400,
     primary2Color: pink400,
   },
 });
@@ -72,7 +79,8 @@ render (
             onEnter={onOrdersEnter} />
           <Route
             path="/admin"
-            component={AdminContainer} />
+            component={AdminContainer}
+            onEnter={onAdminEnter} />
         </Route>
       </Router>
     </Provider>
@@ -91,7 +99,6 @@ function onCelebsEnter () {
 }
 
 function onCurrentProductEnter (nextRouterState) {
-  console.log("this is the nextRouterState: ", nextRouterState)
   const productId = nextRouterState.params.productId;
   const thunk = fetchCurrentProduct(productId);
   store.dispatch(thunk);
@@ -116,6 +123,11 @@ function onOrdersEnter (nextRouterState) {
   const auth = store.getState().auth || {}
   const userId = auth.id || null;
   const thunk = fetchOrders(userId);
+  store.dispatch(thunk)
+}
+
+function onAdminEnter () {
+  const thunk = fetchProductsAdmin()
   store.dispatch(thunk)
 }
 
