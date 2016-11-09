@@ -7,6 +7,8 @@ import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import Review from './Review';
 import { updateCartId} from '../reducers/cart';
+import { Link } from 'react-router'
+
 import Chip from 'material-ui/Chip';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import store from '../store';
@@ -141,6 +143,8 @@ export class Product extends React.Component {
                 <h2>Why It's Fabulous</h2>
                 <p>{currentProduct.description}
                 </p>
+                <b>Celebs: </b>{currentProduct.celebs && currentProduct.celebs.map(celeb =>
+                  <Link to={`/celebs/${celeb.id}`} className='celeb-listing'>{celeb.name}</Link>)}
               </div>
             </Tab>
             <Tab label="Reviews" value="reviews" className="reviews">

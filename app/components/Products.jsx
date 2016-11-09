@@ -108,7 +108,11 @@ export class Products extends React.Component {
                   <div className="mdl-card__title">
                     <span>{product.name}</span>
                   </div>
+                  </Link>
                   <div className="mdl-card__supporting-text">
+                  <b>Celeb(s): </b>{product.celebs && product.celebs.map(celeb =>
+                    <Link to={`/celebs/${celeb.id}`} className='celeb-listing'>{celeb.name}</Link>)}
+                  <br/>
                   {product.categories && product.categories.map(category => (
                       <div className='mdl-chip' key={idx++}>
                         <span className="mdl-chip__text">{category}</span>
@@ -116,8 +120,8 @@ export class Products extends React.Component {
                     ))
                   }
                   </div>
-                </Link>
-                  <RaisedButton type="submit" label="ADD" primary={true} onClick={evt=>{ evt.preventDefault(); this.add({product});}}/>
+                 <RaisedButton type="submit" label="ADD" primary={true} onClick={evt=>{ evt.preventDefault(); this.add({product});}}/>
+                  <RaisedButton type="submit" label="DELETE" primary={true}  onClick={evt=>{ evt.preventDefault(); this.del({product});}}/>
               </div>
             ))
           }
