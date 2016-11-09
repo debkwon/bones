@@ -8,7 +8,7 @@ const seedUsers = () => db.Promise.map([
 const seedProducts = () => db.Promise.map([
   {name: `Hillary's Pantsuit`, price: 350.00, description: 'Classic red pantsuit, worn at the Democratic National Convention 2016', categories: ['Clothing'], quantity: 5, photoURL: 'http://s1.r29static.com//bin/entry/567/x,80/1660164/image.jpg'},
   {name: `Elijah Woods's Frodo Ring`, price: 13000, description: 'Made from real Elven magic', categories:['Film', 'Fantasy'], quantity: 8, photoURL:'https://flavorwire.files.wordpress.com/2012/08/doom.jpg'},
-  {name: `Emma Watson's Hermione Wig`, description:'The bushy but loveable mess from Harry Potter and the Chamber of Secrets', price: 175.00,categories: ['Costume', 'Hair'], quantity: 10, photoURL: 'http://worldtimes24.com/wp-content/uploads/2015/11/pic713-620x330.jpg'},
+  {name: `Emma Watson's Hermione Wig`, description:'The bushy but loveable mess from Harry Potter and the Chamber of Secrets', price: 175.00,categories: ['Costume', 'Hair'], quantity: 10, photoURL: 'https://img.buzzfeed.com/buzzfeed-static/static/2015-11/13/17/enhanced/webdr03/enhanced-11536-1447453594-1.jpg'},
 ], product => db.model('products').create(product))
 
 const seedCelebs = () => db.Promise.map([
