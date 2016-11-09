@@ -98,7 +98,7 @@ export class User extends Component {
         <p>First Name:<TextField defaultValue = {this.state.auth.firstName} name="firstname" style={Textstyles}/></p>
         <p>Last Name: <TextField  defaultValue = {this.state.auth.lastName} name="lastname"  style={Textstyles}/></p>
         <p>Username: <TextField  defaultValue = {this.state.auth.username} name="username"  style={Textstyles}/></p>
-        <p>Eamil: <TextField  defaultValue = {this.state.auth.email} name="email"  style={Textstyles}/></p>
+        <p>Email: <TextField  defaultValue = {this.state.auth.email} name="email"  style={Textstyles}/></p>
         <p>Password: <TextField  defaultValue = "fakepassword" name="password" type = "password"  style={Textstyles}/></p>
         <RaisedButton type="submit" label="UPDATE" primary={true} style={style} />
       </form>

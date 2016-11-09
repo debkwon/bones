@@ -1,7 +1,7 @@
 const db = require('APP/db')
 
 const seedUsers = () => db.Promise.map([
-  {firstName: 'Michelle', lastName: 'Obama', email: 'michelle@firstlady.rocks', password: '1234', username: 'totalbadass'},
+  {firstName: 'Michelle', lastName: 'Obama', email: 'michelle@firstlady.rocks', password: '1234', username: 'totalbadass', isAdmin: true},
   {firstName: 'Barack', lastName: 'Obama', email: 'barack@president.rocks', password: '1234', username: 'realpowerfuldude'},
 ], user => db.model('users').create(user))
 
@@ -32,12 +32,12 @@ const seedOrders = () => db.Promise.map([
 ], order => db.model('orders').create(order))
 
 const seedOrderProducts = () => db.Promise.map([
-  {quantity: 1, pricePerUnit: 12.50, order_id: 1, product_id: 1},
-  {quantity: 2, pricePerUnit: 6.50, order_id: 1, product_id: 2},
+  {quantity: 1, pricePerUnit: 12.49, order_id: 1, product_id: 1},
+  {quantity: 2, pricePerUnit: 6.49, order_id: 1, product_id: 2},
   {quantity: 2, pricePerUnit: 11.99, order_id: 2, product_id: 1},
   {quantity: 2, pricePerUnit: 2.49, order_id: 2, product_id: 3},
-  {quantity: 3, pricePerUnit: 3.50, order_id: 3, product_id: 2},
-  {quantity: 3, pricePerUnit: 3.50, order_id: 3, product_id: 3},
+  {quantity: 3, pricePerUnit: 3.49, order_id: 3, product_id: 2},
+  {quantity: 3, pricePerUnit: 3.49, order_id: 3, product_id: 3},
 ], orderProducts => db.model('order_product').create(orderProducts))
 
 const seedCelebProducts = () => db.Promise.map([
