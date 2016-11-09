@@ -49,6 +49,7 @@ export class Products extends React.Component {
     else if (!this.props.auth && window.localStorage.getItem('orderId')){ //if user is not logged in, but there's an existing created order
       let id = parseInt(window.localStorage.getItem('orderId'));
       total = this.props.cart.total + product_obj.product.price
+
       if (productIsInCart){
           let tempCart = this.props.cart.products;
           tempCart[cartIndex]['order_product']['quantity'] = (tempCart[cartIndex]['order_product']['quantity'] + quantity);
@@ -56,6 +57,7 @@ export class Products extends React.Component {
           axios.put(`/api/orders/${this.props.cart.order_id}`, {total: total, user_id: null, status: this.props.cart.status, products: tempCart})
 
       }else{
+        console.log("PRODUCTS",product_obj.product);
           axios.put(`/api/orders/${id}`, {total: total, user_id: null, status: this.props.cart.status, products:this.props.cart.products.concat(product_obj.product)})
           .then(res=>{
             console.log("what", res);
