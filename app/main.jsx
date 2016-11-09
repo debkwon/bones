@@ -20,6 +20,7 @@ import OrdersContainer from './components/Orders'
 import OrdersPanelContainer from './components/OrdersPanel'
 import WhoAmI from './components/WhoAmI'
 import AdminContainer from './components/Admin'
+import Checkout from './components/Checkout'
 
 import { fetchProducts } from './reducers/products'
 import { fetchCurrentProduct } from './reducers/product'
@@ -59,6 +60,7 @@ render (
           <Route path="/user" component={User} />
           <Route path="/reviews" component={Review} />
           <Route path="/cart" component={Cart} />
+          <Route path="/checkout" component={Checkout} />
           <Route
             path="/orders"
             component={OrdersContainer}
