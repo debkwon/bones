@@ -15,9 +15,9 @@ If you are a user and logged in, you can check on your previous orders and open 
 
 ## 1. If you want to work on the $elleb store
 
-Fork and clone our repo
-npm install
-npm start
-npm run build-watch
-npm run seed
-navigate to localhost:1337
+Fork/clone our repo. Then:  
+- npm install  
+- npm start  
+- npm run build-watch  
+- npm run seed  
+- navigate to localhost:1337  
